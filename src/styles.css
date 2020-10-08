@@ -1,1 +1,17 @@
-/* You can add global styles to this file, and also import other style files */
+html {
+  background: linear-gradient(135deg, #1174b8 1%, #001317 100%) fixed;
+  background-size: cover;
+}
+
+.lobster {
+  font-family: Lobster, cursive;
+}
+
+.card-panel {
+  background-color: white;
+  padding-right: 20px;
+  padding-left: 20px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  margin-top: 20px;
+}
