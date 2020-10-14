@@ -6,12 +6,12 @@
       <div class="container">
         <div class="input-field">
           <i class="material-icons prefix">account_circle</i>
-          <input id="username" name="_username" type="text" autocapitalize="off" class="validate">
-          <label for="username">Votre pseudo</label>
+          <input [(ngModel)]="user.email" id="email" type="text" class="validate">
+          <label for="email">Votre pseudo</label>
         </div>
         <div class="input-field">
           <i class="material-icons prefix">lock</i>
-          <input id="password" name="_password" type="password" class="validate">
+          <input [ngModel]="user.password" id="password" type="text" class="validate">
           <label for="password">Votre mot de passe</label>
         </div>
       </div>
