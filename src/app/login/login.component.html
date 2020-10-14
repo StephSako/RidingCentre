@@ -2,16 +2,16 @@
   <div class="card-panel center-align">
     <h3 class="lobster" style="margin-top: 0">Se connecter</h3>
 
-    <form method="POST">
+    <form (submit)="login()">
       <div class="container">
         <div class="input-field">
           <i class="material-icons prefix">account_circle</i>
-          <input [(ngModel)]="user.email" id="email" type="text" class="validate">
+          <input [(ngModel)]="credentials.email_user" id="email" type="email" name="email_user" class="validate">
           <label for="email">Votre pseudo</label>
         </div>
         <div class="input-field">
           <i class="material-icons prefix">lock</i>
-          <input [ngModel]="user.password" id="password" type="text" class="validate">
+          <input [(ngModel)]="credentials.password_user" id="password" name="password_user" type="password" class="validate">
           <label for="password">Votre mot de passe</label>
         </div>
       </div>

@@ -24,6 +24,7 @@ export interface TokenPayload {
   providedIn: 'root'
 })
 export class AuthenticationService {
+  private baseURL = 'http://localhost:4000';
   private token: string;
 
   constructor(private http: HttpClient, private router: Router) { }
@@ -57,9 +58,9 @@ export class AuthenticationService {
   }
 
   public register(user: TokenPayload): Observable<any> {
-    const base = this.http.post('/api/user/register', user);
+    const URL = this.http.post(this.baseURL + '/api/user/register', user);
 
-    return base.pipe(
+    return URL.pipe(
       map((data: TokenResponse) => {
         if (data.token) {
           this.saveToken(data.token);
@@ -70,9 +71,9 @@ export class AuthenticationService {
   }
 
   public login(user: TokenPayload): Observable<any> {
-    const base = this.http.post('/api/user/login', user);
+    const URL = this.http.post(this.baseURL + '/api/user/login', user);
 
-    return base.pipe(
+    return URL.pipe(
       map((data: TokenResponse) => {
         if (data.token) {
           this.saveToken(data.token);
@@ -83,14 +84,14 @@ export class AuthenticationService {
   }
 
   public profile(): Observable<any> {
-    return this.http.post('/api/users/profile', {
-      headers: { Authorization: `${this.getToken()}`}
+    return this.http.get( this.baseURL + '/api/user/profile', {
+      headers: { Authorization: `${this.getToken()}` }
     });
   }
 
   public logout(): void {
     this.token = '';
     window.localStorage.removeItem('userToken');
-    this.router.navigateByUrl('/');
+    this.router.navigateByUrl('/login');
   }
 }

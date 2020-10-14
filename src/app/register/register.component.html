@@ -1,21 +1,21 @@
 <div style="margin-top: 40px;" class="container">
   <div class="card-panel center-align">
-    <h3 class="lobster" style="margin-top: 0">Se connecter</h3>
+    <h3 class="lobster" style="margin-top: 0">S'inscrire</h3>
 
-    <form method="POST">
+    <form (submit)="register()">
       <div class="container">
 
         <div class="row">
           <div class="col s6 lastname">
             <div class="input-field">
               <i class="material-icons prefix">account_circle</i>
-              <input id="lastname" name="_lastname" type="text" class="validate">
+              <input id="lastname" name="lastname" type="text" class="validate" [(ngModel)]="credentials.lastname_user">
               <label for="lastname">Votre nom</label>
             </div>
           </div>
           <div class="col s6 firstname">
             <div class="input-field">
-              <input id="firstname" name="_firstname" type="text"class="validate">
+              <input id="firstname" name="firstname" type="text"class="validate" [(ngModel)]="credentials.firstname_user">
               <label for="firstname">Votre prénom</label>
             </div>
           </div>
@@ -23,26 +23,26 @@
 
         <div class="input-field mail">
           <i class="material-icons prefix">email</i>
-          <input id="email" name="_password" type="email" class="validate">
-          <label for="email">Votre mot de passe</label>
+          <input id="email" name="password" type="email" class="validate" [(ngModel)]="credentials.email_user">
+          <label for="email">Votre adresse mail</label>
         </div>
 
         <div class="input-field">
           <i class="material-icons prefix">lock</i>
-          <input id="password" name="_password" type="password" class="validate">
+          <input id="password" name="password" type="password" class="validate" [(ngModel)]="credentials.password_user">
           <label for="password">Votre mot de passe</label>
         </div>
 
         <div class="input-field">
           <i class="material-icons prefix">phone_android</i>
-          <input id="phone_number" name="_phone_number" type="password" class="validate">
-          <label for="password">Votre numéro de téléphone</label>
+          <input id="phone_number" name="phone_number" type="number" class="validate" [(ngModel)]="credentials.phone_number_user">
+          <label for="phone_number">Votre numéro de téléphone</label>
         </div>
 
         <div class="input-field">
           <i class="material-icons prefix">assignment_ind</i>
-          <input id="license" name="_license" type="email" class="validate">
-          <label for="license">Votre numéro de license</label>
+          <input id="license_number" name="license_number" type="text" class="validate" [(ngModel)]="credentials.license_number_user">
+          <label for="license_number">Votre numéro de license</label>
         </div>
 
       </div>

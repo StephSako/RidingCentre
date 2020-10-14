@@ -2,10 +2,9 @@
   <div class="nav-wrapper">
     <a routerLink="/" class="brand-logo">Accueil</a>
     <ul id="nav-mobile" class="right hide-on-med-and-down">
-      <li><a *ngIf="!auth.isLoggedIn()" routerLink="/connexion">Se connecter</a></li>
-      <li><a *ngIf="!auth.isLoggedIn()" routerLink="/inscription">S'inscrire</a></li>
-      <li *ngIf="auth.isLoggedIn()">
-        <a routerLink="/profile">
+      <li *ngIf="!auth.isLoggedIn()"><a routerLink="/login">Se connecter</a></li>
+      <li *ngIf="!auth.isLoggedIn()"><a routerLink="/register">S'inscrire</a></li>
+      <li *ngIf="auth.isLoggedIn()"><a routerLink="/profile">
           <div class="chip">
             {{ auth.getUserDetails()?.lastname_user | uppercase }} {{ auth.getUserDetails()?.firstname_user | titlecase }}
           </div>
