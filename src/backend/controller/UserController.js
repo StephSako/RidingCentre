@@ -47,4 +47,38 @@ user.post('/register', (req, res) => {
   })
 })
 
+//LOGIN
+user.post('/login', (req, res) => {
+  User.findOne({
+    where: {
+      email_user: req.body.email_user
+    }
+  }).then(user => {
+    if (bcrypt.compareSync(req.body.password_user, user.password_user)) {
+      let token = jwt.sign(user.dataValues, process.env.SECRET_KEY, {
+        expiresIn: 1440
+      })
+      res.json({token: token})
+    } else res.send("Ce compte n'est pas enregistré")
+  }).catch(err => {
+    res.send('error : ' + err)
+  })
+})
+
+//PROFILE
+user.get('/profile', (req, res) => {
+  var decoded = jwt.verify(req.headers['authorization'], process.env.SECRET_KEY)
+
+  User.findOne({
+    where: {
+      id_user: decoded.id_user
+    }
+  }).then(user => {
+    if (user) res.json(user)
+    else res.send("L'utilisateur n'existe pas")
+  }).catch(err => {
+    res.send('error : ' + err)
+  })
+})
+
 module.exports = user
