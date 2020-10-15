@@ -10,14 +10,14 @@ import { UserInterface } from '../UserInterface';
 })
 export class ProfileComponent implements OnInit {
 
-  details: UserInterface;
+  user: UserInterface;
 
   constructor(private authService: AuthenticationService) { }
 
   ngOnInit(): void {
     this.authService.profile().subscribe(
       user => {
-        this.details = user;
+        this.user = user;
       },
       err => {
         console.error(err);

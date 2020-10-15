@@ -57,6 +57,12 @@ export class AuthenticationService {
     else { return false; }
   }
 
+  public isAdmin(): boolean {
+    const user = this.getUserDetails();
+    if (user.role_user === 'admin') { return user.exp > Date.now() / 1000; }
+    else { return false; }
+  }
+
   public register(user: TokenPayload): Observable<any> {
     const URL = this.http.post(this.baseURL + '/api/user/register', user);
 

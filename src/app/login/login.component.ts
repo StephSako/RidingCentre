@@ -1,14 +1,21 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
+import { MaterializeAction} from 'angular2-materialize';
+
+import * as M from 'materialize-css/dist/js/materialize';
 
 import { AuthenticationService, TokenPayload } from '../authentication.service';
+import { EventEmitter } from 'events';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['../app.component.css', './login.component.css']
 })
+
 export class LoginComponent implements OnInit {
+
+  toastModule = new EventEmitter<string|MaterializeAction>();
 
   credentials: TokenPayload = {
     id_user: 0,
@@ -22,7 +29,13 @@ export class LoginComponent implements OnInit {
 
   constructor(private authService: AuthenticationService, private router: Router) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    // this.toastMe('Vous êtes connecté');
+  }
+
+  toastMe(texte: string): void {
+    M.toast({html: texte});
+  }
 
   login(): void {
     this.authService.login(this.credentials)

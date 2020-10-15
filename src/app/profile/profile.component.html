@@ -2,27 +2,31 @@
   <div class="card-panel">
     <h3 class="center lobster">Votre profil</h3>
 
-    <table>
+    <table *ngIf="user">
       <tbody>
         <tr>
           <td><b>Votre prénom</b></td>
-          <td>{{ details.firstname_user}}</td>
+          <td>{{ user.firstname_user}}</td>
         </tr>
         <tr>
           <td><b>Votre nom</b></td>
-          <td>{{ details.lastname_user}}</td>
+          <td>{{ user.lastname_user}}</td>
         </tr>
         <tr>
           <td><b>Votre adresse mail</b></td>
-          <td>{{ details.email_user}}</td>
+          <td>{{ user.email_user}}</td>
         </tr>
         <tr>
           <td><b>Votre numéro de téléphone</b></td>
-          <td>{{ details.phone_number_user}}</td>
+          <td>{{ user.phone_number_user}}</td>
         </tr>
         <tr>
           <td><b>Votre numéro de licence</b></td>
-          <td>{{ details.license_number_user}}</td>
+          <td>{{ user.license_number_user}}</td>
+        </tr>
+        <tr>
+          <td><b>Type de compte</b></td>
+          <td>{{ user.role_user | titlecase }}</td>
         </tr>
       </tbody>
     </table>
