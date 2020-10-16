@@ -16,7 +16,9 @@ module.exports = db.sequelize.define(
       type: Sequelize.STRING
     },
     role_user: {
-      type: Sequelize.STRING
+      type: Sequelize.INTEGER,
+      references: 'role_user',
+      referencesKey: 'id'
     },
     password_user: {
       type: Sequelize.STRING

@@ -9,12 +9,15 @@ import { RegisterComponent } from './register/register.component';
 import { ProfileComponent } from './profile/profile.component';
 import { HomeComponent } from './home/home.component';
 import { AuthGuardService } from './auth-guard.service';
+import { HomeInstructorComponent } from './home-instructor/home-instructor.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuardService] },
+  { path: 'home', component: HomeComponent, canActivate: [AuthGuardService] },
+  { path: 'home-instructor', component: HomeInstructorComponent, canActivate: [AuthGuardService] },
 ];
 
 @NgModule({

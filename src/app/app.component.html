@@ -4,6 +4,10 @@
     <ul id="nav-mobile" class="right hide-on-med-and-down">
       <li *ngIf="!auth.isLoggedIn()"><a routerLink="/login">Se connecter</a></li>
       <li *ngIf="!auth.isLoggedIn()"><a routerLink="/register">S'inscrire</a></li>
+
+      <li *ngIf="auth.isAdmin()"><a routerLink="/register">Back-office</a></li>
+      <li *ngIf="auth.isInstructor()"><a routerLink="/register">Gestion</a></li>
+
       <li *ngIf="auth.isLoggedIn()"><a routerLink="/profile">
           <div class="chip">
             {{ auth.getUserDetails()?.lastname_user | uppercase }} {{ auth.getUserDetails()?.firstname_user | titlecase }}

@@ -15,6 +15,7 @@ export interface TokenPayload {
   firstname_user: string;
   lastname_user: string;
   email_user: string;
+  role_user: number;
   password_user: string;
   license_number_user: string;
   phone_number_user: string;
@@ -59,8 +60,18 @@ export class AuthenticationService {
 
   public isAdmin(): boolean {
     const user = this.getUserDetails();
-    if (user.role_user === 'admin') { return user.exp > Date.now() / 1000; }
-    else { return false; }
+    if (this.isLoggedIn()) {
+      if (user.role_user === 3) { return user.exp > Date.now() / 1000; }
+      else { return false; }
+    } else { return false; }
+  }
+
+  public isInstructor(): boolean {
+    const user = this.getUserDetails();
+    if (this.isLoggedIn()) {
+      if (user.role_user === 2) { return user.exp > Date.now() / 1000; }
+      else { return false; }
+    } else { return false; }
   }
 
   public register(user: TokenPayload): Observable<any> {

@@ -10,7 +10,7 @@ export class AuthGuardService implements CanActivate {
   // tslint:disable-next-line:typedef
   canActivate() {
     if (!this.auth.isLoggedIn()) {
-      this.router.navigateByUrl('/');
+      this.router.navigateByUrl('/login');
       return false;
     }
     return true;

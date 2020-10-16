@@ -18,7 +18,7 @@ user.post('/register', (req, res) => {
     password_user: req.body.password_user,
     license_number_user: req.body.license_number_user,
     phone_number_user: req.body.phone_number_user,
-    role_user: 0,
+    role_user: 1,
     email_user: req.body.email_user,
     created_at_user: today,
     updated_at_user: today

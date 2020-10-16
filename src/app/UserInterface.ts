@@ -1,6 +1,6 @@
 export interface UserInterface {
   id_user: number;
-  role_user: string;
+  role_user: number;
   firstname_user: string;
   lastname_user: string;
   email_user: string;

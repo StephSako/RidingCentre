@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import { MaterializeAction} from 'angular2-materialize';
-
 import * as M from 'materialize-css/dist/js/materialize';
 
 import { AuthenticationService, TokenPayload } from '../authentication.service';
@@ -22,6 +21,7 @@ export class LoginComponent implements OnInit {
     firstname_user: '',
     lastname_user: '',
     email_user: '',
+    role_user: 0,
     password_user: '',
     license_number_user: '',
     phone_number_user: ''
@@ -41,7 +41,9 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.credentials)
       .subscribe(
       () => {
-        this.router.navigateByUrl('/profile');
+        if (this.authService.getUserDetails().role_user === 1) {this.router.navigateByUrl('/home'); }
+        else if (this.authService.getUserDetails().role_user === 2) {this.router.navigateByUrl('/home-instructor'); }
+        else { this.router.navigateByUrl('/home'); }
       },
         err => {
         console.error(err);

@@ -11,6 +11,8 @@ import { AuthenticationService } from './authentication.service';
 import { AuthGuardService } from './auth-guard.service';
 import { ProfileComponent } from './profile/profile.component';
 import { HomeComponent } from './home/home.component';
+import { HomeInstructorComponent } from './home-instructor/home-instructor.component';
+import { BackOfficeComponent } from './back-office/back-office.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { HomeComponent } from './home/home.component';
     LoginComponent,
     RegisterComponent,
     ProfileComponent,
-    HomeComponent
+    HomeComponent,
+    HomeInstructorComponent,
+    BackOfficeComponent
   ],
   imports: [
     BrowserModule,

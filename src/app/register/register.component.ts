@@ -15,6 +15,7 @@ export class RegisterComponent implements OnInit {
     firstname_user: '',
     lastname_user: '',
     email_user: '',
+    role_user: 0,
     password_user: '',
     license_number_user: '',
     phone_number_user: ''
@@ -28,7 +29,7 @@ export class RegisterComponent implements OnInit {
     this.authService.register(this.credentials)
       .subscribe(
         () => {
-          this.router.navigateByUrl('/profile');
+          this.router.navigateByUrl('/home');
         },
         err => {
           console.error(err);
