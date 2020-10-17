@@ -21,7 +21,7 @@ export class RepriseComponent implements OnInit {
 
   getReprise(): void {
     const id = +this.route.snapshot.paramMap.get('id');
-    this.repriseManager.getReprise(id).subscribe(
+    this.repriseManager.details(id).subscribe(
       reprise => {
         this.reprise = reprise;
       },

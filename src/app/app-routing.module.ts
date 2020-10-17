@@ -11,6 +11,7 @@ import { HomeComponent } from './home/home.component';
 import { AuthGuardService } from './auth-guard.service';
 import { HomeInstructorComponent } from './home-instructor/home-instructor.component';
 import { RepriseComponent } from './reprise/reprise.component';
+import {RepriseCreateComponent} from './reprise-create/reprise-create.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [AuthGuardService] },
   { path: 'home-instructor', component: HomeInstructorComponent, canActivate: [AuthGuardService] },
   { path: 'reprise/:id', component: RepriseComponent },
+  { path: 'new-course', component: RepriseCreateComponent },
 ];
 
 @NgModule({

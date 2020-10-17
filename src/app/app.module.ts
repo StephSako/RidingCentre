@@ -14,6 +14,7 @@ import { HomeComponent } from './home/home.component';
 import { HomeInstructorComponent } from './home-instructor/home-instructor.component';
 import { BackOfficeComponent } from './back-office/back-office.component';
 import { RepriseComponent } from './reprise/reprise.component';
+import { RepriseCreateComponent } from './reprise-create/reprise-create.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { RepriseComponent } from './reprise/reprise.component';
     HomeComponent,
     HomeInstructorComponent,
     BackOfficeComponent,
-    RepriseComponent
+    RepriseComponent,
+    RepriseCreateComponent
   ],
   imports: [
     BrowserModule,

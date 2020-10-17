@@ -2,8 +2,8 @@ const express = require('express')
 const reprise = express.Router()
 const Reprise = require("../model/Reprise")
 
-// REGISTER
-reprise.post('/register', (req, res) => {
+// CREATE
+reprise.post('/create', (req, res) => {
   const repriseData = {
     date: req.body.date,
     rider_number_limit: req.body.rider_number_limit,
@@ -19,8 +19,8 @@ reprise.post('/register', (req, res) => {
 })
 
 // DETAILS
-reprise.post('/details', (req, res) => {
-  let id_reprise = req.body.id_reprise
+reprise.get('/details/:id_reprise', (req, res) => {
+  let id_reprise = req.params.id_reprise
 
   Reprise.findOne({
     where: {
