@@ -7,12 +7,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
-import { AuthenticationService } from './authentication.service';
+import { AuthenticationService } from './Services/authentication.service';
 import { AuthGuardService } from './auth-guard.service';
 import { ProfileComponent } from './profile/profile.component';
 import { HomeComponent } from './home/home.component';
 import { HomeInstructorComponent } from './home-instructor/home-instructor.component';
 import { BackOfficeComponent } from './back-office/back-office.component';
+import { RepriseComponent } from './reprise/reprise.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { BackOfficeComponent } from './back-office/back-office.component';
     ProfileComponent,
     HomeComponent,
     HomeInstructorComponent,
-    BackOfficeComponent
+    BackOfficeComponent,
+    RepriseComponent
   ],
   imports: [
     BrowserModule,

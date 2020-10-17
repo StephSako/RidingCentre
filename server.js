@@ -17,9 +17,9 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cors())
 
 app.use(function (req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*')
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
-  next()
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
 })
 
 const path = require('path')
@@ -31,6 +31,9 @@ app.get('/api', function (req, res) {
 
 let UserController = require('./src/backend/controller/UserController')
 app.use('/api/user', UserController)
+
+let RepriseController = require('./src/backend/controller/RepriseController')
+app.use('/api/reprise', RepriseController)
 
 let port = process.env.PORT || 4000
 app.listen(port, function () {

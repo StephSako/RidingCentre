@@ -1,17 +1,13 @@
 const express = require('express')
 const user = express.Router()
-const cors = require("cors")
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt")
-
 const User = require("../model/User")
-user.use(cors())
 
 process.env.SECRET_KEY = 'secret'
 
 // REGISTER
 user.post('/register', (req, res) => {
-  const today = new Date()
   const userData = {
     firstname_user: req.body.firstname_user,
     lastname_user: req.body.lastname_user,
@@ -19,9 +15,7 @@ user.post('/register', (req, res) => {
     license_number_user: req.body.license_number_user,
     phone_number_user: req.body.phone_number_user,
     role_user: 1,
-    email_user: req.body.email_user,
-    created_at_user: today,
-    updated_at_user: today
+    email_user: req.body.email_user
   }
 
   User.findOne({
@@ -48,7 +42,7 @@ user.post('/register', (req, res) => {
   })
 })
 
-//LOGIN
+// LOGIN
 user.post('/login', (req, res) => {
   User.findOne({
     where: {
@@ -66,9 +60,10 @@ user.post('/login', (req, res) => {
   })
 })
 
-//PROFILE
+// PROFILE
 user.get('/profile', (req, res) => {
-  var decoded = jwt.verify(req.headers['authorization'], process.env.SECRET_KEY)
+
+  let decoded = jwt.verify(req.headers['authorization'], process.env.SECRET_KEY)
 
   User.findOne({
     where: {
@@ -80,6 +75,16 @@ user.get('/profile', (req, res) => {
   }).catch(err => {
     res.send('error : ' + err)
   })
+})
+
+// EDIT
+user.post('/edit', (req, res) => {
+  console.log('not created yet')
+})
+
+// PROFILE
+user.post('/delete', (req, res) => {
+  console.log('not created yet')
 })
 
 module.exports = user

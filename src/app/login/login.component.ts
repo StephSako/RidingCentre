@@ -3,7 +3,7 @@ import {Router} from '@angular/router';
 import { MaterializeAction} from 'angular2-materialize';
 import * as M from 'materialize-css/dist/js/materialize';
 
-import { AuthenticationService, TokenPayload } from '../authentication.service';
+import { AuthenticationService, TokenPayload } from '../Services/authentication.service';
 import { EventEmitter } from 'events';
 
 @Component({

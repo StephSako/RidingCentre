@@ -1,0 +1,20 @@
+<div class="container">
+  <h2 *ngIf="reprise">{{ reprise.title }}</h2>
+
+  <table *ngIf="reprise">
+    <tbody>
+    <tr>
+      <td><b>Date et horaire</b></td>
+      <td>{{ reprise.date}}</td>
+    </tr>
+    <tr>
+      <td><b>Limite du nombre de cavaliers</b></td>
+      <td>{{ reprise.rider_number_limit}}</td>
+    </tr>
+    <tr>
+      <td><b>Niveau de Galop requis</b></td>
+      <td>{{ reprise.rider_number_limit}}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>

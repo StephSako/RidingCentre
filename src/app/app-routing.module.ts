@@ -10,6 +10,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { HomeComponent } from './home/home.component';
 import { AuthGuardService } from './auth-guard.service';
 import { HomeInstructorComponent } from './home-instructor/home-instructor.component';
+import { RepriseComponent } from './reprise/reprise.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuardService] },
   { path: 'home', component: HomeComponent, canActivate: [AuthGuardService] },
   { path: 'home-instructor', component: HomeInstructorComponent, canActivate: [AuthGuardService] },
+  { path: 'reprise/:id', component: RepriseComponent },
 ];
 
 @NgModule({

@@ -2,33 +2,24 @@ const Sequelize = require("sequelize")
 const db = require("../db.js")
 
 module.exports = db.sequelize.define(
-  'user',
+  'reprise',
   {
-    id_user: {
+    id: {
       type: Sequelize.INTEGER,
       primaryKey: true,
       autoIncrement: true
     },
-    firstname_user: {
-      type: Sequelize.STRING
+    date: {
+      type: Sequelize.DATE
     },
-    lastname_user: {
-      type: Sequelize.STRING
-    },
-    role_user: {
+    rider_number_limit: {
       type: Sequelize.INTEGER
     },
-    password_user: {
+    title: {
       type: Sequelize.STRING
     },
-    email_user: {
-      type: Sequelize.STRING
-    },
-    license_number_user: {
-      type: Sequelize.STRING
-    },
-    phone_number_user: {
-      type: Sequelize.STRING
+    galop_level: {
+      type: Sequelize.INTEGER
     }
   },
   {
