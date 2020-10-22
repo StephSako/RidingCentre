@@ -3,6 +3,7 @@ const user = express.Router()
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt")
 const User = require("../model/User")
+const { Op } = require("sequelize");
 
 process.env.SECRET_KEY = 'secret'
 
@@ -46,7 +47,10 @@ user.post('/register', (req, res) => {
 user.post('/login', (req, res) => {
   User.findOne({
     where: {
-      email_user: req.body.email_user
+      [Op.or]: [
+        { email_user: req.body.login_user },
+        { phone_number_user: req.body.login_user }
+      ]
     }
   }).then(user => {
     if (bcrypt.compareSync(req.body.password_user, user.password_user)) {

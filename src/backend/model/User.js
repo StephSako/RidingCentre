@@ -22,13 +22,15 @@ module.exports = db.sequelize.define(
       type: Sequelize.STRING
     },
     email_user: {
-      type: Sequelize.STRING
+      type: Sequelize.STRING,
+      unique: true
     },
     license_number_user: {
       type: Sequelize.STRING
     },
     phone_number_user: {
-      type: Sequelize.STRING
+      type: Sequelize.STRING,
+      unique: true
     }
   },
   {

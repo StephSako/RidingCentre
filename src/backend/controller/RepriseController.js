@@ -34,6 +34,18 @@ reprise.get('/details/:id_reprise', (req, res) => {
   })
 })
 
+// ALL
+reprise.get('/', (req, res) => {
+  let id_reprise = req.params.id_reprise
+
+  Reprise.findAll({}).then(reprises => {
+    if (reprises) res.json(reprises)
+    else res.send("Il n'y a pas de reprises")
+  }).catch(err => {
+    res.send('error : ' + err)
+  })
+})
+
 // EDIT
 /*reprise.post('/edit', (req, res) => {
   console.log('not created yet')

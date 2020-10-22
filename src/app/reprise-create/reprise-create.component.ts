@@ -13,6 +13,7 @@ export class RepriseCreateComponent implements OnInit {
   reprise: Reprise = {
     rider_number_limit: null,
     date: null,
+    hour: null,
     galop_level: null,
     title: ''
   };

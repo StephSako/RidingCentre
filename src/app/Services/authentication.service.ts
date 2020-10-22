@@ -10,8 +10,12 @@ interface TokenResponse {
   token: string;
 }
 
-export interface TokenPayload {
-  id_user: number;
+export interface TokenPayloadLogin {
+  login_user: string;
+  password_user: string;
+}
+
+export interface TokenPayloadRegister {
   firstname_user: string;
   lastname_user: string;
   email_user: string;
@@ -74,7 +78,7 @@ export class AuthenticationService {
     } else { return false; }
   }
 
-  public register(user: TokenPayload): Observable<any> {
+  public register(user: TokenPayloadRegister): Observable<any> {
     const URL = this.http.post(this.baseURL + '/register', user);
 
     return URL.pipe(
@@ -87,7 +91,7 @@ export class AuthenticationService {
     );
   }
 
-  public login(user: TokenPayload): Observable<any> {
+  public login(user: TokenPayloadLogin): Observable<any> {
     const URL = this.http.post(this.baseURL + '/login', user);
 
     return URL.pipe(
