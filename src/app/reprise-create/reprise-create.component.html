@@ -1,48 +1,46 @@
 <div style="margin-top: 40px;" class="container">
   <div class="card-panel center-align">
-    <h3 class="lobster" style="margin-top: 0">S'inscrire</h3>
+    <h3 class="lobster" style="margin-top: 0">Nouvelle reprise</h3>
 
     <form (submit)="create()">
       <div class="container">
 
-        <div class="input-field">
-          <i class="material-icons prefix">title</i>
-          <input id="title" name="title" type="text" class="validate" [(ngModel)]="reprise.title">
-          <label for="title">Titre du cours</label>
-        </div>
+        <p>
+          <mat-form-field appearance="outline">
+            <mat-icon matSuffix>title</mat-icon>
+            <mat-label>Identifiant</mat-label>
+            <input [(ngModel)]="reprise.title" name="title_reprise" matInput>
+          </mat-form-field>
+        </p>
 
-        <div class="row">
-          <div class="col s6">
-            <div class="input-field">
-              <i class="material-icons prefix">today</i>
-              <input type="text" class="datepicker validate" id="date_reprise" name="date_reprise" [(ngModel)]="reprise.date">
-              <label for="date_reprise">Date du cours</label>
-            </div>
-          </div>
-          <div class="col s6">
-            <div class="input-field">
-              <i class="material-icons prefix">schedule</i>
-              <input type="text" class="timepicker validate" id="heure_reprise" name="heure_reprise" [(ngModel)]="reprise.date">
-              <label for="heure_reprise">Date du cours</label>
-            </div>
-          </div>
-        </div>
+        <p>
+          <mat-form-field appearance="outline">
+            <mat-label>Choisissez la date</mat-label>
+            <input name="date_reprise" [(ngModel)]="reprise.date" [matDatepicker]="picker" matInput>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </p>
 
-        <div class="input-field">
-          <i class="material-icons prefix">people</i>
-          <input id="rider_number_limit" name="rider_number_limit" type="number" class="active validate" [(ngModel)]="reprise.rider_number_limit">
-          <label for="rider_number_limit">Nombre maximal de cavalier</label>
-        </div>
+        <p>
+          <mat-form-field appearance="outline">
+            <mat-icon matSuffix>title</mat-icon>
+            <mat-label>Nombre maximal de cavalier</mat-label>
+            <input min="1" max="100" name="rider_number_limit" type="number" [(ngModel)]="reprise.rider_number_limit" matInput>
+          </mat-form-field>
+        </p>
 
-        <div class="input-field">
-          <i class="material-icons prefix">equalizer</i>
-          <input id="galop_level" name="galop_level" type="number" class="active validate" [(ngModel)]="reprise.galop_level">
-          <label for="galop_level">Niveau du Galop</label>
-        </div>
+        <p>
+          <mat-form-field appearance="outline">
+            <mat-label>Niveau du Galop</mat-label>
+            <input min="1" max="7" name="galop_level" type="number" [(ngModel)]="reprise.galop_level" matInput>
+            <mat-icon matSuffix>title</mat-icon>
+          </mat-form-field>
+        </p>
+
+        <button mat-raised-button class="center" color="accent">Créer</button>
+
       </div>
-
-      <button class="btn btn-large waves-effect waves-light blue lighten-2"><i class="material-icons left">arrow_forward</i>S'inscrire</button>
-      <button class="btn waves-effect waves-light white black-text"><i class="material-icons left">check</i>Se connecter</button>
     </form>
   </div>
 </div>

@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Router} from '@angular/router';
-import { RepriseInterface } from '../Interfaces/RepriseInterface';
 import {Time} from '@angular/common';
 
 export interface Reprise {
@@ -26,7 +25,7 @@ export class RepriseService {
   }
 
   public create(reprise: Reprise): Observable<any> {
-    return this.http.post(this.baseURL, reprise);
+    return this.http.post(this.baseURL + 'create', reprise);
   }
 
   // tslint:disable-next-line:variable-name

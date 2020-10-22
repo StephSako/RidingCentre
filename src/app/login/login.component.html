@@ -1,22 +1,29 @@
 <div style="margin-top: 40px;" class="container">
-  <div class="card-panel center-align">
-    <h3 class="lobster" style="margin-top: 0">Se connecter</h3>
+  <div class="card-panel">
+    <h3 class="lobster center" style="margin-top: 0">Se connecter</h3>
 
     <form (submit)="login()">
       <div class="container">
-        <div class="input-field">
-          <i class="material-icons prefix">account_circle</i>
-          <input [(ngModel)]="credentials.login_user" id="login_user" type="text" name="login_user" class="validate">
-          <label for="login_user">Votre email ou numéro de téléphone</label>
-        </div>
-        <div class="input-field">
-          <i class="material-icons prefix">lock</i>
-          <input [(ngModel)]="credentials.password_user" id="password" name="password_user" type="password" class="validate">
-          <label for="password">Votre mot de passe</label>
-        </div>
+
+        <p>
+          <mat-form-field appearance="outline">
+            <mat-icon matSuffix>account_circle</mat-icon>
+            <mat-label>Identifiant</mat-label>
+            <input [(ngModel)]="credentials.login_user" name="login_user" matInput>
+          </mat-form-field>
+        </p>
+
+        <p>
+          <mat-form-field appearance="outline">
+            <mat-icon matSuffix>vpn_key</mat-icon>
+            <mat-label>Mot de passe</mat-label>
+            <input [(ngModel)]="credentials.password_user" name="password_user" type="password" matInput>
+          </mat-form-field>
+        </p>
+
       </div>
 
-      <button class="btn waves-effect waves-light blue lighten-2"><i class="material-icons prefix">check</i> C'est parti !</button>
+      <button class="center" mat-raised-button color="blue">C'est parti !</button>
     </form>
   </div>
 </div>

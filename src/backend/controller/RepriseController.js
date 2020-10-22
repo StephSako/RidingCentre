@@ -4,8 +4,11 @@ const Reprise = require("../model/Reprise")
 
 // CREATE
 reprise.post('/create', (req, res) => {
+  console.log(req.body.date)
+  console.log(req.body.hour)
   const repriseData = {
     date: req.body.date,
+    hour: req.body.hour,
     rider_number_limit: req.body.rider_number_limit,
     title: req.body.title,
     galop_level: req.body.galop_level

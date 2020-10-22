@@ -3,8 +3,9 @@ html {
   background-size: cover;
 }
 
-.lobster {
-  font-family: Lobster, cursive;
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
 .card-panel {
@@ -14,4 +15,20 @@ html {
   margin-bottom: 20px;
   border-radius: 5px !important;
   margin-top: 20px;
+}
+
+.container {
+  margin: 0 auto;
+  max-width: 1280px;
+  width: 90%;
+}
+
+.center {
+  display: block !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.lobster {
+  font-family: Lobster, cursive !important;
 }

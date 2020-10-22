@@ -25,6 +25,7 @@ export class RepriseCreateComponent implements OnInit {
   }
 
   create(): void {
+    // console.log(this.reprise);
     this.repriseService.create(this.reprise)
       .subscribe(
         () => {

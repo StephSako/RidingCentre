@@ -21,7 +21,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [AuthGuardService] },
   { path: 'home-instructor', component: HomeInstructorComponent, canActivate: [AuthGuardService] },
   { path: 'reprise/:id', component: RepriseComponent },
-  { path: 'new-course', component: RepriseCreateComponent },
+  { path: 'new/reprise', component: RepriseCreateComponent },
 ];
 
 @NgModule({
