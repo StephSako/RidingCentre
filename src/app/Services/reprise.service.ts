@@ -2,12 +2,10 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Router} from '@angular/router';
-import {Time} from '@angular/common';
 
 export interface Reprise {
   rider_number_limit: number;
   date: Date;
-  hour: Time;
   galop_level: number;
   title: string;
 }

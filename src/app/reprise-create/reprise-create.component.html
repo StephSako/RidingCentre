@@ -1,12 +1,10 @@
 <div style="margin-top: 40px;" class="container">
-  <div class="card-panel center-align">
-    <h3 class="lobster" style="margin-top: 0">Nouvelle reprise</h3>
-
+  <div class="card-panel">
     <form (submit)="create()">
       <div class="container">
 
         <p>
-          <mat-form-field appearance="outline">
+          <mat-form-field appearance="outline" class="center">
             <mat-icon matSuffix>title</mat-icon>
             <mat-label>Identifiant</mat-label>
             <input [(ngModel)]="reprise.title" name="title_reprise" matInput>
@@ -14,27 +12,30 @@
         </p>
 
         <p>
-          <mat-form-field appearance="outline">
-            <mat-label>Choisissez la date</mat-label>
-            <input name="date_reprise" [(ngModel)]="reprise.date" [matDatepicker]="picker" matInput>
+          <mat-form-field appearance="outline" class="center">
+            <input matInput [(ngModel)]="reprise.date" [ngxMatDatetimePicker]="picker" placeholder="Choisissez un jour et une heure" [formControl]="dateControl" [min]="minDate" [max]="maxDate" [disabled]="disabled">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
+            <ngx-mat-datetime-picker #picker [showSpinners]="showSpinners" [showSeconds]="showSeconds"
+                                     [stepHour]="stepHour" [stepMinute]="stepMinute" [stepSecond]="stepSecond"
+                                     [touchUi]="touchUi" [color]="color" [enableMeridian]="enableMeridian"
+                                     [disableMinute]="disableMinute" [hideTime]="hideTime">
+            </ngx-mat-datetime-picker>
           </mat-form-field>
         </p>
 
         <p>
-          <mat-form-field appearance="outline">
-            <mat-icon matSuffix>title</mat-icon>
+          <mat-form-field appearance="outline" class="center">
+            <mat-icon matSuffix>groups</mat-icon>
             <mat-label>Nombre maximal de cavalier</mat-label>
             <input min="1" max="100" name="rider_number_limit" type="number" [(ngModel)]="reprise.rider_number_limit" matInput>
           </mat-form-field>
         </p>
 
         <p>
-          <mat-form-field appearance="outline">
+          <mat-form-field appearance="outline" class="center">
+            <mat-icon matSuffix>military_tech</mat-icon>
             <mat-label>Niveau du Galop</mat-label>
             <input min="1" max="7" name="galop_level" type="number" [(ngModel)]="reprise.galop_level" matInput>
-            <mat-icon matSuffix>title</mat-icon>
           </mat-form-field>
         </p>
 

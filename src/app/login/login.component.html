@@ -1,12 +1,12 @@
 <div style="margin-top: 40px;" class="container">
   <div class="card-panel">
-    <h3 class="lobster center" style="margin-top: 0">Se connecter</h3>
+    <h3 class="lobster" style="margin-top: 0">Se connecter</h3>
 
     <form (submit)="login()">
       <div class="container">
 
         <p>
-          <mat-form-field appearance="outline">
+          <mat-form-field appearance="outline" class="center">
             <mat-icon matSuffix>account_circle</mat-icon>
             <mat-label>Identifiant</mat-label>
             <input [(ngModel)]="credentials.login_user" name="login_user" matInput>
@@ -14,7 +14,7 @@
         </p>
 
         <p>
-          <mat-form-field appearance="outline">
+          <mat-form-field appearance="outline" class="center">
             <mat-icon matSuffix>vpn_key</mat-icon>
             <mat-label>Mot de passe</mat-label>
             <input [(ngModel)]="credentials.password_user" name="password_user" type="password" matInput>

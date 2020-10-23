@@ -10,8 +10,7 @@ body {
 
 .card-panel {
   background-color: white;
-  padding-right: 20px;
-  padding-left: 20px;
+  padding: 10px;
   margin-bottom: 20px;
   border-radius: 5px !important;
   margin-top: 20px;
@@ -21,6 +20,7 @@ body {
   margin: 0 auto;
   max-width: 1280px;
   width: 90%;
+  margin-top: 20px !important;
 }
 
 .center {

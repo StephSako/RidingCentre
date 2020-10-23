@@ -12,9 +12,6 @@ module.exports = db.sequelize.define(
     date: {
       type: Sequelize.DATE
     },
-    hour: {
-      type: Sequelize.TIME
-    },
     rider_number_limit: {
       type: Sequelize.INTEGER
     },
