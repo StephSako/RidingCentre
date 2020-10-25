@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="card-panel">
+  <mat-card>
     <h1 class="lobster">Votre profil</h1>
 
     <mat-list *ngIf="user">
@@ -39,5 +39,5 @@
         <div mat-line>{{ user.role_user.toString() | titlecase }}</div>
       </mat-list-item>
     </mat-list>
-  </div>
+  </mat-card>
 </div>

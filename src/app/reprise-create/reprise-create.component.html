@@ -1,12 +1,11 @@
 <div style="margin-top: 40px;" class="container">
-  <div class="card-panel">
     <form (submit)="create()">
       <div class="container">
 
         <p>
           <mat-form-field appearance="outline" class="center">
             <mat-icon matSuffix>title</mat-icon>
-            <mat-label>Identifiant</mat-label>
+            <mat-label>Titre du cours (facultatif)</mat-label>
             <input [(ngModel)]="reprise.title" name="title_reprise" matInput>
           </mat-form-field>
         </p>
@@ -43,5 +42,4 @@
 
       </div>
     </form>
-  </div>
 </div>

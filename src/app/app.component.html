@@ -9,9 +9,9 @@
   <button *ngIf="auth.isAdmin()" routerLink="/register" mat-raised-button color="accent">Back-office</button>
   <button *ngIf="auth.isInstructor() || auth.isAdmin()" routerLink="/home-instructor" mat-button>Gestion des reprises</button>
 
-  <button *ngIf="auth.isLoggedIn()" routerLink="/profile" mat-button>Mon compte</button>
+  <button *ngIf="auth.isLoggedIn()" routerLink="/profile" mat-stroked-button>Mon compte</button>
 
-  <button *ngIf="auth.isLoggedIn()" (click)="auth.logout()" mat-raised-button color="primary">Se déconnecter</button>
+  <button *ngIf="auth.isLoggedIn()" (click)="auth.logout()" mat-raised-button color="warn">Se déconnecter</button>
 </mat-toolbar>
 
 <router-outlet></router-outlet>

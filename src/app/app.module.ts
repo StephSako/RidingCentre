@@ -19,6 +19,10 @@ import { NgxMatNativeDateModule } from '@angular-material-components/datetime-pi
 import { NgxMatMomentModule } from '@angular-material-components/moment-adapter';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MatCardModule } from '@angular/material/card';
+import { MatTableModule } from '@angular/material/table';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -68,7 +72,11 @@ import { RepriseCreateComponent } from './reprise-create/reprise-create.componen
     NgxMatMomentModule,
     ReactiveFormsModule,
     MatExpansionModule,
-    MatGridListModule
+    MatGridListModule,
+    MatCardModule,
+    MatTableModule,
+    MatDialogModule,
+    MatSnackBarModule
   ],
   providers: [AuthenticationService, AuthGuardService],
   bootstrap: [AppComponent]

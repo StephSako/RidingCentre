@@ -1,10 +1,11 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { ThemePalette } from '@angular/material/core';
+import { FormControl } from '@angular/forms';
 import * as moment from 'moment';
 
 import { RepriseService, Reprise } from '../Services/reprise.service';
-import {ThemePalette} from '@angular/material/core';
-import {FormControl} from '@angular/forms';
+import { HomeInstructorComponent } from '../home-instructor/home-instructor.component';
 
 @Component({
   selector: 'app-reprise-create',
@@ -38,7 +39,7 @@ export class RepriseCreateComponent implements OnInit {
     title: ''
   };
 
-  constructor(private repriseService: RepriseService, private router: Router) { }
+  constructor(private repriseService: RepriseService, private router: Router, private homeInstructor: HomeInstructorComponent) { }
 
   ngOnInit(): void {
 
@@ -50,7 +51,7 @@ export class RepriseCreateComponent implements OnInit {
     this.repriseService.create(this.reprise)
       .subscribe(
         () => {
-          this.router.navigateByUrl('/home');
+          this.homeInstructor.updateAllReprises();
         },
         err => {
           console.error(err);

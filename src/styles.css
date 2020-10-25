@@ -8,14 +8,6 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-.card-panel {
-  background-color: white;
-  padding: 10px;
-  margin-bottom: 20px;
-  border-radius: 5px !important;
-  margin-top: 20px;
-}
-
 .container {
   margin: 0 auto;
   max-width: 1280px;
@@ -31,4 +23,8 @@ body {
 
 .lobster {
   font-family: Lobster, cursive !important;
+}
+
+.lobster_2 {
+  font-family: "Lobster Two", cursive !important;
 }

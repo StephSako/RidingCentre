@@ -1,11 +1,6 @@
-.lastname{
-  padding-left: 0;
-}
-
-.firstname{
-  padding-right: 0;
-}
-
-.row {
-  margin-bottom: 0;
+button {
+  margin-top: 15px;
+  margin-bottom: 20px;
+  background-color: lightskyblue;
+  color: white;
 }

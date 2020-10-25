@@ -1,6 +1,6 @@
-<div style="margin-top: 40px;" class="container">
-  <div class="card-panel">
-    <h3 class="lobster" style="margin-top: 0">Se connecter</h3>
+<div class="container">
+  <mat-card>
+    <h1 class="lobster">Se connecter</h1>
 
     <form (submit)="login()">
       <div class="container">
@@ -8,7 +8,7 @@
         <p>
           <mat-form-field appearance="outline" class="center">
             <mat-icon matSuffix>account_circle</mat-icon>
-            <mat-label>Identifiant</mat-label>
+            <mat-label>Mail ou numéro de téléphone</mat-label>
             <input [(ngModel)]="credentials.login_user" name="login_user" matInput>
           </mat-form-field>
         </p>
@@ -25,5 +25,5 @@
 
       <button class="center" mat-raised-button color="blue">C'est parti !</button>
     </form>
-  </div>
+  </mat-card>
 </div>

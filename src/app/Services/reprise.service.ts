@@ -30,4 +30,9 @@ export class RepriseService {
   public details(id_reprise: number): Observable<any> {
     return this.http.get( `${this.baseURL}/${id_reprise}`);
   }
+
+  // tslint:disable-next-line:variable-name
+  public delete(id_reprise: number): Observable<any> {
+    return this.http.get(`${this.baseURL}/delete/${id_reprise}`);
+  }
 }
