@@ -1,14 +1,9 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
-import {Router} from '@angular/router';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
-export interface Reprise {
-  rider_number_limit: number;
-  date: Date;
-  galop_level: number;
-  title: string;
-}
+import { RepriseInterface } from '../Interfaces/RepriseInterface';
 
 @Injectable({
   providedIn: 'root'
@@ -22,8 +17,14 @@ export class RepriseService {
     return this.http.get(this.baseURL);
   }
 
-  public create(reprise: Reprise): Observable<any> {
+  public create(reprise: RepriseInterface): Observable<any> {
     return this.http.post(this.baseURL + 'create', reprise);
+  }
+
+  // tslint:disable-next-line:variable-name
+  public edit(id_reprise: number, reprise: RepriseInterface): Observable<any> {
+    console.log(reprise.title);
+    return this.http.put(`${this.baseURL}edit/${id_reprise}`, reprise);
   }
 
   // tslint:disable-next-line:variable-name
@@ -33,6 +34,6 @@ export class RepriseService {
 
   // tslint:disable-next-line:variable-name
   public delete(id_reprise: number): Observable<any> {
-    return this.http.get(`${this.baseURL}/delete/${id_reprise}`);
+    return this.http.delete(`${this.baseURL}delete/${id_reprise}`);
   }
 }

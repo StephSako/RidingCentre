@@ -46,7 +46,7 @@ reprise_router.get('/', (req, res) => {
 })
 
 // DELETE
-reprise_router.get('/delete/:id_reprise', (req, res) => {
+reprise_router.delete('/delete/:id_reprise', (req, res) => {
   let id_reprise = parseInt(req.params.id_reprise, 10)
 
   Reprise.findOne({
@@ -66,8 +66,17 @@ reprise_router.get('/delete/:id_reprise', (req, res) => {
 
 
 // EDIT
-/*reprise_router.post('/edit', (req, res) => {
-  console.log('not created yet')
-})*/
+reprise_router.put('/edit/:id_reprise', (req, res) => {
+  const id_reprise = req.params.id_reprise;
+
+  Reprise.update(req.body, {
+    where: { id: id_reprise}
+  }).then(num => {
+    if (num == 1) res.json({message: "La reprise a été mise à jour"})
+    else res.json({message: "La reprise n'a été mise à jour"})
+  }).catch(err => {
+    res.json({message: "Une erreur est survenue dans la mise à jour de la reprise"})
+  })
+})
 
 module.exports = reprise_router

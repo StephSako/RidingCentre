@@ -36,6 +36,7 @@ import { HomeInstructorComponent } from './home-instructor/home-instructor.compo
 import { BackOfficeComponent } from './back-office/back-office.component';
 import { RepriseComponent } from './reprise/reprise.component';
 import { RepriseCreateComponent } from './reprise-create/reprise-create.component';
+import { RepriseEditComponent } from './reprise-edit/reprise-edit.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { RepriseCreateComponent } from './reprise-create/reprise-create.componen
     HomeInstructorComponent,
     BackOfficeComponent,
     RepriseComponent,
-    RepriseCreateComponent
+    RepriseCreateComponent,
+    RepriseEditComponent
   ],
   imports: [
     BrowserModule,

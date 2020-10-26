@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {RepriseInterface} from '../Interfaces/RepriseInterface';
-import {RepriseService} from '../Services/reprise.service';
-import {Router} from '@angular/router';
+
+import { RepriseInterface } from '../Interfaces/RepriseInterface';
+import { RepriseService } from '../Services/reprise.service';
+import { RepriseEditComponent } from '../reprise-edit/reprise-edit.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-home-instructor',
@@ -13,7 +15,15 @@ export class HomeInstructorComponent implements OnInit {
   displayedColumns: string[] = ['title', 'date', 'rider_number_limit', 'galop_level', 'modify', 'delete'];
   allReprises: RepriseInterface[];
 
-  constructor(public repriseService: RepriseService, private router: Router) { }
+  reprise: RepriseInterface = {
+    id: null,
+    rider_number_limit: null,
+    date: null,
+    galop_level: null,
+    title: null
+  };
+
+  constructor(public repriseService: RepriseService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.updateAllReprises();
@@ -21,6 +31,20 @@ export class HomeInstructorComponent implements OnInit {
 
   updateAllReprises(): void {
     this.repriseService.getAll().subscribe(heroes => this.allReprises = heroes );
+  }
+
+  create(): void {
+    // this.reprise.date = moment(this.reprise.date).utc().format('YYYY-MM-DD hh:mm');
+    // console.log(this.reprise);
+    this.repriseService.create(this.reprise)
+      .subscribe(
+        () => {
+          this.updateAllReprises();
+        },
+        err => {
+          console.error(err);
+        }
+      );
   }
 
   // tslint:disable-next-line:variable-name
@@ -34,6 +58,13 @@ export class HomeInstructorComponent implements OnInit {
           console.error(err);
         }
       );
+  }
+
+  openDialog(cours: RepriseInterface): void {
+    const dialogRef = this.dialog.open(RepriseEditComponent, {
+      width: '80%',
+      data: cours
+    });
   }
 
 }

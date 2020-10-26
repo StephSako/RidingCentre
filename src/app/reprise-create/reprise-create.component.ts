@@ -1,11 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
 import { FormControl } from '@angular/forms';
-import * as moment from 'moment';
 
-import { RepriseService, Reprise } from '../Services/reprise.service';
-import { HomeInstructorComponent } from '../home-instructor/home-instructor.component';
+import { RepriseInterface } from '../Interfaces/RepriseInterface';
 
 @Component({
   selector: 'app-reprise-create',
@@ -32,31 +29,16 @@ export class RepriseCreateComponent implements OnInit {
 
   public dateControl = new FormControl(null);
 
-  reprise: Reprise = {
+  @Input() reprise: RepriseInterface = {
+    id: null,
     rider_number_limit: null,
     date: null,
     galop_level: null,
     title: ''
   };
 
-  constructor(private repriseService: RepriseService, private router: Router, private homeInstructor: HomeInstructorComponent) { }
+  constructor() { }
 
-  ngOnInit(): void {
-
-  }
-
-  create(): void {
-    // this.reprise.date = moment(this.reprise.date).utc().format('YYYY-MM-DD hh:mm');
-    console.log(this.reprise);
-    this.repriseService.create(this.reprise)
-      .subscribe(
-        () => {
-          this.homeInstructor.updateAllReprises();
-        },
-        err => {
-          console.error(err);
-        }
-      );
-  }
+  ngOnInit(): void { }
 
 }

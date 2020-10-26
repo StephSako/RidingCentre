@@ -1,7 +1,5 @@
-import {Time} from '@angular/common';
-
 export interface RepriseInterface {
-  id_reprise: number;
+  id: number;
   date: Date;
   title: string;
   rider_number_limit: number;
