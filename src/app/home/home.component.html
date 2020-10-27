@@ -3,13 +3,13 @@
 
   <mat-card *ngFor="let reprise of allReprises">
 
-    <h3 class="center lobster_2">{{ reprise.title }}</h3>
+    <h2 class="center lobster_2">{{ reprise.title }}</h2>
 
     <mat-grid-list cols="4" rowHeight="10:1">
-      <mat-grid-tile>Jour&nbsp;<mat-icon>event</mat-icon></mat-grid-tile>
-      <mat-grid-tile>Heure&nbsp;<mat-icon>schedule</mat-icon></mat-grid-tile>
-      <mat-grid-tile>Nombre maximum de cavaliers&nbsp;<mat-icon>groups</mat-icon></mat-grid-tile>
-      <mat-grid-tile>Niveau du Galop&nbsp;<mat-icon>military_tech</mat-icon></mat-grid-tile>
+      <mat-grid-tile><b>Jour&nbsp;</b><mat-icon>event</mat-icon></mat-grid-tile>
+      <mat-grid-tile><b>Heure&nbsp;</b><mat-icon>schedule</mat-icon></mat-grid-tile>
+      <mat-grid-tile><b>Limite&nbsp;</b><mat-icon>groups</mat-icon></mat-grid-tile>
+      <mat-grid-tile><b>Niveau du Galop&nbsp;</b><mat-icon>military_tech</mat-icon></mat-grid-tile>
 
       <mat-grid-tile>{{reprise.date | date:"MM/dd/yyyy"}}</mat-grid-tile>
       <mat-grid-tile>{{reprise.date | date:"hh:mm"}}</mat-grid-tile>
