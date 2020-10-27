@@ -3,15 +3,28 @@ html {
   background-size: cover;
 }
 
-.lobster {
-  font-family: Lobster, cursive;
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-.card-panel {
-  background-color: white;
-  padding-right: 20px;
-  padding-left: 20px;
-  margin-bottom: 20px;
-  border-radius: 10px;
-  margin-top: 20px;
+.container {
+  margin: 0 auto;
+  max-width: 1280px;
+  width: 90%;
+  margin-top: 20px !important;
+}
+
+.center {
+  display: block !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.lobster {
+  font-family: Lobster, cursive !important;
+}
+
+.lobster_2 {
+  font-family: "Lobster Two", cursive !important;
 }

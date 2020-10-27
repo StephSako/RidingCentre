@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 
-import { AuthenticationService, TokenPayload } from '../authentication.service';
+import { AuthenticationService, TokenPayloadRegister } from '../Services/authentication.service';
 
 @Component({
   selector: 'app-register',
@@ -10,8 +10,7 @@ import { AuthenticationService, TokenPayload } from '../authentication.service';
 })
 export class RegisterComponent implements OnInit {
 
-  credentials: TokenPayload = {
-    id_user: 0,
+  credentials: TokenPayloadRegister = {
     firstname_user: '',
     lastname_user: '',
     email_user: '',

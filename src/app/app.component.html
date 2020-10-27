@@ -1,22 +1,17 @@
-<nav>
-  <div class="nav-wrapper">
-    <a routerLink="/" class="brand-logo">Accueil</a>
-    <ul id="nav-mobile" class="right hide-on-med-and-down">
-      <li *ngIf="!auth.isLoggedIn()"><a routerLink="/login">Se connecter</a></li>
-      <li *ngIf="!auth.isLoggedIn()"><a routerLink="/register">S'inscrire</a></li>
+<mat-toolbar>
+  <button mat-button routerLink="/">Accueil</button>
 
-      <li *ngIf="auth.isAdmin()"><a routerLink="/register">Back-office</a></li>
-      <li *ngIf="auth.isInstructor()"><a routerLink="/register">Gestion</a></li>
+  <span class="example-spacer"></span>
 
-      <li *ngIf="auth.isLoggedIn()"><a routerLink="/profile">
-          <div class="chip">
-            {{ auth.getUserDetails()?.lastname_user | uppercase }} {{ auth.getUserDetails()?.firstname_user | titlecase }}
-          </div>
-        </a>
-      </li>
-      <li *ngIf="auth.isLoggedIn()"><a (click)="auth.logout()" routerLink="">Se déconnecter</a></li>
-    </ul>
-  </div>
-</nav>
+  <button *ngIf="!auth.isLoggedIn()" routerLink="/register" mat-raised-button color="accent">S'inscrire</button>
+  <button *ngIf="!auth.isLoggedIn()" routerLink="/login" mat-button>Se connecter</button>
+
+  <button *ngIf="auth.isAdmin()" routerLink="/register" mat-raised-button color="accent">Back-office</button>
+  <button *ngIf="auth.isInstructor() || auth.isAdmin()" routerLink="/home-instructor" mat-button>Gestion des reprises</button>
+
+  <button *ngIf="auth.isLoggedIn()" routerLink="/profile" mat-stroked-button>Mon compte</button>
+
+  <button *ngIf="auth.isLoggedIn()" (click)="auth.logout()" mat-raised-button color="warn">Se déconnecter</button>
+</mat-toolbar>
 
 <router-outlet></router-outlet>

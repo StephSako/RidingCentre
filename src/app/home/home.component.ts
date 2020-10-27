@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
+import { RepriseService } from '../Services/reprise.service';
+import { RepriseInterface } from '../Interfaces/RepriseInterface';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -7,9 +10,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  allReprises: RepriseInterface[];
+
+  constructor(private repriseService: RepriseService) { }
 
   ngOnInit(): void {
+    this.repriseService.getAll().subscribe(heroes => this.allReprises = heroes);
   }
 
 }

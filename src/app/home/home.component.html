@@ -1,3 +1,36 @@
 <div class="container">
-  <p>home works!</p>
+  <h1 class="lobster">Tous les cours</h1>
+
+  <mat-card *ngFor="let reprise of allReprises">
+
+    <h4 class="center lobster_2">{{ reprise.title }}</h4>
+
+    <mat-grid-list cols="4" rowHeight="50px">
+      <mat-grid-tile [colspan]="1" [rowspan]="1">
+        <mat-icon>event</mat-icon>
+        {{reprise.date | date:"MM/dd/yyyy"}}
+      </mat-grid-tile>
+      <mat-grid-tile [colspan]="1" [rowspan]="1">
+        <mat-icon>schedule</mat-icon>
+        {{reprise.date | date:"hh:mm"}}
+      </mat-grid-tile>
+      <mat-grid-tile [colspan]="1" [rowspan]="1">
+        <mat-icon>groups</mat-icon>
+         {{reprise.rider_number_limit}}
+      </mat-grid-tile>
+      <mat-grid-tile [colspan]="1" [rowspan]="1">
+        <mat-icon>military_tech</mat-icon>
+        {{reprise.galop_level}}
+      </mat-grid-tile>
+    </mat-grid-list>
+
+    <mat-grid-list cols="2" rowHeight="50px">
+      <mat-grid-tile [colspan]="1" [rowspan]="1">
+        <button mat-raised-button color="primary">S'inscrire</button>
+      </mat-grid-tile>
+      <mat-grid-tile [colspan]="1" [rowspan]="1">
+        <button mat-raised-button color="warn">Se désinscrire</button>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </mat-card>
 </div>

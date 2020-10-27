@@ -3,15 +3,19 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Router} from '@angular/router';
 
-import {UserInterface} from './UserInterface';
-import {map} from 'rxjs/operators';
+import { UserInterface } from '../Interfaces/UserInterface';
+import { map } from 'rxjs/operators';
 
 interface TokenResponse {
   token: string;
 }
 
-export interface TokenPayload {
-  id_user: number;
+export interface TokenPayloadLogin {
+  login_user: string;
+  password_user: string;
+}
+
+export interface TokenPayloadRegister {
   firstname_user: string;
   lastname_user: string;
   email_user: string;
@@ -25,7 +29,7 @@ export interface TokenPayload {
   providedIn: 'root'
 })
 export class AuthenticationService {
-  private baseURL = 'http://localhost:4000';
+  private baseURL = 'http://localhost:4000/api/user';
   private token: string;
 
   constructor(private http: HttpClient, private router: Router) { }
@@ -74,8 +78,8 @@ export class AuthenticationService {
     } else { return false; }
   }
 
-  public register(user: TokenPayload): Observable<any> {
-    const URL = this.http.post(this.baseURL + '/api/user/register', user);
+  public register(user: TokenPayloadRegister): Observable<any> {
+    const URL = this.http.post(this.baseURL + '/register', user);
 
     return URL.pipe(
       map((data: TokenResponse) => {
@@ -87,8 +91,8 @@ export class AuthenticationService {
     );
   }
 
-  public login(user: TokenPayload): Observable<any> {
-    const URL = this.http.post(this.baseURL + '/api/user/login', user);
+  public login(user: TokenPayloadLogin): Observable<any> {
+    const URL = this.http.post(this.baseURL + '/login', user);
 
     return URL.pipe(
       map((data: TokenResponse) => {
@@ -101,7 +105,7 @@ export class AuthenticationService {
   }
 
   public profile(): Observable<any> {
-    return this.http.get( this.baseURL + '/api/user/profile', {
+    return this.http.get( this.baseURL + '/profile', {
       headers: { Authorization: `${this.getToken()}` }
     });
   }

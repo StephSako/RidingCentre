@@ -16,37 +16,25 @@ module.exports = db.sequelize.define(
       type: Sequelize.STRING
     },
     role_user: {
-      type: Sequelize.INTEGER,
-      references: 'role_user',
-      referencesKey: 'id'
+      type: Sequelize.INTEGER
     },
     password_user: {
       type: Sequelize.STRING
     },
     email_user: {
-      type: Sequelize.STRING
+      type: Sequelize.STRING,
+      unique: true
     },
     license_number_user: {
       type: Sequelize.STRING
     },
     phone_number_user: {
-      type: Sequelize.STRING
-    },
-    created_at_user: {
-      field: 'created_at_user',
-      type: Sequelize.DATE,
-      defaultValue: Sequelize.NOW
-    },
-    updated_at_user: {
-      field: 'updated_at_user',
-      type: Sequelize.DATE,
-      defaultValue: Sequelize.NOW
+      type: Sequelize.STRING,
+      unique: true
     }
   },
   {
-    timestamp: 0,
-    updatedAt: 'updated_at_user',
-    createdAt: 'created_at_user',
+    timestamps: false,
     freezeTableName: 1
   }
 )
