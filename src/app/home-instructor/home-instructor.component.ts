@@ -30,7 +30,7 @@ export class HomeInstructorComponent implements OnInit {
   }
 
   updateAllReprises(): void {
-    this.repriseService.getAll().subscribe(heroes => this.allReprises = heroes );
+    this.repriseService.getAll().subscribe(allReprises => this.allReprises = allReprises );
   }
 
   create(): void {

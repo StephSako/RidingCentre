@@ -5,3 +5,7 @@ mat-card {
 h1 {
   color: white;
 }
+
+button {
+  margin-top: 10px;
+}

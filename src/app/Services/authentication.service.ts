@@ -15,6 +15,11 @@ export interface TokenPayloadLogin {
   password_user: string;
 }
 
+export interface RepriseCreateInscriptionInterface {
+  id_user: number;
+  id_reprise: number;
+}
+
 export interface TokenPayloadRegister {
   firstname_user: string;
   lastname_user: string;
@@ -29,7 +34,8 @@ export interface TokenPayloadRegister {
   providedIn: 'root'
 })
 export class AuthenticationService {
-  private baseURL = 'http://localhost:4000/api/user';
+  private baseURL = 'http://localhost:4000/api/user/';
+  private baseURLRepriseInscription = 'http://localhost:4000/api/reprise_inscription/';
   private token: string;
 
   constructor(private http: HttpClient, private router: Router) { }
@@ -62,24 +68,29 @@ export class AuthenticationService {
     else { return false; }
   }
 
+  public isRider(): boolean {
+    const user = this.getUserDetails();
+    if (this.isLoggedIn()) {
+      return user.role_user === 1;
+    } else { return false; }
+  }
+
   public isAdmin(): boolean {
     const user = this.getUserDetails();
     if (this.isLoggedIn()) {
-      if (user.role_user === 3) { return user.exp > Date.now() / 1000; }
-      else { return false; }
+      return user.role_user === 3;
     } else { return false; }
   }
 
   public isInstructor(): boolean {
     const user = this.getUserDetails();
     if (this.isLoggedIn()) {
-      if (user.role_user === 2) { return user.exp > Date.now() / 1000; }
-      else { return false; }
+      return user.role_user === 2;
     } else { return false; }
   }
 
   public register(user: TokenPayloadRegister): Observable<any> {
-    const URL = this.http.post(this.baseURL + '/register', user);
+    const URL = this.http.post(this.baseURL + 'register', user);
 
     return URL.pipe(
       map((data: TokenResponse) => {
@@ -92,7 +103,7 @@ export class AuthenticationService {
   }
 
   public login(user: TokenPayloadLogin): Observable<any> {
-    const URL = this.http.post(this.baseURL + '/login', user);
+    const URL = this.http.post(this.baseURL + 'login', user);
 
     return URL.pipe(
       map((data: TokenResponse) => {
@@ -105,7 +116,7 @@ export class AuthenticationService {
   }
 
   public profile(): Observable<any> {
-    return this.http.get( this.baseURL + '/profile', {
+    return this.http.get( this.baseURL + 'profile', {
       headers: { Authorization: `${this.getToken()}` }
     });
   }
@@ -114,5 +125,24 @@ export class AuthenticationService {
     this.token = '';
     window.localStorage.removeItem('userToken');
     this.router.navigateByUrl('/login');
+  }
+
+  public getRegisteredReprises(): Observable<any> {
+    return this.http.get( `${this.baseURLRepriseInscription}user/${this.getUserDetails().id_user}`);
+  }
+
+  // tslint:disable-next-line:variable-name
+  public deleteRegisteredReprise(id_reprise: number): Observable<any> {
+    return this.http.delete(`${this.baseURLRepriseInscription}delete/user/${this.getUserDetails().id_user}/reprise/${id_reprise}`);
+  }
+
+  // tslint:disable-next-line:variable-name
+  public registerToReprise(id_reprise: number): Observable<any> {
+    const repriseInscriptionData: RepriseCreateInscriptionInterface = {
+      id_reprise,
+      id_user: this.getUserDetails().id_user
+    };
+
+    return this.http.post(this.baseURLRepriseInscription + 'register', repriseInscriptionData);
   }
 }

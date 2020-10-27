@@ -35,6 +35,9 @@ app.use('/api/user', UserController)
 let RepriseController = require('./src/backend/controller/RepriseController')
 app.use('/api/reprise', RepriseController)
 
+let RepriseInscriptionController = require('./src/backend/controller/RepriseInscriptionController')
+app.use('/api/reprise_inscription', RepriseInscriptionController)
+
 let port = process.env.PORT || 4000
 app.listen(port, function () {
   console.log('Express server listening on port ' + port)

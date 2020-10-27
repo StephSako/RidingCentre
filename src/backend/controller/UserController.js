@@ -86,7 +86,7 @@ user.post('/edit', (req, res) => {
   console.log('not created yet')
 })
 
-// PROFILE
+// DELETE
 user.post('/delete', (req, res) => {
   console.log('not created yet')
 })
