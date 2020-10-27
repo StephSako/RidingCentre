@@ -7,7 +7,7 @@
     <div style="margin-top: 40px;" class="container">
       <form (submit)="create()">
         <app-reprise-create [reprise]="reprise"></app-reprise-create>
-        <button mat-raised-button class="center" color="accent">Créer</button>
+        <button mat-raised-button class="center" color="accent" [disabled]="!isInvalid()">Créer</button>
       </form>
     </div>
 

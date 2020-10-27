@@ -10,7 +10,7 @@
 
   <p>
     <mat-form-field appearance="outline" class="center">
-      <input matInput [(ngModel)]="reprise.date" [ngxMatDatetimePicker]="picker" placeholder="Choisissez un jour et une heure" [formControl]="dateControl" [min]="minDate" [max]="maxDate" [disabled]="disabled">
+      <input matInput (click)="picker.open()" [(ngModel)]="reprise.date" [ngxMatDatetimePicker]="picker" placeholder="Choisissez un jour et une heure" [formControl]="dateControl" [min]="minDate" [max]="maxDate" [disabled]="disabled">
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <ngx-mat-datetime-picker #picker [showSpinners]="showSpinners" [showSeconds]="showSeconds"
                                [stepHour]="stepHour" [stepMinute]="stepMinute" [stepSecond]="stepSecond"

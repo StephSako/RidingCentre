@@ -36,4 +36,9 @@ export class RepriseService {
   public delete(id_reprise: number): Observable<any> {
     return this.http.delete(`${this.baseURL}delete/${id_reprise}`);
   }
+
+  // tslint:disable-next-line:variable-name
+  public isEmpty(_string: string): boolean {
+    return (!_string || 0 === _string.trim().length);
+  }
 }

@@ -26,7 +26,6 @@ export class RepriseCreateComponent implements OnInit {
   public color: ThemePalette = 'primary';
   public disableMinute = false;
   public hideTime = false;
-
   public dateControl = new FormControl(null);
 
   @Input() reprise: RepriseInterface = {
@@ -34,7 +33,7 @@ export class RepriseCreateComponent implements OnInit {
     rider_number_limit: null,
     date: null,
     galop_level: null,
-    title: ''
+    title: null
   };
 
   constructor() { }

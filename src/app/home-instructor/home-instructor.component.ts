@@ -61,10 +61,14 @@ export class HomeInstructorComponent implements OnInit {
   }
 
   openDialog(cours: RepriseInterface): void {
-    const dialogRef = this.dialog.open(RepriseEditComponent, {
+    this.dialog.open(RepriseEditComponent, {
       width: '80%',
       data: cours
     });
   }
 
+  isInvalid(): boolean {
+    return (!this.repriseService.isEmpty(this.reprise.title) && this.reprise.galop_level && this.reprise.rider_number_limit
+      && this.reprise.galop_level > 0 && this.reprise.rider_number_limit > 0);
+  }
 }

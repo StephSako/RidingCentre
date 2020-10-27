@@ -3,5 +3,5 @@ export interface RepriseInterface {
   date: Date;
   title: string;
   rider_number_limit: number;
-  galop_level: string;
+  galop_level: number;
 }
