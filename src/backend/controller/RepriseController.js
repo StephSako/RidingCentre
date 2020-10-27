@@ -21,7 +21,7 @@ reprise_router.post('/create', (req, res) => {
 
 // DETAILS
 reprise_router.get('/details/:id_reprise', (req, res) => {
-  let id_reprise = req.params.id_reprise
+  const id_reprise = req.params.id_reprise
 
   Reprise.findOne({
     where: {
@@ -47,7 +47,7 @@ reprise_router.get('/', (req, res) => {
 
 // DELETE
 reprise_router.delete('/delete/:id_reprise', (req, res) => {
-  let id_reprise = parseInt(req.params.id_reprise, 10)
+  const id_reprise = req.params.id_reprise
 
   Reprise.findOne({
     where: {

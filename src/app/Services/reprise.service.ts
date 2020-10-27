@@ -23,7 +23,6 @@ export class RepriseService {
 
   // tslint:disable-next-line:variable-name
   public edit(id_reprise: number, reprise: RepriseInterface): Observable<any> {
-    console.log(reprise.title);
     return this.http.put(`${this.baseURL}edit/${id_reprise}`, reprise);
   }
 
