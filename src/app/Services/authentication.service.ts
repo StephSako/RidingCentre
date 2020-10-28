@@ -5,6 +5,7 @@ import {Router} from '@angular/router';
 
 import { UserInterface } from '../Interfaces/UserInterface';
 import { map } from 'rxjs/operators';
+import {RoleUserInterface} from '../Interfaces/RoleUser';
 
 interface TokenResponse {
   token: string;
@@ -24,7 +25,7 @@ export interface TokenPayloadRegister {
   firstname_user: string;
   lastname_user: string;
   email_user: string;
-  role_user: number;
+  role_user: RoleUserInterface;
   password_user: string;
   license_number_user: string;
   phone_number_user: string;
@@ -71,21 +72,21 @@ export class AuthenticationService {
   public isRider(): boolean {
     const user = this.getUserDetails();
     if (this.isLoggedIn()) {
-      return user.role_user === 1;
-    } else { return false; }
-  }
-
-  public isAdmin(): boolean {
-    const user = this.getUserDetails();
-    if (this.isLoggedIn()) {
-      return user.role_user === 3;
+      return user.role_user.id === 1;
     } else { return false; }
   }
 
   public isInstructor(): boolean {
     const user = this.getUserDetails();
     if (this.isLoggedIn()) {
-      return user.role_user === 2;
+      return user.role_user.id === 2;
+    } else { return false; }
+  }
+
+  public isAdmin(): boolean {
+    const user = this.getUserDetails();
+    if (this.isLoggedIn()) {
+      return user.role_user.id === 3;
     } else { return false; }
   }
 

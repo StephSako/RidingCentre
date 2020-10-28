@@ -3,6 +3,7 @@ const user = express.Router()
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt")
 const User = require("../model/User")
+const RoleUser = require("../model/RoleUser")
 const { Op } = require("sequelize");
 
 process.env.SECRET_KEY = 'secret'
@@ -51,7 +52,8 @@ user.post('/login', (req, res) => {
         { email_user: req.body.login_user },
         { phone_number_user: req.body.login_user }
       ]
-    }
+    },
+    include: [RoleUser]
   }).then(user => {
     if (bcrypt.compareSync(req.body.password_user, user.password_user)) {
       let token = jwt.sign(user.dataValues, process.env.SECRET_KEY, {
@@ -66,15 +68,17 @@ user.post('/login', (req, res) => {
 
 // PROFILE
 user.get('/profile', (req, res) => {
-
   let decoded = jwt.verify(req.headers['authorization'], process.env.SECRET_KEY)
 
   User.findOne({
     where: {
-      id_user: decoded.id_user
-    }
+      id_user: decoded.id_user,
+    },
+    include: [RoleUser]
   }).then(user => {
-    if (user) res.json(user)
+    if (user){
+      res.json(user)
+    }
     else res.send("L'utilisateur n'existe pas")
   }).catch(err => {
     res.send('error : ' + err)

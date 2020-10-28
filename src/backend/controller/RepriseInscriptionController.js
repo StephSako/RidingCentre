@@ -10,7 +10,6 @@ reprise_inscription.get('/user/:id_user', (req, res) => {
   RepriseInscription.findAll({
     where: { id_user: id_user}
   }).then(reprises => {
-    console.log(reprises)
     if (!_.isEmpty(reprises)) return res.json(_.map(reprises, function(reprise) { return reprise.id_reprise; }))
     else res.json([])
   }).catch(err => {

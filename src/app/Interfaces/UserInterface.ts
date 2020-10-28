@@ -1,6 +1,8 @@
+import {RoleUserInterface} from './RoleUser';
+
 export interface UserInterface {
   id_user: number;
-  role_user: number;
+  role_user: RoleUserInterface;
   firstname_user: string;
   lastname_user: string;
   email_user: string;

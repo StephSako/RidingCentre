@@ -4,6 +4,8 @@ const morgan = require('morgan')
 const cors = require('cors')
 const session = require('express-session')
 const app = express()
+const RoleUser = require("./src/backend/model/RoleUser")
+const User = require("./src/backend/model/User.js")
 
 app.use(session({
   secret: 'riding_center',
@@ -28,6 +30,9 @@ app.use(express.static(path.join(__dirname, 'dist/')))
 app.get('/api', function (req, res) {
   res.json({ status: 'Working' })
 })
+
+RoleUser.hasMany(User)
+User.belongsTo(RoleUser, { constraints: false })
 
 let UserController = require('./src/backend/controller/UserController')
 app.use('/api/user', UserController)

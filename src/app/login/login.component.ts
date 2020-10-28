@@ -25,8 +25,8 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.credentials)
       .subscribe(
       () => {
-        if (this.authService.getUserDetails().role_user === 1) {this.router.navigateByUrl('/home'); }
-        else if (this.authService.getUserDetails().role_user === 2) {this.router.navigateByUrl('/home-instructor'); }
+        if (this.authService.getUserDetails().role_user.id === 1) {this.router.navigateByUrl('/home'); }
+        else if (this.authService.getUserDetails().role_user.id === 2) {this.router.navigateByUrl('/home-instructor'); }
         else { this.router.navigateByUrl('/home'); }
       },
         err => {
