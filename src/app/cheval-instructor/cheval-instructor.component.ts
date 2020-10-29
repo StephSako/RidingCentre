@@ -3,8 +3,8 @@ import { MatDialog } from '@angular/material/dialog';
 
 import { ChevalService } from '../Services/cheval.service';
 import { ChevalInterface } from '../Interfaces/ChevalInterface';
-import { ChevalFormComponent } from '../cheval-form/cheval-form.component';
-import {ChevalEditComponent} from '../cheval-edit/cheval-edit.component';
+import { ChevalEditComponent } from '../cheval-edit/cheval-edit.component';
+import { HelperService } from '../Services/helper.service';
 
 @Component({
   selector: 'app-cheval-instructor',
@@ -23,7 +23,7 @@ export class ChevalInstructorComponent implements OnInit {
     race: null
   };
 
-  constructor(public chevalService: ChevalService, public dialog: MatDialog) { }
+  constructor(public chevalService: ChevalService, public dialog: MatDialog, private helper: HelperService) { }
 
   ngOnInit(): void {
     this.updateAllCheval();
@@ -68,7 +68,7 @@ export class ChevalInstructorComponent implements OnInit {
   }
 
   isInvalid(): boolean {
-    return (!this.chevalService.isEmpty(this.cheval.nom) && this.cheval.age && this.cheval.race && this.cheval.age > 0);
+    return (!this.helper.isEmpty(this.cheval.nom) && this.cheval.age && this.cheval.race && this.cheval.age > 0);
   }
 
 }

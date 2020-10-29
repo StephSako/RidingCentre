@@ -28,3 +28,13 @@ body {
 .lobster_2 {
   font-family: "Lobster Two", cursive !important;
 }
+
+.style-succes {
+  color: green;
+}
+.style-succes .mat-simple-snackbar-action, .style-error .mat-simple-snackbar-action {
+  color: white;
+}
+.style-error {
+  color: red;
+}

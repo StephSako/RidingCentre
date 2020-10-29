@@ -32,15 +32,15 @@ user.post('/register', (req, res) => {
           let token = jwt.sign(user.dataValues, process.env.SECRET_KEY, {
             expiresIn: 1440
           })
-          res.json({token: token})
+          res.json({token: token, success: true})
         }).catch(err => {
-          res.send('error : ' + err)
+          res.json({message: err, success: false})
         })
       } else {
-        res.json({error: "L'utilisateur est déjà enregistré !"})
+        res.json({error: "Ce compte existe déjà"})
       }
     }).catch(err => {
-    res.send('error : ' + err)
+    res.json({message: err, success: false})
   })
 })
 
@@ -59,10 +59,10 @@ user.post('/login', (req, res) => {
       let token = jwt.sign(user.dataValues, process.env.SECRET_KEY, {
         expiresIn: 1440
       })
-      res.json({token: token})
-    } else res.send("Ce compte n'est pas enregistré")
-  }).catch(err => {
-    res.send('error : ' + err)
+      res.json({token: token, success: true})
+    } else res.status(401).send("Le mot de passe est incorrect")
+  }).catch(() => {
+    res.status(500).send("Aucun compte associé à cet idenfitiant")
   })
 })
 
@@ -76,12 +76,10 @@ user.get('/profile', (req, res) => {
     },
     include: [RoleUser]
   }).then(user => {
-    if (user){
-      res.json(user)
-    }
-    else res.send("L'utilisateur n'existe pas")
+    if (user) res.send(user)
+    else res.json({message: "Cet utilisateur est introuvable", success: false})
   }).catch(err => {
-    res.send('error : ' + err)
+    res.json({message: err, success: false})
   })
 })
 

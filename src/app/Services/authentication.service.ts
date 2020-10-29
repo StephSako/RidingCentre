@@ -1,14 +1,17 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
-import {Router} from '@angular/router';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import {Observable, throwError} from 'rxjs';
+import { Router } from '@angular/router';
 
 import { UserInterface } from '../Interfaces/UserInterface';
-import { map } from 'rxjs/operators';
-import {RoleUserInterface} from '../Interfaces/RoleUser';
+import {catchError, map} from 'rxjs/operators';
+import { RoleUserInterface } from '../Interfaces/RoleUser';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 interface TokenResponse {
   token: string;
+  success: boolean;
+  message: string;
 }
 
 export interface TokenPayloadLogin {
@@ -112,6 +115,9 @@ export class AuthenticationService {
           this.saveToken(data.token);
         }
         return data;
+      }),
+      catchError(err => {
+        return throwError(err.error);
       })
     );
   }
@@ -145,5 +151,12 @@ export class AuthenticationService {
     };
 
     return this.http.post(this.baseURLRepriseInscription + 'register', repriseInscriptionData);
+  }
+
+  public notifyUser(message: string, action: string, snackBar: MatSnackBar): void {
+      snackBar.open(message, action, {
+        duration: 2000,
+        panelClass: ['style-error'],
+      });
   }
 }
