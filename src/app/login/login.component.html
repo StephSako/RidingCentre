@@ -3,13 +3,13 @@
     <h1 class="lobster">Se connecter</h1>
 
     <form (submit)="login()">
-      <div class="container">
 
         <p>
           <mat-form-field appearance="outline" class="center">
             <mat-icon matSuffix>account_circle</mat-icon>
             <mat-label>Mail ou numéro de téléphone</mat-label>
-            <input [(ngModel)]="credentials.login_user" name="login_user" matInput>
+            <input [(ngModel)]="credentials.login_user" name="login_user" matInput [formControl]="loginControl" required>
+            <mat-error *ngIf="loginControl.invalid">{{getErrorMessageLogin()}}</mat-error>
           </mat-form-field>
         </p>
 
@@ -17,11 +17,10 @@
           <mat-form-field appearance="outline" class="center">
             <mat-icon matSuffix>vpn_key</mat-icon>
             <mat-label>Mot de passe</mat-label>
-            <input [(ngModel)]="credentials.password_user" name="password_user" type="password" matInput>
+            <input [(ngModel)]="credentials.password_user" name="password_user" type="password" matInput [formControl]="passwordControl" required>
+            <mat-error *ngIf="passwordControl.invalid">{{getErrorMessagePassword()}}</mat-error>
           </mat-form-field>
         </p>
-
-      </div>
 
       <button class="center" mat-raised-button color="blue">C'est parti !</button>
     </form>

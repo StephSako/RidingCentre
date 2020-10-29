@@ -1,13 +1,17 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
-import {Router} from '@angular/router';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import {Observable, throwError} from 'rxjs';
+import { Router } from '@angular/router';
 
 import { UserInterface } from '../Interfaces/UserInterface';
-import { map } from 'rxjs/operators';
+import {catchError, map} from 'rxjs/operators';
+import { RoleUserInterface } from '../Interfaces/RoleUser';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 interface TokenResponse {
   token: string;
+  success: boolean;
+  message: string;
 }
 
 export interface TokenPayloadLogin {
@@ -24,7 +28,7 @@ export interface TokenPayloadRegister {
   firstname_user: string;
   lastname_user: string;
   email_user: string;
-  role_user: number;
+  role_user: RoleUserInterface;
   password_user: string;
   license_number_user: string;
   phone_number_user: string;
@@ -71,21 +75,21 @@ export class AuthenticationService {
   public isRider(): boolean {
     const user = this.getUserDetails();
     if (this.isLoggedIn()) {
-      return user.role_user === 1;
-    } else { return false; }
-  }
-
-  public isAdmin(): boolean {
-    const user = this.getUserDetails();
-    if (this.isLoggedIn()) {
-      return user.role_user === 3;
+      return user.role_user.id === 1;
     } else { return false; }
   }
 
   public isInstructor(): boolean {
     const user = this.getUserDetails();
     if (this.isLoggedIn()) {
-      return user.role_user === 2;
+      return user.role_user.id === 2;
+    } else { return false; }
+  }
+
+  public isAdmin(): boolean {
+    const user = this.getUserDetails();
+    if (this.isLoggedIn()) {
+      return user.role_user.id === 3;
     } else { return false; }
   }
 
@@ -111,6 +115,9 @@ export class AuthenticationService {
           this.saveToken(data.token);
         }
         return data;
+      }),
+      catchError(err => {
+        return throwError(err.error);
       })
     );
   }
@@ -144,5 +151,12 @@ export class AuthenticationService {
     };
 
     return this.http.post(this.baseURLRepriseInscription + 'register', repriseInscriptionData);
+  }
+
+  public notifyUser(message: string, action: string, snackBar: MatSnackBar): void {
+      snackBar.open(message, action, {
+        duration: 2000,
+        panelClass: ['style-error'],
+      });
   }
 }

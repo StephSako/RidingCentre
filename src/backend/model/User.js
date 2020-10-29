@@ -1,7 +1,7 @@
 const Sequelize = require("sequelize")
 const db = require("../db.js")
 
-module.exports = db.sequelize.define(
+let User = db.sequelize.define(
   'user',
   {
     id_user: {
@@ -14,9 +14,6 @@ module.exports = db.sequelize.define(
     },
     lastname_user: {
       type: Sequelize.STRING
-    },
-    role_user: {
-      type: Sequelize.INTEGER
     },
     password_user: {
       type: Sequelize.STRING
@@ -35,6 +32,10 @@ module.exports = db.sequelize.define(
   },
   {
     timestamps: false,
-    freezeTableName: 1
+    freezeTableName: 1,
+    underscored: true,
+    camelCase: false
   }
 )
+
+module.exports = User

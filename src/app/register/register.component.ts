@@ -11,13 +11,16 @@ import { AuthenticationService, TokenPayloadRegister } from '../Services/authent
 export class RegisterComponent implements OnInit {
 
   credentials: TokenPayloadRegister = {
-    firstname_user: '',
-    lastname_user: '',
-    email_user: '',
-    role_user: 0,
-    password_user: '',
-    license_number_user: '',
-    phone_number_user: ''
+    firstname_user: null,
+    lastname_user: null,
+    email_user: null,
+    role_user: {
+      id: 0,
+      role: null
+    },
+    password_user: null,
+    license_number_user: null,
+    phone_number_user: null
   };
 
   constructor(private authService: AuthenticationService, private router: Router) { }

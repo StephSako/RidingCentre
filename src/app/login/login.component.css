@@ -4,3 +4,8 @@ button {
   background-color: lightskyblue;
   color: white;
 }
+
+p {
+  margin-left: 20%;
+  margin-right: 20%;
+}

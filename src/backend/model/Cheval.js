@@ -1,23 +1,26 @@
 const Sequelize = require("sequelize")
 const db = require("../db.js")
 
-let RoleUser = db.sequelize.define(
-  'role_user',
+module.exports = db.sequelize.define(
+  'cheval',
   {
     id: {
       type: Sequelize.INTEGER,
       primaryKey: true,
       autoIncrement: true
     },
-    role: {
+    nom: {
       type: Sequelize.STRING
+    },
+    race: {
+      type: Sequelize.STRING
+    },
+    age: {
+      type: Sequelize.INTEGER
     }
   },
   {
-    timestamps: 0,
-    freezeTableName: 1,
-    underscored: true
+    timestamps: false,
+    freezeTableName: 1
   }
 )
-
-module.exports = RoleUser
