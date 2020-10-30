@@ -4,3 +4,7 @@ button {
   background-color: lightskyblue;
   color: white;
 }
+
+mat-card {
+  margin-bottom: 30px;
+}

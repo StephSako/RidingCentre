@@ -2,37 +2,17 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import { Router } from '@angular/router';
-
-import { UserInterface } from '../Interfaces/UserInterface';
-import {catchError, map} from 'rxjs/operators';
-import { RoleUserInterface } from '../Interfaces/RoleUser';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { catchError, map } from 'rxjs/operators';
 
-interface TokenResponse {
-  token: string;
-  success: boolean;
-  message: string;
-}
-
-export interface TokenPayloadLogin {
-  login_user: string;
-  password_user: string;
-}
-
-export interface RepriseCreateInscriptionInterface {
-  id_user: number;
-  id_reprise: number;
-}
-
-export interface TokenPayloadRegister {
-  firstname_user: string;
-  lastname_user: string;
-  email_user: string;
-  role_user: RoleUserInterface;
-  password_user: string;
-  license_number_user: string;
-  phone_number_user: string;
-}
+import {
+  TokenPayloadRegister,
+  TokenPayloadLogin,
+  UserInterface,
+  RepriseCreateInscriptionInterface,
+  TokenResponse,
+  UserEditInterface
+} from '../Interfaces/UserInterface';
 
 @Injectable({
   providedIn: 'root'
@@ -153,10 +133,27 @@ export class AuthenticationService {
     return this.http.post(this.baseURLRepriseInscription + 'register', repriseInscriptionData);
   }
 
-  public notifyUser(message: string, action: string, snackBar: MatSnackBar): void {
+  public notifyUser(message: string, action: string, snackBar: MatSnackBar, style): void {
       snackBar.open(message, action, {
         duration: 2000,
-        panelClass: ['style-error'],
+        panelClass: ['style-' + style],
       });
+  }
+
+  // tslint:disable-next-line:variable-name
+  public edit(id_user: number, user: UserEditInterface): Observable<any> {
+    const URL = this.http.put(`${this.baseURL}edit/${id_user}`, user);
+
+    return URL.pipe(
+      map((data: TokenResponse) => {
+        if (data.token) {
+          this.saveToken(data.token);
+        }
+        return data;
+      }),
+      catchError(err => {
+        return throwError(err.error);
+      })
+    );
   }
 }

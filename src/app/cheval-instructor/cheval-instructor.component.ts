@@ -62,7 +62,7 @@ export class ChevalInstructorComponent implements OnInit {
 
   openDialog(cheval: ChevalInterface): void {
     this.dialog.open(ChevalEditComponent, {
-      width: '80%',
+      width: '60%',
       data: cheval
     });
   }

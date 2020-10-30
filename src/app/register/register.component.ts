@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 
-import { AuthenticationService, TokenPayloadRegister } from '../Services/authentication.service';
+import { AuthenticationService } from '../Services/authentication.service';
+import {TokenPayloadRegister} from '../Interfaces/UserInterface';
 
 @Component({
   selector: 'app-register',
