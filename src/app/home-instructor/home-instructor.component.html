@@ -1,1 +1,53 @@
-<p>home-instructor works!</p>
+<div class="container">
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-description class="lobster">Créer une reprise</mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <div style="margin-top: 40px;" class="container">
+      <form (submit)="create()">
+        <app-reprise-create [reprise]="reprise"></app-reprise-create>
+        <button mat-raised-button class="center" color="accent" [disabled]="!isInvalid()">Créer</button>
+      </form>
+    </div>
+
+  </mat-expansion-panel>
+
+  <table mat-table *ngIf="allReprises" [dataSource]="allReprises" class="mat-elevation-z8">
+
+    <ng-container matColumnDef="title">
+      <th mat-header-cell *matHeaderCellDef>Titre</th>
+      <td mat-cell *matCellDef="let cours"><span>{{cours.title}}</span><span style="color: lightgrey;" *ngIf="!cours.title"><i>Pas de titre</i></span></td>
+    </ng-container>
+
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef>Jour et horaire</th>
+      <td mat-cell *matCellDef="let cours">{{cours.date | date:"MM/dd/yyyy hh:mm"}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="rider_number_limit">
+      <th mat-header-cell *matHeaderCellDef>Nb max de cavaliers</th>
+      <td mat-cell *matCellDef="let cours">{{cours.rider_number_limit}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="galop_level">
+      <th mat-header-cell *matHeaderCellDef>Niveau du Galop</th>
+      <td mat-cell *matCellDef="let cours">{{cours.galop_level}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="modify">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let cours"><button (click)="openDialog(cours)" class="center" mat-raised-button color="primary">Modifier</button></td>
+    </ng-container>
+
+    <ng-container matColumnDef="delete">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let cours"><button (click)="delete(cours.id)" class="center" mat-raised-button color="warn">Supprimer</button></td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+  </table>
+
+</div>

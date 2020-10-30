@@ -4,6 +4,8 @@ const morgan = require('morgan')
 const cors = require('cors')
 const session = require('express-session')
 const app = express()
+const RoleUser = require("./src/backend/model/RoleUser")
+const User = require("./src/backend/model/User.js")
 
 app.use(session({
   secret: 'riding_center',
@@ -17,9 +19,9 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cors())
 
 app.use(function (req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*')
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
-  next()
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
 })
 
 const path = require('path')
@@ -29,8 +31,20 @@ app.get('/api', function (req, res) {
   res.json({ status: 'Working' })
 })
 
+RoleUser.hasMany(User)
+User.belongsTo(RoleUser, { constraints: false })
+
 let UserController = require('./src/backend/controller/UserController')
 app.use('/api/user', UserController)
+
+let RepriseController = require('./src/backend/controller/RepriseController')
+app.use('/api/reprise', RepriseController)
+
+let RepriseInscriptionController = require('./src/backend/controller/RepriseInscriptionController')
+app.use('/api/reprise_inscription', RepriseInscriptionController)
+
+let ChevalController = require('./src/backend/controller/ChevalController')
+app.use('/api/cheval', ChevalController)
 
 let port = process.env.PORT || 4000
 app.listen(port, function () {

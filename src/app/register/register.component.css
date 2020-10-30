@@ -1,11 +1,12 @@
-.lastname{
-  padding-left: 0;
+button {
+  margin-top: 15px;
+  margin-bottom: 20px;
+  background-color: lightskyblue;
+  color: white;
 }
 
-.firstname{
-  padding-right: 0;
-}
-
-.row {
-  margin-bottom: 0;
+mat-card {
+  margin-bottom: 30px;
+  margin-left: 18%;
+  margin-right: 18%;
 }

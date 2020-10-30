@@ -1,54 +1,58 @@
-<div style="margin-top: 40px;" class="container">
-  <div class="card-panel center-align">
-    <h3 class="lobster" style="margin-top: 0">S'inscrire</h3>
+<div class="container">
+  <mat-card>
+    <h1 class="lobster">S'inscrire</h1>
 
     <form (submit)="register()">
-      <div class="container">
 
-        <div class="row">
-          <div class="col s6 lastname">
-            <div class="input-field">
-              <i class="material-icons prefix">account_circle</i>
-              <input id="lastname" name="lastname" type="text" class="validate" [(ngModel)]="credentials.lastname_user">
-              <label for="lastname">Votre nom</label>
-            </div>
-          </div>
-          <div class="col s6 firstname">
-            <div class="input-field">
-              <input id="firstname" name="firstname" type="text"class="validate" [(ngModel)]="credentials.firstname_user">
-              <label for="firstname">Votre prénom</label>
-            </div>
-          </div>
-        </div>
+      <p>
+        <mat-form-field appearance="outline" class="center">
+          <mat-icon matSuffix>account_circle</mat-icon>
+          <mat-label>Nom</mat-label>
+          <input [(ngModel)]="credentials.lastname_user" name="lastname_user" type="text" class="validate" matInput>
+        </mat-form-field>
+      </p>
 
-        <div class="input-field mail">
-          <i class="material-icons prefix">email</i>
-          <input id="email" name="password" type="email" class="validate" [(ngModel)]="credentials.email_user">
-          <label for="email">Votre adresse mail</label>
-        </div>
+      <p>
+        <mat-form-field appearance="outline" class="center">
+          <mat-icon matSuffix>account_circle</mat-icon>
+          <mat-label>Prénom</mat-label>
+          <input [(ngModel)]="credentials.firstname_user" class="validate" name="firstname_user" type="text" matInput>
+        </mat-form-field>
+      </p>
 
-        <div class="input-field">
-          <i class="material-icons prefix">lock</i>
-          <input id="password" name="password" type="password" class="validate" [(ngModel)]="credentials.password_user">
-          <label for="password">Votre mot de passe</label>
-        </div>
+      <p>
+        <mat-form-field appearance="outline" class="center">
+          <mat-icon matSuffix>email</mat-icon>
+          <mat-label>Adresse email</mat-label>
+          <input [(ngModel)]="credentials.email_user" class="validate" name="email_user" type="email" matInput>
+        </mat-form-field>
+      </p>
 
-        <div class="input-field">
-          <i class="material-icons prefix">phone_android</i>
-          <input id="phone_number" name="phone_number" type="number" class="validate" [(ngModel)]="credentials.phone_number_user">
-          <label for="phone_number">Votre numéro de téléphone</label>
-        </div>
+      <p>
+        <mat-form-field appearance="outline" class="center">
+          <mat-icon matSuffix>vpn_key</mat-icon>
+          <mat-label>Mot de passe</mat-label>
+          <input [(ngModel)]="credentials.password_user" class="validate" name="password_user" type="password" matInput>
+        </mat-form-field>
+      </p>
 
-        <div class="input-field">
-          <i class="material-icons prefix">assignment_ind</i>
-          <input id="license_number" name="license_number" type="text" class="validate" [(ngModel)]="credentials.license_number_user">
-          <label for="license_number">Votre numéro de license</label>
-        </div>
+      <p>
+        <mat-form-field appearance="outline" class="center">
+          <mat-icon matSuffix>phone_android</mat-icon>
+          <mat-label>Numéro de téléphone</mat-label>
+          <input [(ngModel)]="credentials.phone_number_user" class="validate" name="phone_user" type="text" matInput>
+        </mat-form-field>
+      </p>
 
-      </div>
+      <p>
+        <mat-form-field appearance="outline" class="center">
+          <mat-icon matSuffix>assignment_ind</mat-icon>
+          <mat-label>Numéro de license</mat-label>
+          <input [(ngModel)]="credentials.license_number_user" class="validate" name="license_number" type="text" matInput>
+        </mat-form-field>
+      </p>
 
-      <button class="btn btn-large waves-effect waves-light blue lighten-2"><i class="material-icons left">arrow_forward</i>S'inscrire</button>
-      <button class="btn waves-effect waves-light white black-text"><i class="material-icons left">check</i>Se connecter</button>
+      <button class="center" mat-raised-button color="blue">S'inscrire</button>
     </form>
-  </div>
+  </mat-card>
 </div>

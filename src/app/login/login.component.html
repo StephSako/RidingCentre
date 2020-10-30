@@ -1,22 +1,32 @@
-<div style="margin-top: 40px;" class="container">
-  <div class="card-panel center-align">
-    <h3 class="lobster" style="margin-top: 0">Se connecter</h3>
+<div class="container">
+  <mat-card>
+    <h1 class="lobster">Se connecter</h1>
 
     <form (submit)="login()">
-      <div class="container">
-        <div class="input-field">
-          <i class="material-icons prefix">account_circle</i>
-          <input [(ngModel)]="credentials.email_user" id="email" type="email" name="email_user" class="validate">
-          <label for="email">Votre pseudo</label>
-        </div>
-        <div class="input-field">
-          <i class="material-icons prefix">lock</i>
-          <input [(ngModel)]="credentials.password_user" id="password" name="password_user" type="password" class="validate">
-          <label for="password">Votre mot de passe</label>
-        </div>
+
+      <p>
+        <mat-form-field appearance="outline" class="center">
+          <mat-icon matSuffix>account_circle</mat-icon>
+          <mat-label>Adresse email ou numéro de téléphone</mat-label>
+          <input [(ngModel)]="credentials.login_user" name="login_user" matInput [formControl]="loginControl" required>
+          <mat-error *ngIf="loginControl.invalid">{{getErrorMessageLogin()}}</mat-error>
+        </mat-form-field>
+      </p>
+
+      <p>
+        <mat-form-field appearance="outline" class="center">
+          <mat-icon matSuffix>vpn_key</mat-icon>
+          <mat-label>Mot de passe</mat-label>
+          <input [(ngModel)]="credentials.password_user" name="password_user" type="password" matInput [formControl]="passwordControl" required>
+          <mat-error *ngIf="passwordControl.invalid">{{getErrorMessagePassword()}}</mat-error>
+        </mat-form-field>
+      </p>
+
+      <div style="text-align: center;">
+        <a mat-button routerLink="/recuperation-mot-de-passe">J'ai oublié mon mot de passe</a>
       </div>
 
-      <button class="btn waves-effect waves-light blue lighten-2"><i class="material-icons prefix">check</i> C'est parti !</button>
+      <button class="center" mat-raised-button color="blue">C'est parti !</button>
     </form>
-  </div>
+  </mat-card>
 </div>

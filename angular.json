@@ -24,12 +24,11 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css",
-              "node_modules/materialize-css/dist/css/materialize.min.css"
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+              "src/styles.css"
             ],
             "scripts": [
-              "node_modules/hammerjs/hammer.min.js",
-              "node_modules/materialize-css/dist/js/materialize.min.js"
+              "node_modules/hammerjs/hammer.min.js"
             ]
           },
           "configurations": {
@@ -92,12 +91,11 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css",
-              "node_modules/materialize-css/dist/css/materialize.min.css"
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+              "src/styles.css"
             ],
             "scripts": [
-              "node_modules/hammerjs/hammer.min.js",
-              "node_modules/materialize-css/dist/js/materialize.min.js"
+              "node_modules/hammerjs/hammer.min.js"
             ]
           }
         },
@@ -127,6 +125,7 @@
           }
         }
       }
-    }},
+    }
+  },
   "defaultProject": "riding-centre"
 }

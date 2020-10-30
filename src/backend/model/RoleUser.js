@@ -1,7 +1,7 @@
 const Sequelize = require("sequelize")
 const db = require("../db.js")
 
-module.exports = db.sequelize.define(
+let RoleUser = db.sequelize.define(
   'role_user',
   {
     id: {
@@ -14,9 +14,10 @@ module.exports = db.sequelize.define(
     }
   },
   {
-    timestamp: 0,
-    updatedAt: 0,
-    createdAt: 0,
-    freezeTableName: 1
+    timestamps: 0,
+    freezeTableName: 1,
+    underscored: true
   }
 )
+
+module.exports = RoleUser
