@@ -1,5 +1,5 @@
 button {
-  margin-top: 15px;
+  margin-top: 5px;
   margin-bottom: 20px;
   background-color: lightskyblue;
   color: white;
@@ -8,4 +8,15 @@ button {
 p {
   margin-left: 20%;
   margin-right: 20%;
+}
+
+a {
+  text-decoration: none;
+  color: cornflowerblue;
+}
+
+mat-card {
+  margin-bottom: 30px;
+  margin-left: 18%;
+  margin-right: 18%;
 }

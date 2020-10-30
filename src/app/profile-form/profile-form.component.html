@@ -20,7 +20,7 @@
   <p>
     <mat-form-field appearance="outline" class="center">
       <mat-icon matSuffix>email</mat-icon>
-      <mat-label>Adresse Email</mat-label>
+      <mat-label>Adresse email</mat-label>
       <input [(ngModel)]="user.email_user" name="email_user" type="email" matInput  [formControl]="emailControl" required>
       <mat-error *ngIf="emailControl.invalid">{{getErrorMessageEmail()}}</mat-error>
     </mat-form-field>

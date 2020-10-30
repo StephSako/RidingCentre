@@ -156,4 +156,20 @@ export class AuthenticationService {
       })
     );
   }
+
+  public retrievePassword(email: string): Observable<any> {
+    const URL = this.http.post(this.baseURL + 'retrieve/password', email);
+
+    return URL.pipe(
+      map((data: TokenResponse) => {
+        if (data.token) {
+          this.saveToken(data.token);
+        }
+        return data;
+      }),
+      catchError(err => {
+        return throwError(err.error);
+      })
+    );
+  }
 }

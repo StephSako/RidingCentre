@@ -38,7 +38,7 @@ export class ProfileFormComponent implements OnInit {
   }
 
   getErrorMessageEmail(): string {
-    if (this.fieldControl.hasError('required')) {
+    if (this.emailControl.hasError('required')) {
       return 'Champ obligatoire';
     }
     else if (this.emailControl.hasError('email')) {
