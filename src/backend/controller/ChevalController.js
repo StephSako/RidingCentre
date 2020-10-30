@@ -71,9 +71,9 @@ cheval.put('/edit/:id_cheval', (req, res) => {
     where: { id: id_cheval}
   }).then(num => {
     if (num == 1) res.json({message: "Le cheval a été mis à jour"})
-    else res.json({message: "Le cheval n'a été mis à jour"})
+    else if (num < 1) res.json({message: "Le cheval n'existe pas"})
   }).catch(err => {
-    res.json({message: "Une erreur est survenue dans la mise à jour du cheval"})
+    res.json({message: "Une erreur est survenue lors de la mise à jour du cheval"})
   })
 })
 

@@ -43,6 +43,8 @@ import { MenuGestionComponent } from './menu-gestion/menu-gestion.component';
 import { ChevalFormComponent } from './cheval-form/cheval-form.component';
 import { ChevalInstructorComponent } from './cheval-instructor/cheval-instructor.component';
 import { ChevalEditComponent } from './cheval-edit/cheval-edit.component';
+import { ProfileFormComponent } from './profile-form/profile-form.component';
+import { ProfileEditComponent } from './profile-edit/profile-edit.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +61,9 @@ import { ChevalEditComponent } from './cheval-edit/cheval-edit.component';
     MenuGestionComponent,
     ChevalFormComponent,
     ChevalInstructorComponent,
-    ChevalEditComponent
+    ChevalEditComponent,
+    ProfileFormComponent,
+    ProfileEditComponent
   ],
   imports: [
     BrowserModule,

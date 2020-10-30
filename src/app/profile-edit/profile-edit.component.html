@@ -1,0 +1,4 @@
+<form (submit)="edit()">
+  <app-profile-form [user]="user"></app-profile-form>
+  <button type="submit" mat-raised-button mat-dialog-close class="center" color="accent" [disabled]="!isInvalid()">Modifier</button>
+</form>

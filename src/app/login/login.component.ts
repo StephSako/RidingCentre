@@ -1,10 +1,11 @@
-import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
-import { AuthenticationService, TokenPayloadLogin } from '../Services/authentication.service';
-import {MatSnackBar} from '@angular/material/snack-bar';
-import {FormControl, Validators} from '@angular/forms';
-import {HelperService} from '../Services/helper.service';
+import { AuthenticationService } from '../Services/authentication.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { FormControl, Validators } from '@angular/forms';
+import { HelperService } from '../Services/helper.service';
+import { TokenPayloadLogin } from '../Interfaces/UserInterface';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,7 @@ export class LoginComponent implements OnInit {
   };
 
   loginControl = new FormControl('', [Validators.required]);
-  passwordControl = new FormControl('', [Validators.required, Validators.email]);
+  passwordControl = new FormControl('', [Validators.required]);
 
   getErrorMessageLogin(): string {
     if (this.loginControl.hasError('required')) {
@@ -45,23 +46,17 @@ export class LoginComponent implements OnInit {
       this.authService.login(this.credentials)
         .subscribe(
           () => {
-            if (this.authService.isRider()) {
-              this.router.navigateByUrl('/home');
-            } else if (this.authService.isInstructor()) {
+            if (this.authService.isInstructor()) {
               this.router.navigateByUrl('/home-instructor');
             } else {
               this.router.navigateByUrl('/home');
             }
           },
           err => {
-            this.openSnackBar(err, 'OK');
+            this.authService.notifyUser(err, 'OK', this.snackBar, 'error');
           }
         );
     }
-  }
-
-  openSnackBar(message: string, action: string): void {
-    this.authService.notifyUser(message, action, this.snackBar);
   }
 
 }

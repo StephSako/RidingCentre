@@ -62,7 +62,7 @@ export class HomeInstructorComponent implements OnInit {
 
   openDialog(cours: RepriseInterface): void {
     this.dialog.open(RepriseEditComponent, {
-      width: '80%',
+      width: '60%',
       data: cours
     });
   }
