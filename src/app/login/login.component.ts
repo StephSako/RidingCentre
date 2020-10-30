@@ -15,6 +15,8 @@ import { TokenPayloadLogin } from '../Interfaces/UserInterface';
 
 export class LoginComponent implements OnInit {
 
+  nbErrors: number;
+
   credentials: TokenPayloadLogin = {
     login_user: '',
     password_user: '',
@@ -39,6 +41,7 @@ export class LoginComponent implements OnInit {
               private helper: HelperService) { }
 
   ngOnInit(): void {
+    this.nbErrors = 0;
   }
 
   login(): void {
@@ -53,7 +56,9 @@ export class LoginComponent implements OnInit {
             }
           },
           err => {
-            this.authService.notifyUser(err, 'OK', this.snackBar, 'error');
+            this.nbErrors++;
+            if (this.nbErrors === 3) { this.router.navigateByUrl('/recuperation-mot-de-passe'); }
+            else { this.authService.notifyUser(err, 'OK', this.snackBar, 'error'); }
           }
         );
     }

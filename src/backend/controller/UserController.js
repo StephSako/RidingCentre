@@ -5,6 +5,7 @@ const bcrypt = require("bcrypt")
 const User = require("../model/User")
 const RoleUser = require("../model/RoleUser")
 const { Op } = require("sequelize");
+const nodemailer = require('nodemailer');
 
 process.env.SECRET_KEY = 'secret'
 
@@ -118,6 +119,36 @@ user.put('/edit/:id_user', (req, res) => {
 // DELETE
 user.post('/delete', (req, res) => {
   console.log('not created yet')
+})
+
+// SEND EMAIL
+user.post('/retrieve/password', (req, res) => {
+  const email = req.body.email
+  console.log(email)
+  const transporter = nodemailer.createTransport({
+    host: 'smtp-stephsako.alwaysdata.net',
+    port: 587,
+    secure: false,
+    tls:{
+      rejectUnauthorized: false
+    },
+    auth: {
+      user: 'stephsako@alwaysdata.net',
+      pass: 'jesuis95etgta#'
+    }
+  });
+
+  const mailOptions = {
+    from: '"No-reply - Centre équestre" <stephsako@alwaysdata.net>',
+    to: '<' + email + '>',
+    subject: 'Récupération de mot de passe',
+    text: 'eh non ct une blague je suis un poti blagueur'
+  };
+
+  transporter.sendMail(mailOptions, function(error){
+    if (error) res.status(401).send("Une erreur est survenue. Réessayez ultérieurement")
+    else res.status(200).send("Email envoyé")
+  });
 })
 
 module.exports = user
