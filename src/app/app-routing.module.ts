@@ -11,7 +11,9 @@ import { HomeComponent } from './home/home.component';
 import { AuthGuardService } from './auth-guard.service';
 import { HomeInstructorComponent } from './home-instructor/home-instructor.component';
 import { RepriseComponent } from './reprise/reprise.component';
-import {RepriseCreateComponent} from './reprise-create/reprise-create.component';
+import { RepriseCreateComponent } from './reprise-create/reprise-create.component';
+import {ChevalInstructorComponent} from './cheval-instructor/cheval-instructor.component';
+import {RecuperationPasswordComponent} from './recuperation-password/recuperation-password.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -20,8 +22,10 @@ const routes: Routes = [
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuardService] },
   { path: 'home', component: HomeComponent, canActivate: [AuthGuardService] },
   { path: 'home-instructor', component: HomeInstructorComponent, canActivate: [AuthGuardService] },
+  { path: 'cheval-instructor', component: ChevalInstructorComponent, canActivate: [AuthGuardService] },
   { path: 'reprise/:id', component: RepriseComponent },
   { path: 'new/reprise', component: RepriseCreateComponent },
+  { path: 'recuperation-mot-de-passe', component: RecuperationPasswordComponent },
 ];
 
 @NgModule({

@@ -7,7 +7,7 @@
   <button *ngIf="!auth.isLoggedIn()" routerLink="/login" mat-button>Se connecter</button>
 
   <button *ngIf="auth.isAdmin()" routerLink="/register" mat-raised-button color="accent">Back-office</button>
-  <button *ngIf="auth.isInstructor() || auth.isAdmin()" routerLink="/home-instructor" mat-button>Gestion des reprises</button>
+  <app-menu-gestion></app-menu-gestion>
 
   <button *ngIf="auth.isLoggedIn()" routerLink="/profile" mat-stroked-button>Mon compte</button>
 

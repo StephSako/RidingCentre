@@ -18,8 +18,8 @@
     </mat-grid-list>
 
     <div *ngIf="authService.isRider()">
-      <button mat-raised-button color="primary" class="center" *ngIf="!isRegistered(reprise.id)" (click)="registerToReprise(reprise.id)">S'inscrire</button>
-      <button mat-raised-button color="warn" class="center" *ngIf="isRegistered(reprise.id)" (click)="deleteRegisteredReprise(reprise.id)">Se désinscrire</button>
+      <button mat-raised-button color="primary" class="center" *ngIf="!isRegistered(reprise.id_reprise)" (click)="registerToReprise(reprise.id_reprise)">S'inscrire</button>
+      <button mat-raised-button color="warn" class="center" *ngIf="isRegistered(reprise.id_reprise)" (click)="deleteRegisteredReprise(reprise.id_reprise)">Se désinscrire</button>
     </div>
 
   </mat-card>

@@ -1,34 +1,18 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
-import {Router} from '@angular/router';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import {Observable, throwError} from 'rxjs';
+import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { catchError, map } from 'rxjs/operators';
 
-import { UserInterface } from '../Interfaces/UserInterface';
-import { map } from 'rxjs/operators';
-
-interface TokenResponse {
-  token: string;
-}
-
-export interface TokenPayloadLogin {
-  login_user: string;
-  password_user: string;
-}
-
-export interface RepriseCreateInscriptionInterface {
-  id_user: number;
-  id_reprise: number;
-}
-
-export interface TokenPayloadRegister {
-  firstname_user: string;
-  lastname_user: string;
-  email_user: string;
-  role_user: number;
-  password_user: string;
-  license_number_user: string;
-  phone_number_user: string;
-}
+import {
+  TokenPayloadRegister,
+  TokenPayloadLogin,
+  UserInterface,
+  RepriseCreateInscriptionInterface,
+  TokenResponse,
+  UserEditInterface
+} from '../Interfaces/UserInterface';
 
 @Injectable({
   providedIn: 'root'
@@ -71,21 +55,21 @@ export class AuthenticationService {
   public isRider(): boolean {
     const user = this.getUserDetails();
     if (this.isLoggedIn()) {
-      return user.role_user === 1;
-    } else { return false; }
-  }
-
-  public isAdmin(): boolean {
-    const user = this.getUserDetails();
-    if (this.isLoggedIn()) {
-      return user.role_user === 3;
+      return user.role_user.id === 1;
     } else { return false; }
   }
 
   public isInstructor(): boolean {
     const user = this.getUserDetails();
     if (this.isLoggedIn()) {
-      return user.role_user === 2;
+      return user.role_user.id === 2;
+    } else { return false; }
+  }
+
+  public isAdmin(): boolean {
+    const user = this.getUserDetails();
+    if (this.isLoggedIn()) {
+      return user.role_user.id === 3;
     } else { return false; }
   }
 
@@ -111,6 +95,9 @@ export class AuthenticationService {
           this.saveToken(data.token);
         }
         return data;
+      }),
+      catchError(err => {
+        return throwError(err.error);
       })
     );
   }
@@ -144,5 +131,45 @@ export class AuthenticationService {
     };
 
     return this.http.post(this.baseURLRepriseInscription + 'register', repriseInscriptionData);
+  }
+
+  public notifyUser(message: string, action: string, snackBar: MatSnackBar, style): void {
+      snackBar.open(message, action, {
+        duration: 2000,
+        panelClass: ['style-' + style],
+      });
+  }
+
+  // tslint:disable-next-line:variable-name
+  public edit(id_user: number, user: UserEditInterface): Observable<any> {
+    const URL = this.http.put(`${this.baseURL}edit/${id_user}`, user);
+
+    return URL.pipe(
+      map((data: TokenResponse) => {
+        if (data.token) {
+          this.saveToken(data.token);
+        }
+        return data;
+      }),
+      catchError(err => {
+        return throwError(err.error);
+      })
+    );
+  }
+
+  public retrievePassword(email: string): Observable<any> {
+    const URL = this.http.post(this.baseURL + 'retrieve/password', email);
+
+    return URL.pipe(
+      map((data: TokenResponse) => {
+        if (data.token) {
+          this.saveToken(data.token);
+        }
+        return data;
+      }),
+      catchError(err => {
+        return throwError(err.error);
+      })
+    );
   }
 }

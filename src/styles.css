@@ -19,6 +19,7 @@ body {
   display: block !important;
   margin-left: auto !important;
   margin-right: auto !important;
+  text-align: center;
 }
 
 .lobster {
@@ -27,4 +28,14 @@ body {
 
 .lobster_2 {
   font-family: "Lobster Two", cursive !important;
+}
+
+.style-success .mat-simple-snackbar-action {
+  color: green;
+}
+.style-success, .style-error  {
+  color: white;
+}
+.style-error .mat-simple-snackbar-action {
+  color: red;
 }

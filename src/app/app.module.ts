@@ -23,6 +23,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatSelectModule } from '@angular/material/select';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -37,6 +39,14 @@ import { BackOfficeComponent } from './back-office/back-office.component';
 import { RepriseComponent } from './reprise/reprise.component';
 import { RepriseCreateComponent } from './reprise-create/reprise-create.component';
 import { RepriseEditComponent } from './reprise-edit/reprise-edit.component';
+import { MenuGestionComponent } from './menu-gestion/menu-gestion.component';
+import { ChevalFormComponent } from './cheval-form/cheval-form.component';
+import { ChevalInstructorComponent } from './cheval-instructor/cheval-instructor.component';
+import { ChevalEditComponent } from './cheval-edit/cheval-edit.component';
+import { ProfileFormComponent } from './profile-form/profile-form.component';
+import { ProfileEditComponent } from './profile-edit/profile-edit.component';
+import { RecuperationPasswordComponent } from './recuperation-password/recuperation-password.component';
+import { AssignHorsesComponent } from './assign-horses/assign-horses.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +59,15 @@ import { RepriseEditComponent } from './reprise-edit/reprise-edit.component';
     BackOfficeComponent,
     RepriseComponent,
     RepriseCreateComponent,
-    RepriseEditComponent
+    RepriseEditComponent,
+    MenuGestionComponent,
+    ChevalFormComponent,
+    ChevalInstructorComponent,
+    ChevalEditComponent,
+    ProfileFormComponent,
+    ProfileEditComponent,
+    RecuperationPasswordComponent,
+    AssignHorsesComponent
   ],
   imports: [
     BrowserModule,
@@ -78,7 +96,9 @@ import { RepriseEditComponent } from './reprise-edit/reprise-edit.component';
     MatCardModule,
     MatTableModule,
     MatDialogModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatMenuModule,
+    MatSelectModule
   ],
   providers: [AuthenticationService, AuthGuardService],
   bootstrap: [AppComponent]

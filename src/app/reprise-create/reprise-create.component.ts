@@ -29,7 +29,7 @@ export class RepriseCreateComponent implements OnInit {
   public dateControl = new FormControl(null);
 
   @Input() reprise: RepriseInterface = {
-    id: null,
+    id_reprise: null,
     rider_number_limit: null,
     date: null,
     galop_level: null,
