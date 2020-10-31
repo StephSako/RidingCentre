@@ -10,31 +10,34 @@ module.exports = db.sequelize.define(
       autoIncrement: true
     },
     firstname_user: {
-      type: Sequelize.STRING
+      type: Sequelize.STRING,
+      allowNull: false
     },
     lastname_user: {
-      type: Sequelize.STRING
-    },
-    role_user: {
-      type: Sequelize.INTEGER
+      type: Sequelize.STRING,
+      allowNull: false
     },
     password_user: {
       type: Sequelize.STRING
     },
     email_user: {
       type: Sequelize.STRING,
-      unique: true
+      unique: true,
+      allowNull: false
     },
     license_number_user: {
       type: Sequelize.STRING
     },
     phone_number_user: {
       type: Sequelize.STRING,
-      unique: true
+      unique: true,
+      allowNull: false
     }
   },
   {
     timestamps: false,
-    freezeTableName: 1
+    freezeTableName: 1,
+    underscored: true,
+    camelCase: false
   }
 )

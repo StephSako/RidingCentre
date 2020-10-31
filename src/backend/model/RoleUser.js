@@ -14,9 +14,8 @@ module.exports = db.sequelize.define(
     }
   },
   {
-    timestamp: 0,
-    updatedAt: 0,
-    createdAt: 0,
-    freezeTableName: 1
+    timestamps: 0,
+    freezeTableName: 1,
+    underscored: true
   }
 )

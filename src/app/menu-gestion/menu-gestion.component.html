@@ -1,0 +1,5 @@
+<button *ngIf="authService.isInstructor() || authService.isAdmin()" class="btn_menu" mat-button [matMenuTriggerFor]="menu">Back-office</button>
+<mat-menu #menu="matMenu">
+  <button routerLink="/home-instructor" mat-menu-item>Gestion des reprises</button>
+  <button routerLink="/cheval-instructor" mat-menu-item>Gestion des chevaux</button>
+</mat-menu>

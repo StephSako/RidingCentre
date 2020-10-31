@@ -1,0 +1,30 @@
+<div class="container">
+
+  <p>
+    <mat-form-field appearance="outline" class="center">
+      <mat-icon matSuffix>title</mat-icon>
+      <mat-label>Nom</mat-label>
+      <input [(ngModel)]="cheval.nom" name="cheval_nom" matInput>
+    </mat-form-field>
+  </p>
+
+  <p>
+    <mat-form-field appearance="outline" class="center">
+      <mat-icon matSuffix>cake</mat-icon>
+      <mat-label>Age</mat-label>
+      <input min="1" max="100" name="rider_number_limit" type="number" [(ngModel)]="cheval.age" matInput>
+    </mat-form-field>
+  </p>
+
+  <p>
+    <mat-form-field appearance="outline" class="center">
+      <mat-label>Race</mat-label>
+      <mat-select [(ngModel)]="cheval.race" name="food">
+        <mat-option *ngFor="let race of races" [value]="race.nom">
+          {{race.nom}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </p>
+
+</div>

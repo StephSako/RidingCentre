@@ -1,5 +1,5 @@
 export interface RepriseInterface {
-  id: number;
+  id_reprise: number;
   date: Date;
   title: string;
   rider_number_limit: number;
