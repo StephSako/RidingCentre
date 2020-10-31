@@ -28,7 +28,7 @@ export class RepriseService {
 
   // tslint:disable-next-line:variable-name
   public details(id_reprise: number): Observable<any> {
-    return this.http.get( `${this.baseURL}/${id_reprise}`);
+    return this.http.get( `${this.baseURL}details/${id_reprise}`);
   }
 
   // tslint:disable-next-line:variable-name

@@ -35,4 +35,9 @@ export class ChevalService {
   public delete(id_cheval: number): Observable<any> {
     return this.http.delete(`${this.baseURL}delete/${id_cheval}`);
   }
+
+  // tslint:disable-next-line:variable-name
+  public getAvailableHorses(id_reprise: number): Observable<any> {
+    return this.http.get( `${this.baseURL}available_horses/reprise/${id_reprise}`);
+  }
 }

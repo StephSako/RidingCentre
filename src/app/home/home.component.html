@@ -22,5 +22,9 @@
       <button mat-raised-button color="warn" class="center" *ngIf="isRegistered(reprise.id_reprise)" (click)="deleteRegisteredReprise(reprise.id_reprise)">Se désinscrire</button>
     </div>
 
+    <div *ngIf="authService.isInstructor()">
+      <button mat-raised-button color="primary" class="center" [routerLink]="['/reprise', reprise.id_reprise]">Voir la fiche</button>
+    </div>
+
   </mat-card>
 </div>

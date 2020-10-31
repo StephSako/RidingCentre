@@ -1,4 +1,5 @@
 import {RoleUserInterface} from './RoleUser';
+import {ChevalInterface} from './ChevalInterface';
 
 export interface UserInterface {
   id_user: number;
@@ -30,17 +31,13 @@ export interface RepriseCreateInscriptionInterface {
 }
 
 export interface RegisteredToRepriseInterface {
+  id_reprise_inscription: number;
     user: {
       id_user: number;
       firstname_user: string;
       lastname_user: string;
     };
-    cheval?: {
-      id_cheval: number;
-      nom: string;
-      race: string;
-      age: number;
-    };
+    cheval?: ChevalInterface[];
 }
 
 export interface TokenPayloadRegister {

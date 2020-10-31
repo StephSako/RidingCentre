@@ -1,10 +1,8 @@
-const User = require("../model/User");
-const Cheval = require("../model/Cheval");
-const Reprise = require("../model/Reprise");
 const express = require('express')
 const reprise_inscription = express.Router()
 const RepriseInscription = require("../model/RepriseInscription")
 const _ = require('lodash');
+const { Op } = require("sequelize");
 
 // ALL REGISTERED REPRISE FOR A SPECIFIC USER
 reprise_inscription.get('/user/:id_user', (req, res) => {
@@ -33,17 +31,24 @@ reprise_inscription.get('/reprise/:id_reprise', (req, res) => {
     if (!_.isEmpty(users)){
       return res.json(_.map(users, function(data) {
         return {
+          id_reprise_inscription: data.dataValues.id,
           user: {
             id_user: data.user.dataValues.id_user,
             firstname_user: data.user.dataValues.firstname_user,
             lastname_user: data.user.dataValues.lastname_user
           },
-          cheval: (!data.cheval ? null : {
-            id_cheval: data.cheval.dataValues.id_cheval,
-            nom: data.cheval.dataValues.nom,
-            race: data.cheval.dataValues.race,
-            age: data.cheval.dataValues.age,
-          })
+          cheval:
+            (!data.cheval ? [] :
+              [
+                {
+                  id_cheval: data.cheval.dataValues.id_cheval,
+                  nom: data.cheval.dataValues.nom,
+                  race: data.cheval.dataValues.race,
+                  age: data.cheval.dataValues.age,
+                }
+              ]
+            )
+
         };
       }))
     }
@@ -99,20 +104,6 @@ reprise_inscription.delete('/delete/user/:id_user/reprise/:id_reprise', (req, re
     else res.json({message: "Cet enregistrement n'existe pas"})
   }).catch(err => {
     res.json({error: err})
-  })
-})
-
-// AVAILABLE HORSES FOR A SPECIFIC REPRISE
-reprise_inscription.get('/available_horses/reprise/:id_reprise', (req, res) => {
-  const id_reprise = req.params.id_reprise;
-
-  RepriseInscription.findAll({
-    where: { id_user: id_user}
-  }).then(reprises => {
-    if (!_.isEmpty(reprises)) return res.json(_.map(reprises, function(reprise) { return reprise.id_reprise; }))
-    else res.json([])
-  }).catch(err => {
-    res.send("error : " + err)
   })
 })
 
