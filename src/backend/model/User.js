@@ -1,7 +1,7 @@
 const Sequelize = require("sequelize")
 const db = require("../db.js")
 
-let User = db.sequelize.define(
+module.exports = db.sequelize.define(
   'user',
   {
     id_user: {
@@ -10,24 +10,28 @@ let User = db.sequelize.define(
       autoIncrement: true
     },
     firstname_user: {
-      type: Sequelize.STRING
+      type: Sequelize.STRING,
+      allowNull: false
     },
     lastname_user: {
-      type: Sequelize.STRING
+      type: Sequelize.STRING,
+      allowNull: false
     },
     password_user: {
       type: Sequelize.STRING
     },
     email_user: {
       type: Sequelize.STRING,
-      unique: true
+      unique: true,
+      allowNull: false
     },
     license_number_user: {
       type: Sequelize.STRING
     },
     phone_number_user: {
       type: Sequelize.STRING,
-      unique: true
+      unique: true,
+      allowNull: false
     }
   },
   {
@@ -37,5 +41,3 @@ let User = db.sequelize.define(
     camelCase: false
   }
 )
-
-module.exports = User

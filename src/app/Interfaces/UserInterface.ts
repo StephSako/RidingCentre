@@ -29,6 +29,20 @@ export interface RepriseCreateInscriptionInterface {
   id_reprise: number;
 }
 
+export interface RegisteredToRepriseInterface {
+    user: {
+      id_user: number;
+      firstname_user: string;
+      lastname_user: string;
+    };
+    cheval?: {
+      id_cheval: number;
+      nom: string;
+      race: string;
+      age: number;
+    };
+}
+
 export interface TokenPayloadRegister {
   firstname_user: string;
   lastname_user: string;

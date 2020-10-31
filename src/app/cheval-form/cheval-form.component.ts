@@ -10,7 +10,7 @@ import {RaceChevalInterface} from '../Interfaces/RaceCheval';
 export class ChevalFormComponent implements OnInit {
 
   @Input() cheval: ChevalInterface = {
-    id: null,
+    id_cheval: null,
     nom: null,
     age: null,
     race: null,

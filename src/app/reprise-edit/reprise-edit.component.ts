@@ -12,7 +12,7 @@ import { RepriseService } from '../Services/reprise.service';
 export class RepriseEditComponent {
 
   reprise: RepriseInterface = {
-    id: null,
+    id_reprise: null,
     rider_number_limit: null,
     date: null,
     galop_level: null,
@@ -24,7 +24,7 @@ export class RepriseEditComponent {
   }
 
   edit(): void {
-    this.repriseService.edit(this.reprise.id, this.reprise ).subscribe(() => { }, err => { console.error(err); });
+    this.repriseService.edit(this.reprise.id_reprise, this.reprise ).subscribe(() => { }, err => { console.error(err); });
   }
 
 }

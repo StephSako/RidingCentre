@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Router } from '@angular/router';
 
 import { RepriseInterface } from '../Interfaces/RepriseInterface';
 
@@ -10,8 +9,9 @@ import { RepriseInterface } from '../Interfaces/RepriseInterface';
 })
 export class RepriseService {
   private baseURL = 'http://localhost:4000/api/reprise/';
+  private baseURLInscription = 'http://localhost:4000/api/reprise_inscription/';
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient) { }
 
   public getAll(): Observable<any> {
     return this.http.get(this.baseURL);
@@ -39,5 +39,10 @@ export class RepriseService {
   // tslint:disable-next-line:variable-name
   public isEmpty(_string: string): boolean {
     return (!_string || 0 === _string.trim().length);
+  }
+
+  // tslint:disable-next-line:variable-name
+  public getRegisteredUsers(id_reprise: number): Observable<any> {
+    return this.http.get( `${this.baseURLInscription}reprise/${id_reprise}`);
   }
 }

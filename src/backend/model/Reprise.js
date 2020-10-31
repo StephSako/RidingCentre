@@ -4,7 +4,7 @@ const db = require("../db.js")
 module.exports = db.sequelize.define(
   'reprise',
   {
-    id: {
+    id_reprise: {
       type: Sequelize.INTEGER,
       primaryKey: true,
       autoIncrement: true

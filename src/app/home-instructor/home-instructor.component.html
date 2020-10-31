@@ -17,32 +17,37 @@
 
     <ng-container matColumnDef="title">
       <th mat-header-cell *matHeaderCellDef>Titre</th>
-      <td mat-cell *matCellDef="let cours"><span>{{cours.title}}</span><span style="color: lightgrey;" *ngIf="!cours.title"><i>Pas de titre</i></span></td>
+      <td mat-cell *matCellDef="let reprise"><span>{{reprise.title}}</span><span style="color: lightgrey;" *ngIf="!reprise.title"><i>Pas de titre</i></span></td>
     </ng-container>
 
     <ng-container matColumnDef="date">
       <th mat-header-cell *matHeaderCellDef>Jour et horaire</th>
-      <td mat-cell *matCellDef="let cours">{{cours.date | date:"MM/dd/yyyy hh:mm"}}</td>
+      <td mat-cell *matCellDef="let reprise">{{reprise.date | date:"MM/dd/yyyy hh:mm"}}</td>
     </ng-container>
 
     <ng-container matColumnDef="rider_number_limit">
       <th mat-header-cell *matHeaderCellDef>Nb max de cavaliers</th>
-      <td mat-cell *matCellDef="let cours">{{cours.rider_number_limit}}</td>
+      <td mat-cell *matCellDef="let reprise">{{reprise.rider_number_limit}}</td>
     </ng-container>
 
     <ng-container matColumnDef="galop_level">
       <th mat-header-cell *matHeaderCellDef>Niveau du Galop</th>
-      <td mat-cell *matCellDef="let cours">{{cours.galop_level}}</td>
+      <td mat-cell *matCellDef="let reprise">{{reprise.galop_level}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="assign_horses">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let reprise"><button (click)="openDialogAssignHorses(reprise.id_reprise)" class="center" mat-raised-button style="color: white; background-color: #66bb6a">Assigner chevaux</button></td>
     </ng-container>
 
     <ng-container matColumnDef="modify">
       <th mat-header-cell *matHeaderCellDef></th>
-      <td mat-cell *matCellDef="let cours"><button (click)="openDialog(cours)" class="center" mat-raised-button color="primary">Modifier</button></td>
+      <td mat-cell *matCellDef="let reprise"><button (click)="openDialogEditReprise(reprise)" class="center" mat-raised-button color="primary">Modifier</button></td>
     </ng-container>
 
     <ng-container matColumnDef="delete">
       <th mat-header-cell *matHeaderCellDef></th>
-      <td mat-cell *matCellDef="let cours"><button (click)="delete(cours.id)" class="center" mat-raised-button color="warn">Supprimer</button></td>
+      <td mat-cell *matCellDef="let reprise"><button (click)="delete(reprise.id)" class="center" mat-raised-button color="warn">Supprimer</button></td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

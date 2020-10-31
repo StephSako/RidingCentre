@@ -17,7 +17,7 @@ export class ChevalInstructorComponent implements OnInit {
   allCheval: ChevalInterface[];
 
   cheval: ChevalInterface = {
-    id: null,
+    id_cheval: null,
     nom: null,
     age: null,
     race: null

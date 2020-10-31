@@ -1,5 +1,5 @@
 export interface ChevalInterface {
-  id: number;
+  id_cheval: number;
   nom: string;
   age: number;
   race: string;

@@ -11,7 +11,7 @@ import { ChevalService } from '../Services/cheval.service';
 export class ChevalEditComponent {
 
   cheval: ChevalInterface = {
-    id: null,
+    id_cheval: null,
     nom: null,
     age: null,
     race: null
@@ -22,7 +22,7 @@ export class ChevalEditComponent {
   }
 
   edit(): void {
-    this.chevalService.edit(this.cheval.id, this.cheval).subscribe(() => { }, err => { console.error(err); });
+    this.chevalService.edit(this.cheval.id_cheval, this.cheval).subscribe(() => { }, err => { console.error(err); });
   }
 
 }

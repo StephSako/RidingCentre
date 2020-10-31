@@ -25,7 +25,7 @@ reprise_router.get('/details/:id_reprise', (req, res) => {
 
   Reprise.findOne({
     where: {
-      id: id_reprise
+      id_reprise: id_reprise
     }
   }).then(reprise => {
     if (reprise) res.json(reprise)
@@ -51,7 +51,7 @@ reprise_router.delete('/delete/:id_reprise', (req, res) => {
 
   Reprise.findOne({
     where: {
-      id: id_reprise
+      id_reprise: id_reprise
     }
   }).then(reprise => {
     if (reprise){
@@ -70,7 +70,9 @@ reprise_router.put('/edit/:id_reprise', (req, res) => {
   const id_reprise = req.params.id_reprise;
 
   Reprise.update(req.body, {
-    where: { id: id_reprise}
+    where: {
+      id_reprise: id_reprise
+    }
   }).then(num => {
     if (num == 1) res.json({message: "La reprise a été mise à jour"})
     else res.json({message: "La reprise n'a été mise à jour"})

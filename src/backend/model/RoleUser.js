@@ -1,7 +1,7 @@
 const Sequelize = require("sequelize")
 const db = require("../db.js")
 
-let RoleUser = db.sequelize.define(
+module.exports = db.sequelize.define(
   'role_user',
   {
     id: {
@@ -19,5 +19,3 @@ let RoleUser = db.sequelize.define(
     underscored: true
   }
 )
-
-module.exports = RoleUser

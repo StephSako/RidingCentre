@@ -1,3 +1,6 @@
+const User = require("../model/User");
+const Cheval = require("../model/Cheval");
+const Reprise = require("../model/Reprise");
 const express = require('express')
 const reprise_inscription = express.Router()
 const RepriseInscription = require("../model/RepriseInscription")
@@ -17,7 +20,40 @@ reprise_inscription.get('/user/:id_user', (req, res) => {
   })
 })
 
-// CREATE
+// ALL REGISTERED USER FOR A SPECIFIC REPRISE
+reprise_inscription.get('/reprise/:id_reprise', (req, res) => {
+  const id_reprise = req.params.id_reprise;
+
+  RepriseInscription.findAll({
+    where: {
+      id_reprise: id_reprise
+    },
+    include: ['user', 'cheval']
+  }).then(users => {
+    if (!_.isEmpty(users)){
+      return res.json(_.map(users, function(data) {
+        return {
+          user: {
+            id_user: data.user.dataValues.id_user,
+            firstname_user: data.user.dataValues.firstname_user,
+            lastname_user: data.user.dataValues.lastname_user
+          },
+          cheval: (!data.cheval ? null : {
+            id_cheval: data.cheval.dataValues.id_cheval,
+            nom: data.cheval.dataValues.nom,
+            race: data.cheval.dataValues.race,
+            age: data.cheval.dataValues.age,
+          })
+        };
+      }))
+    }
+    else res.json([])
+  }).catch(err => {
+    res.send("error : " + err)
+  })
+})
+
+// REGISTER
 reprise_inscription.post('/register', (req, res) => {
   RepriseInscription.count({
     where: {
@@ -29,6 +65,7 @@ reprise_inscription.post('/register', (req, res) => {
       const repriseInscriptionData = {
         id_user: req.body.id_user,
         id_reprise: req.body.id_reprise,
+        id_cheval: null
       }
 
       RepriseInscription.create(repriseInscriptionData).then(repriseInscription => {
@@ -62,6 +99,20 @@ reprise_inscription.delete('/delete/user/:id_user/reprise/:id_reprise', (req, re
     else res.json({message: "Cet enregistrement n'existe pas"})
   }).catch(err => {
     res.json({error: err})
+  })
+})
+
+// AVAILABLE HORSES FOR A SPECIFIC REPRISE
+reprise_inscription.get('/available_horses/reprise/:id_reprise', (req, res) => {
+  const id_reprise = req.params.id_reprise;
+
+  RepriseInscription.findAll({
+    where: { id_user: id_user}
+  }).then(reprises => {
+    if (!_.isEmpty(reprises)) return res.json(_.map(reprises, function(reprise) { return reprise.id_reprise; }))
+    else res.json([])
+  }).catch(err => {
+    res.send("error : " + err)
   })
 })
 
