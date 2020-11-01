@@ -1,6 +1,7 @@
 const express = require('express')
 const reprise_inscription = express.Router()
 const RepriseInscription = require("../model/RepriseInscription")
+const User = require("../model/User")
 const _ = require('lodash');
 
 // ALL REGISTERED REPRISE FOR A SPECIFIC USER
@@ -8,9 +9,19 @@ reprise_inscription.get('/user/:id_user', (req, res) => {
   const id_user = req.params.id_user;
 
   RepriseInscription.findAll({
-    where: { id_user: id_user}
+    where: {
+      id_user: id_user
+    },
+    include: ['cheval']
   }).then(reprises => {
-    if (!_.isEmpty(reprises)) return res.json(_.map(reprises, function(reprise) { return reprise.id_reprise; }))
+    if (!_.isEmpty(reprises)){
+      return res.json(_.map(reprises, function(reprise) {
+        return {
+          id_reprise: reprise.id_reprise,
+          cheval: (reprise.cheval ? reprise.cheval.dataValues : null)
+        };
+      }))
+    }
     else res.json([])
   }).catch(err => {
     res.send("error : " + err)

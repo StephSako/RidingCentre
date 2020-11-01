@@ -47,7 +47,6 @@ import { ChevalEditComponent } from './cheval-edit/cheval-edit.component';
 import { ProfileFormComponent } from './profile-form/profile-form.component';
 import { ProfileEditComponent } from './profile-edit/profile-edit.component';
 import { RecuperationPasswordComponent } from './recuperation-password/recuperation-password.component';
-import { AssignHorsesComponent } from './assign-horses/assign-horses.component';
 
 @NgModule({
   declarations: [
@@ -67,8 +66,7 @@ import { AssignHorsesComponent } from './assign-horses/assign-horses.component';
     ChevalEditComponent,
     ProfileFormComponent,
     ProfileEditComponent,
-    RecuperationPasswordComponent,
-    AssignHorsesComponent
+    RecuperationPasswordComponent
   ],
   imports: [
     BrowserModule,

@@ -35,9 +35,9 @@
       <td mat-cell *matCellDef="let reprise">{{reprise.galop_level}}</td>
     </ng-container>
 
-    <ng-container matColumnDef="assign_horses">
+    <ng-container matColumnDef="open">
       <th mat-header-cell *matHeaderCellDef></th>
-      <td mat-cell *matCellDef="let reprise"><button (click)="openDialogAssignHorses(reprise.id_reprise)" class="center" mat-raised-button style="color: white; background-color: #66bb6a">Assigner chevaux</button></td>
+      <td mat-cell *matCellDef="let reprise"><button [routerLink]="['/reprise', reprise.id_reprise]" class="center" mat-raised-button style="color: white; background-color: #66bb6a">Ouvrir</button></td>
     </ng-container>
 
     <ng-container matColumnDef="modify">

@@ -97,7 +97,10 @@ cheval.get('/available_horses/reprise/:id_reprise', (req, res) => {
         id_cheval: {
           [Op.notIn]: chevauxUnavailable
         }
-      }
+      },
+      order: [
+        ['nom', 'ASC']
+      ]
     }).then(chevaux => {
       return res.json(chevaux)
     }).catch(err => {

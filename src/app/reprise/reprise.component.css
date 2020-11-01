@@ -68,3 +68,12 @@
   display: table;
   clear: both;
 }
+
+.nom_cavalier {
+  margin-top: 20px;
+  margin-bottom: 0;
+}
+
+img {
+  margin: 2%;
+}

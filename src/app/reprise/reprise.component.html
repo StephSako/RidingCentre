@@ -1,35 +1,31 @@
 <div class="container">
   <mat-card>
-    <h2 class="lobster center" *ngIf="reprise;else no_title">{{ reprise.title }}</h2>
+    <h2 class="lobster center" *ngIf="reprise.title;else no_title">{{ reprise.title }}</h2>
     <ng-template #no_title><h2 class="lobster center">Description de la reprise</h2></ng-template>
 
-    <table *ngIf="reprise">
-      <tbody>
-      <tr>
-        <td><b>Date et horaire</b></td>
-        <td>{{ reprise.date}}</td>
-      </tr>
-      <tr>
-        <td><b>Limite du nombre de cavaliers</b></td>
-        <td>{{ reprise.rider_number_limit}}</td>
-      </tr>
-      <tr>
-        <td><b>Niveau de Galop requis</b></td>
-        <td>{{ reprise.rider_number_limit}}</td>
-      </tr>
-      </tbody>
-    </table>
+    <mat-grid-list cols="4" rowHeight="10:1">
+      <mat-grid-tile><b>Jour&nbsp;</b><mat-icon>event</mat-icon></mat-grid-tile>
+      <mat-grid-tile><b>Heure&nbsp;</b><mat-icon>schedule</mat-icon></mat-grid-tile>
+      <mat-grid-tile><b>Limite&nbsp;</b><mat-icon>groups</mat-icon></mat-grid-tile>
+      <mat-grid-tile><b>Niveau du Galop&nbsp;</b><mat-icon>military_tech</mat-icon></mat-grid-tile>
 
-    <br>
-    <mat-divider></mat-divider>
+      <mat-grid-tile>{{reprise.date | date:"MM/dd/yyyy"}}</mat-grid-tile>
+      <mat-grid-tile>{{reprise.date | date:"HH:mm"}}</mat-grid-tile>
+      <mat-grid-tile>{{reprise.rider_number_limit}}</mat-grid-tile>
+      <mat-grid-tile>{{reprise.galop_level}}</mat-grid-tile>
+    </mat-grid-list>
 
-    <br><h2 class="center lobster">Assignation des chevaux</h2>
+    <br><mat-divider></mat-divider>
+
+    <img class="center" src="assets/horse-icon.png" height="80" alt="horse-icon">
+
+    <h1 class="center lobster">Assignation des chevaux</h1>
 
     <div cdkDropListGroup>
       <div class="row">
         <div class="column">
 
-          <h2>Chevaux Disponibles</h2>
+          <h3 class="lobster">Chevaux Disponibles</h3>
           <div
             cdkDropList
             [cdkDropListData]="chevauxDisponibles"
@@ -45,9 +41,9 @@
 
         <div class="column">
 
-          <h2>Cavaliers inscrits</h2>
+          <h3 class="lobster">Cavaliers inscrits</h3>
           <div *ngFor="let cavalier of cavaliersInscrits">
-            <h3>{{cavalier.user.firstname_user}} {{cavalier.user.lastname_user}}</h3>
+            <h3 class="nom_cavalier">{{cavalier.user.firstname_user}} {{cavalier.user.lastname_user}}</h3>
             <div
               cdkDropList
               [cdkDropListData]="cavalier.cheval"
