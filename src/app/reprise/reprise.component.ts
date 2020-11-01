@@ -1,14 +1,15 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 import { RepriseService } from '../Services/reprise.service';
 import { RepriseInterface } from '../Interfaces/RepriseInterface';
-import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
-import {ChevalInterface} from '../Interfaces/ChevalInterface';
-import {RegisteredToRepriseInterface} from '../Interfaces/UserInterface';
-import {ChevalService} from '../Services/cheval.service';
-import {MatSnackBar} from '@angular/material/snack-bar';
-import {AuthenticationService} from '../Services/authentication.service';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { ChevalInterface } from '../Interfaces/ChevalInterface';
+import { RegisteredToRepriseInterface } from '../Interfaces/UserInterface';
+import { ChevalService } from '../Services/cheval.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { AuthenticationService } from '../Services/authentication.service';
+import { RepriseInscriptionInterface } from '../Interfaces/RepriseInscriptionInterface';
 
 @Component({
   selector: 'app-reprise',
@@ -47,18 +48,18 @@ export class RepriseComponent implements OnInit {
 
   // tslint:disable-next-line:variable-name
   drop(event: CdkDragDrop<ChevalInterface[]>, id_user: number, id_reprise_inscription: number): void {
-    console.log('id_user : ' + id_user + ', id_reprise_inscription : ' + id_reprise_inscription);
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
-      // if (event.container.data.length === 0){
+      if (event.container.data.length === 0){
+        this.assignHorseToUser(id_user, event.item.data.id_cheval, id_reprise_inscription);
         transferArrayItem(event.previousContainer.data,
           event.container.data,
           event.previousIndex,
           event.currentIndex);
-      /*} else {
+      } else {
         this.authService.notifyUser('Le cavalier a déjà un cheval assigné', 'OK', this.snackBar, 'error');
-      }*/
+      }
     }
   }
 
@@ -98,6 +99,25 @@ export class RepriseComponent implements OnInit {
     this.repriseService.getRegisteredUsers(this.reprise.id_reprise).subscribe((subscriptions) => {
       this.cavaliersInscrits = subscriptions;
     });
+  }
+
+  // tslint:disable-next-line:variable-name
+  assignHorseToUser(id_user: number, id_cheval: number, id_reprise_inscription: number): void {
+    // tslint:disable-next-line:variable-name
+    const reprise_inscription: RepriseInscriptionInterface = {
+      id: id_reprise_inscription,
+      id_reprise: this.reprise.id_reprise,
+      id_cheval,
+      id_user
+    };
+
+    this.repriseService.editSubscription(reprise_inscription).subscribe(() => {
+        this.getSubscribdedUsers();
+        this.authService.notifyUser('Le cheval a été assigné', 'OK', this.snackBar, 'success');
+      },
+      err => {
+        this.authService.notifyUser(err, 'OK', this.snackBar, 'error');
+      });
   }
 
 }

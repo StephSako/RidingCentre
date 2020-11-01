@@ -2,7 +2,6 @@ const express = require('express')
 const reprise_inscription = express.Router()
 const RepriseInscription = require("../model/RepriseInscription")
 const _ = require('lodash');
-const { Op } = require("sequelize");
 
 // ALL REGISTERED REPRISE FOR A SPECIFIC USER
 reprise_inscription.get('/user/:id_user', (req, res) => {
@@ -104,6 +103,20 @@ reprise_inscription.delete('/delete/user/:id_user/reprise/:id_reprise', (req, re
     else res.json({message: "Cet enregistrement n'existe pas"})
   }).catch(err => {
     res.json({error: err})
+  })
+})
+
+// EDIT
+reprise_inscription.put('/edit/:id_reprise_inscription', (req, res) => {
+  const id_reprise_inscription = req.params.id_reprise_inscription;
+
+  RepriseInscription.update(req.body, {
+    where: { id: id_reprise_inscription}
+  }).then(num => {
+    if (num == 1) res.json({message: "Inscription mise à jour"})
+    else if (num < 1) res.json({message: "L'inscription n'existe pas"})
+  }).catch(err => {
+    res.json({message: err/*"Une erreur est survenue lors de la mise à jour de l'inscription"*/})
   })
 })
 

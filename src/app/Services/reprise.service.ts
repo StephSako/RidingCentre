@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { RepriseInterface } from '../Interfaces/RepriseInterface';
+import {RepriseInscriptionInterface} from '../Interfaces/RepriseInscriptionInterface';
 
 @Injectable({
   providedIn: 'root'
@@ -22,8 +23,8 @@ export class RepriseService {
   }
 
   // tslint:disable-next-line:variable-name
-  public edit(id_reprise: number, reprise: RepriseInterface): Observable<any> {
-    return this.http.put(`${this.baseURL}edit/${id_reprise}`, reprise);
+  public edit(reprise: RepriseInterface): Observable<any> {
+    return this.http.put(`${this.baseURL}edit/${reprise.id_reprise}`, reprise);
   }
 
   // tslint:disable-next-line:variable-name
@@ -43,6 +44,11 @@ export class RepriseService {
 
   // tslint:disable-next-line:variable-name
   public getRegisteredUsers(id_reprise: number): Observable<any> {
-    return this.http.get( `${this.baseURLInscription}reprise/${id_reprise}`);
+    return this.http.get(`${this.baseURLInscription}reprise/${id_reprise}`);
+  }
+
+  // tslint:disable-next-line:variable-name
+  public editSubscription(reprise_inscription: RepriseInscriptionInterface): Observable<any> {
+    return this.http.put(`${this.baseURLInscription}edit/${reprise_inscription.id}`, reprise_inscription);
   }
 }

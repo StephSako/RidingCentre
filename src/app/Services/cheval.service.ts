@@ -22,8 +22,8 @@ export class ChevalService {
   }
 
   // tslint:disable-next-line:variable-name
-  public edit(id_cheval: number, cheval: ChevalInterface): Observable<any> {
-    return this.http.put(`${this.baseURL}edit/${id_cheval}`, cheval);
+  public edit(cheval: ChevalInterface): Observable<any> {
+    return this.http.put(`${this.baseURL}edit/${cheval.id_cheval}`, cheval);
   }
 
   // tslint:disable-next-line:variable-name

@@ -141,8 +141,8 @@ export class AuthenticationService {
   }
 
   // tslint:disable-next-line:variable-name
-  public edit(id_user: number, user: UserEditInterface): Observable<any> {
-    const URL = this.http.put(`${this.baseURL}edit/${id_user}`, user);
+  public edit(user: UserEditInterface): Observable<any> {
+    const URL = this.http.put(`${this.baseURL}edit/${user.id_user}`, user);
 
     return URL.pipe(
       map((data: TokenResponse) => {

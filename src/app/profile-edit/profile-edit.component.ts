@@ -27,7 +27,7 @@ export class ProfileEditComponent {
   }
 
   edit(): void {
-    this.authService.edit(this.user.id_user, this.user).subscribe(() => {
+    this.authService.edit(this.user).subscribe(() => {
         this.authService.notifyUser('Votre compte a bien été modifié', 'OK', this.snackBar, 'success');
       },
       err => {

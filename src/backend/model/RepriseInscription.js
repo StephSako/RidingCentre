@@ -14,11 +14,11 @@ module.exports = db.sequelize.define(
     },
     id_reprise: {
       type: Sequelize.INTEGER,
+      allowNull: false,
       references: {
         model: Reprise,
         key: 'id_reprise'
-      },
-      allowNull: false
+      }
     },
     id_user: {
       type: Sequelize.INTEGER,
@@ -30,6 +30,7 @@ module.exports = db.sequelize.define(
     },
     id_cheval: {
       type: Sequelize.INTEGER,
+      allowNull: true,
       references: {
         model: Cheval,
         key: 'id_cheval'

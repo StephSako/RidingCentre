@@ -34,7 +34,7 @@
           [cdkDropListData]="chevauxDisponibles"
           class="example-list"
           (cdkDropListDropped)="drop($event, null, null)">
-          <div class="example-box" *ngFor="let cheval of chevauxDisponibles" cdkDrag>{{cheval.nom}}</div>
+          <div class="example-box" [cdkDragData]="cheval" *ngFor="let cheval of chevauxDisponibles" cdkDrag>{{cheval.nom}}</div>
         </div>
       </div>
 

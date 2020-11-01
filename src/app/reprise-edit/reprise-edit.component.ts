@@ -24,7 +24,7 @@ export class RepriseEditComponent {
   }
 
   edit(): void {
-    this.repriseService.edit(this.reprise.id_reprise, this.reprise ).subscribe(() => { }, err => { console.error(err); });
+    this.repriseService.edit(this.reprise).subscribe(() => { }, err => { console.error(err); });
   }
 
 }
