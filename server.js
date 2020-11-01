@@ -77,10 +77,7 @@ RepriseInscription.belongsTo(Reprise, {
   foreignKey: 'id_reprise'
 });
 RepriseInscription.belongsTo(Cheval, {
-  foreignKey: {
-    name: 'id_cheval',
-    allowNull: true
-  }
+  foreignKey: 'id_cheval',
 });
 
 let UserController = require('./src/backend/controller/UserController')

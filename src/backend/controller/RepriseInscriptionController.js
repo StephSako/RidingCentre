@@ -109,8 +109,13 @@ reprise_inscription.delete('/delete/user/:id_user/reprise/:id_reprise', (req, re
 // EDIT
 reprise_inscription.put('/edit/:id_reprise_inscription', (req, res) => {
   const id_reprise_inscription = req.params.id_reprise_inscription;
+  const reprise_inscription = {
+    id_user: req.body.id_user,
+    id_reprise: req.body.id_reprise,
+    id_cheval: (req.body.id_cheval ? req.body.id_cheval : null)
+  }
 
-  RepriseInscription.update(req.body, {
+  RepriseInscription.update(reprise_inscription, {
     where: { id: id_reprise_inscription}
   }).then(num => {
     if (num == 1) res.json({message: "Inscription mise à jour"})
