@@ -133,9 +133,9 @@ export class AuthenticationService {
     return this.http.post(this.baseURLRepriseInscription + 'register', repriseInscriptionData);
   }
 
-  public notifyUser(message: string, action: string, snackBar: MatSnackBar, style): void {
+  public notifyUser(message: string, action: string, snackBar: MatSnackBar, style: string, duration: number): void {
       snackBar.open(message, action, {
-        duration: 2000,
+        duration,
         panelClass: ['style-' + style],
       });
   }

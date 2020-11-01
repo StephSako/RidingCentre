@@ -23,32 +23,45 @@
     <br>
     <mat-divider></mat-divider>
 
-    <h2 class="center lobster">Assignation des chevaux</h2>
+    <br><h2 class="center lobster">Assignation des chevaux</h2>
 
     <div cdkDropListGroup>
+      <div class="row">
+        <div class="column">
 
-      <div class="example-container">
-        <h2>Chevaux Disponibles</h2>
-        <div
-          cdkDropList
-          [cdkDropListData]="chevauxDisponibles"
-          class="example-list"
-          (cdkDropListDropped)="drop($event, null, null)">
-          <div class="example-box" [cdkDragData]="cheval" *ngFor="let cheval of chevauxDisponibles" cdkDrag>{{cheval.nom}}</div>
+          <h2>Chevaux Disponibles</h2>
+          <div
+            cdkDropList
+            [cdkDropListData]="chevauxDisponibles"
+            class="list"
+            (cdkDropListDropped)="dropUserToStack($event)">
+            <div class="box" [cdkDragData]="cheval" *ngFor="let cheval of chevauxDisponibles" cdkDrag>
+              <div class="custom-placeholder" *cdkDragPlaceholder></div>
+              {{cheval.nom}}<mat-icon aria-hidden="false">open_with</mat-icon>
+            </div>
+          </div>
+
         </div>
-      </div>
 
-      <br><h2>Cavaliers inscrits</h2>
+        <div class="column">
 
-      <div class="example-container" *ngFor="let cavalier of cavaliersInscrits">
-        <h3>{{cavalier.user.firstname_user}} {{cavalier.user.lastname_user}}</h3>
-        <div
-          cdkDropList
-          [cdkDropListData]="chevauxInscrits"
-          class="example-list"
-          (cdkDropListDropped)="drop($event, cavalier.user.id_user, cavalier.id_reprise_inscription)">
-          <div class="example-box" *ngFor="let cheval of cavalier.cheval" cdkDrag>{{cheval.nom}}</div>
+          <h2>Cavaliers inscrits</h2>
+          <div *ngFor="let cavalier of cavaliersInscrits">
+            <h3>{{cavalier.user.firstname_user}} {{cavalier.user.lastname_user}}</h3>
+            <div
+              cdkDropList
+              [cdkDropListData]="cavalier.cheval"
+              class="list"
+              (cdkDropListDropped)="dropStackToUser($event, cavalier.user.id_user, cavalier.id_reprise_inscription)">
+              <div class="box" [cdkDragData]="cavalier" *ngFor="let cheval of cavalier.cheval" cdkDrag>
+                <div class="custom-placeholder" *cdkDragPlaceholder></div>
+                {{cheval.nom}}<mat-icon aria-hidden="false">open_with</mat-icon>
+              </div>
+            </div>
+          </div>
+
         </div>
+
       </div>
     </div>
 

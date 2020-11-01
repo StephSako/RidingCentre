@@ -33,11 +33,11 @@ export class RecuperationPasswordComponent implements OnInit {
   recupPassword(): void {
     if (!this.helper.isEmpty(this.email)){
       this.authService.retrievePassword(this.email).subscribe(() => {
-          this.authService.notifyUser('Votre compte a bien été modifié', 'OK', this.snackBar, 'success');
+          this.authService.notifyUser('Votre compte a bien été modifié', 'OK', this.snackBar, 'success', 2000);
           this.sent = true;
         },
         err => {
-          this.authService.notifyUser(err, 'OK', this.snackBar, 'error');
+          this.authService.notifyUser(err, 'OK', this.snackBar, 'error', 2000);
         });
     }
   }

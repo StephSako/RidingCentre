@@ -19,7 +19,6 @@ import { RepriseInscriptionInterface } from '../Interfaces/RepriseInscriptionInt
 export class RepriseComponent implements OnInit {
 
   chevauxDisponibles: ChevalInterface[];
-  chevauxInscrits: ChevalInterface[];
   cavaliersInscrits: RegisteredToRepriseInterface[] = [{
     id_reprise_inscription: null,
     user: {
@@ -47,26 +46,37 @@ export class RepriseComponent implements OnInit {
               private snackBar: MatSnackBar, private authService: AuthenticationService) {}
 
   // tslint:disable-next-line:variable-name
-  drop(event: CdkDragDrop<ChevalInterface[]>, id_user: number, id_reprise_inscription: number): void {
+  dropStackToUser(event: CdkDragDrop<ChevalInterface[]>, id_user: number, id_reprise_inscription: number): void {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
       if (event.container.data.length === 0){
-        this.assignHorseToUser(id_user, event.item.data.id_cheval, id_reprise_inscription);
         transferArrayItem(event.previousContainer.data,
           event.container.data,
           event.previousIndex,
           event.currentIndex);
+        this.editUserHorse(id_user, id_reprise_inscription, event.item.data.id_cheval);
+        this.authService.notifyUser('Le cheval a été assigné', null, this.snackBar, 'success', 1000);
       } else {
-        this.authService.notifyUser('Le cavalier a déjà un cheval assigné', 'OK', this.snackBar, 'error');
+        this.authService.notifyUser('Le cavalier a déjà un cheval assigné', null, this.snackBar, 'error', 1000);
       }
+    }
+  }
+
+  dropUserToStack(event: CdkDragDrop<ChevalInterface[]>): void {
+    transferArrayItem(event.previousContainer.data,
+      event.container.data,
+      event.previousIndex,
+      event.currentIndex);
+    if (event.item.data.user) {
+      this.editUserHorse(event.item.data.user.id_user, event.item.data.id_reprise_inscription);
+      this.authService.notifyUser('Cheval désassigné', null, this.snackBar, 'error', 500);
     }
   }
 
   ngOnInit(): void {
     this.getReprise();
     this.getAvailableHorses();
-    this.chevauxInscrits = [];
   }
 
   getReprise(): void {
@@ -98,11 +108,12 @@ export class RepriseComponent implements OnInit {
   getSubscribdedUsers(): void {
     this.repriseService.getRegisteredUsers(this.reprise.id_reprise).subscribe((subscriptions) => {
       this.cavaliersInscrits = subscriptions;
+      this.getAvailableHorses();
     });
   }
 
   // tslint:disable-next-line:variable-name
-  assignHorseToUser(id_user: number, id_cheval: number, id_reprise_inscription: number): void {
+  editUserHorse(id_user: number, id_reprise_inscription: number, id_cheval?: number): void {
     // tslint:disable-next-line:variable-name
     const reprise_inscription: RepriseInscriptionInterface = {
       id: id_reprise_inscription,
@@ -113,10 +124,9 @@ export class RepriseComponent implements OnInit {
 
     this.repriseService.editSubscription(reprise_inscription).subscribe(() => {
         this.getSubscribdedUsers();
-        this.authService.notifyUser('Le cheval a été assigné', 'OK', this.snackBar, 'success');
       },
       err => {
-        this.authService.notifyUser(err, 'OK', this.snackBar, 'error');
+        this.authService.notifyUser(err, 'OK', this.snackBar, 'error', 2000);
       });
   }
 

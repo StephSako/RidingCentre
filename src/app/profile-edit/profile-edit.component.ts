@@ -28,10 +28,10 @@ export class ProfileEditComponent {
 
   edit(): void {
     this.authService.edit(this.user).subscribe(() => {
-        this.authService.notifyUser('Votre compte a bien été modifié', 'OK', this.snackBar, 'success');
+        this.authService.notifyUser('Votre compte a bien été modifié', 'OK', this.snackBar, 'success', 2000);
       },
       err => {
-        this.authService.notifyUser(err, 'OK', this.snackBar, 'error');
+        this.authService.notifyUser(err, 'OK', this.snackBar, 'error', 2000);
       });
   }
 
