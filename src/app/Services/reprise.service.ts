@@ -3,14 +3,12 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { RepriseInterface } from '../Interfaces/RepriseInterface';
-import {RepriseInscriptionInterface} from '../Interfaces/RepriseInscriptionInterface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RepriseService {
   private baseURL = 'http://localhost:4000/api/reprise/';
-  private baseURLInscription = 'http://localhost:4000/api/reprise_inscription/';
 
   constructor(private http: HttpClient) { }
 
@@ -40,15 +38,5 @@ export class RepriseService {
   // tslint:disable-next-line:variable-name
   public isEmpty(_string: string): boolean {
     return (!_string || 0 === _string.trim().length);
-  }
-
-  // tslint:disable-next-line:variable-name
-  public getRegisteredUsers(id_reprise: number): Observable<any> {
-    return this.http.get(`${this.baseURLInscription}reprise/${id_reprise}`);
-  }
-
-  // tslint:disable-next-line:variable-name
-  public editSubscription(reprise_inscription: RepriseInscriptionInterface): Observable<any> {
-    return this.http.put(`${this.baseURLInscription}edit/${reprise_inscription.id}`, reprise_inscription);
   }
 }

@@ -1,7 +1,7 @@
 <div class="container">
   <h1 class="lobster">Tous les cours</h1>
 
-  <mat-card *ngFor="let reprise of allReprises">
+  <mat-card *ngFor="let reprise of allReprises" [ngClass]="reprise.canceled ? 'canceled' : ''">
 
     <h2 class="center lobster_2">{{ reprise.title }}</h2>
 
@@ -16,17 +16,23 @@
       <mat-grid-tile>{{reprise.date | date:"HH:mm"}}</mat-grid-tile>
       <mat-grid-tile>{{reprise.rider_number_limit}}</mat-grid-tile>
       <mat-grid-tile>{{reprise.galop_level}}</mat-grid-tile>
-      <mat-grid-tile>{{nomCheval(reprise.id_reprise)}}</mat-grid-tile>
+      <mat-grid-tile *ngIf="nomCheval(reprise.id_reprise)">
+        <button mat-button
+                class="btnHorses"
+                matTooltipPosition=below
+                [matTooltip]="nomCheval(reprise.id_reprise).race + ' - ' + nomCheval(reprise.id_reprise).age + ' ans'"
+                aria-label="horse informations">
+          {{nomCheval(reprise.id_reprise).nom}}
+        </button>
+      </mat-grid-tile>
     </mat-grid-list>
 
-    <div *ngIf="authService.isRider()">
-      <button mat-raised-button color="primary" class="center" *ngIf="!isRegistered(reprise.id_reprise)" (click)="registerToReprise(reprise.id_reprise)">S'inscrire</button>
-      <button mat-raised-button color="warn" class="center" *ngIf="isRegistered(reprise.id_reprise)" (click)="deleteRegisteredReprise(reprise.id_reprise)">Se désinscrire</button>
+    <div *ngIf="authService.isRider() && !reprise.canceled">
+      <button mat-raised-button style="color: white; background-color: #69c61a;" class="center" *ngIf="!isRegistered(reprise.id_reprise); else btnDesinscrire" (click)="registerToReprise(reprise.id_reprise)">S'inscrire</button>
+      <ng-template #btnDesinscrire><button mat-raised-button color="warn" class="center" *ngIf="isRegistered(reprise.id_reprise)" (click)="deleteRegisteredReprise(reprise.id_reprise)">Se désinscrire</button></ng-template>
     </div>
 
-    <div *ngIf="authService.isInstructor()">
-      <button mat-raised-button color="primary" class="center" [routerLink]="['/reprise', reprise.id_reprise]">Voir la fiche</button>
-    </div>
+    <button mat-raised-button color="primary" class="center" [routerLink]="['/reprise', reprise.id_reprise]">Voir la fiche</button>
 
   </mat-card>
 </div>

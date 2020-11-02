@@ -4,6 +4,7 @@ import { RepriseService } from '../Services/reprise.service';
 import { RepriseInterface } from '../Interfaces/RepriseInterface';
 import {AuthenticationService} from '../Services/authentication.service';
 import {RepriseInscriptionHomeInterface} from '../Interfaces/RepriseInscriptionInterface';
+import {ChevalInterface} from '../Interfaces/ChevalInterface';
 
 @Component({
   selector: 'app-home',
@@ -66,13 +67,14 @@ export class HomeComponent implements OnInit {
       );
   }
 
-  nomCheval(idReprise: number): string {
-    if (this.allRegistredReprises){
-      const repriseInscription = this.allRegistredReprises.find(inscription => inscription.id_reprise === idReprise);
-      if (repriseInscription && repriseInscription.cheval) {
-        return repriseInscription.cheval.nom;
-      } else { return ''; }
-    } else { return ''; }
+  nomCheval(idReprise: number): ChevalInterface {
+    if (this.allRegistredReprises) {
+      if (this.allRegistredReprises.find(inscription => inscription.id_reprise === idReprise)) {
+        return this.allRegistredReprises.find(inscription => inscription.id_reprise === idReprise).cheval;
+      } else {
+        return null;
+      }
+    }
   }
 
 }

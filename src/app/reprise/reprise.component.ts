@@ -9,7 +9,8 @@ import { RegisteredToRepriseInterface } from '../Interfaces/UserInterface';
 import { ChevalService } from '../Services/cheval.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthenticationService } from '../Services/authentication.service';
-import { RepriseInscriptionInterface } from '../Interfaces/RepriseInscriptionInterface';
+import {IsRegistereddRepriseInscriptionInterface, RepriseInscriptionInterface} from '../Interfaces/RepriseInscriptionInterface';
+import {RepriseInscriptionService} from '../Services/reprise-inscription.service';
 
 @Component({
   selector: 'app-reprise',
@@ -18,6 +19,10 @@ import { RepriseInscriptionInterface } from '../Interfaces/RepriseInscriptionInt
 })
 export class RepriseComponent implements OnInit {
 
+  isRegistered: IsRegistereddRepriseInscriptionInterface = {
+    isRegistered: null
+  };
+  displayedColumns: string[] = ['cavalier', 'horse'];
   chevauxDisponibles: ChevalInterface[];
   cavaliersInscrits: RegisteredToRepriseInterface[] = [{
     id_reprise_inscription: null,
@@ -43,8 +48,9 @@ export class RepriseComponent implements OnInit {
     canceled: null
   };
 
-  constructor(private route: ActivatedRoute, private repriseService: RepriseService, private chevalService: ChevalService,
-              private snackBar: MatSnackBar, private authService: AuthenticationService) {}
+  constructor(private route: ActivatedRoute, private repriseInscriptionService: RepriseInscriptionService,
+              private chevalService: ChevalService, private snackBar: MatSnackBar, public authService: AuthenticationService,
+              private repriseService: RepriseService) {}
 
   // tslint:disable-next-line:variable-name
   dropStackToUser(event: CdkDragDrop<ChevalInterface[]>, id_user: number, id_reprise_inscription: number): void {
@@ -87,6 +93,7 @@ export class RepriseComponent implements OnInit {
       reprise => {
         this.reprise = reprise;
         this.getSubscribdedUsers();
+        this.inRegistered();
       },
       err => {
         console.error(err);
@@ -107,7 +114,7 @@ export class RepriseComponent implements OnInit {
   }
 
   getSubscribdedUsers(): void {
-    this.repriseService.getRegisteredUsers(this.reprise.id_reprise).subscribe((subscriptions) => {
+    this.repriseInscriptionService.getRegisteredUsers(this.reprise.id_reprise).subscribe((subscriptions) => {
       this.cavaliersInscrits = subscriptions;
       this.getAvailableHorses();
     });
@@ -123,7 +130,7 @@ export class RepriseComponent implements OnInit {
       id_user
     };
 
-    this.repriseService.editSubscription(reprise_inscription).subscribe(() => {
+    this.repriseInscriptionService.editSubscription(reprise_inscription).subscribe(() => {
         this.getSubscribdedUsers();
       },
       err => {
@@ -131,4 +138,47 @@ export class RepriseComponent implements OnInit {
       });
   }
 
+  editRepriseStatus(): void {
+    this.reprise.canceled = !this.reprise.canceled;
+    this.repriseService.edit(this.reprise).subscribe(() => {
+      this.getReprise();
+    }, err => {
+      console.error(err);
+    });
+  }
+
+  // tslint:disable-next-line:variable-name
+  deleteRegisteredReprise(): void {
+    this.authService.deleteRegisteredReprise(this.reprise.id_reprise)
+      .subscribe(
+        () => {
+          this.inRegistered();
+        },
+        err => {
+          console.error(err);
+        }
+      );
+  }
+
+  // tslint:disable-next-line:variable-name
+  registerToReprise(): void {
+    this.authService.registerToReprise(this.reprise.id_reprise)
+      .subscribe(
+        () => {
+          this.inRegistered();
+        },
+        err => {
+          console.error(err);
+        }
+      );
+  }
+
+  inRegistered(): void {
+    this.repriseInscriptionService.isRegistered(this.reprise.id_reprise, this.authService.getUserDetails().id_user).subscribe(
+      (isRegistered) => {
+        this.isRegistered = isRegistered;
+    }, err => {
+      console.error(err);
+    });
+  }
 }

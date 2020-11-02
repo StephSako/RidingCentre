@@ -1,8 +1,8 @@
 <div class="container">
-  <mat-card>
-    <h2 class="lobster center" *ngIf="reprise.title;else no_title">{{ reprise.title }}</h2>
-    <ng-template #no_title><h2 class="lobster center">Description de la reprise</h2></ng-template>
 
+  <h1 class="lobster center">Reprise<span class="lobster" *ngIf="reprise.title"> - {{ reprise.title }}</span></h1>
+
+  <mat-card>
     <mat-grid-list cols="4" rowHeight="10:1">
       <mat-grid-tile><b>Jour&nbsp;</b><mat-icon>event</mat-icon></mat-grid-tile>
       <mat-grid-tile><b>Heure&nbsp;</b><mat-icon>schedule</mat-icon></mat-grid-tile>
@@ -15,17 +15,22 @@
       <mat-grid-tile>{{reprise.galop_level}}</mat-grid-tile>
     </mat-grid-list>
 
-    <br><mat-divider></mat-divider>
+    <p>{{isRegistered|json}}</p>
 
-    <img class="center" src="assets/horse-icon.png" height="80" alt="horse-icon">
+    <div *ngIf="authService.isRider() && !reprise.canceled">
+      <button mat-raised-button style="color: white; background-color: #69c61a;" class="center" *ngIf="!isRegistered.isRegistered; else btnDesinscrire" (click)="registerToReprise()">S'inscrire</button>
+      <ng-template #btnDesinscrire><button mat-raised-button color="warn" class="center" *ngIf="isRegistered.isRegistered" (click)="deleteRegisteredReprise()">Se désinscrire</button></ng-template>
+    </div>
 
-    <h1 class="center lobster">Assignation des chevaux</h1>
+  </mat-card>
 
-    <div cdkDropListGroup>
+  <div *ngIf="!reprise.canceled">
+    <h1 class="lobster center">Assignation des chevaux</h1>
+
+    <div cdkDropListGroup *ngIf="authService.isInstructor()">
       <div class="row">
         <div class="column">
 
-          <h3 class="lobster">Chevaux Disponibles</h3>
           <div
             cdkDropList
             [cdkDropListData]="chevauxDisponibles"
@@ -41,7 +46,6 @@
 
         <div class="column">
 
-          <h3 class="lobster">Cavaliers inscrits</h3>
           <div *ngFor="let cavalier of cavaliersInscrits">
             <h3 class="nom_cavalier">{{cavalier.user.firstname_user}} {{cavalier.user.lastname_user}}</h3>
             <div
@@ -60,6 +64,47 @@
 
       </div>
     </div>
+  </div>
 
-  </mat-card>
+  <div *ngIf="this.authService.isInstructor()">
+    <mat-card *ngIf="cavaliersInscrits.length < 3 && !reprise.canceled; else maintainReprise">
+      <h2 style="color: black; margin-bottom: 0;" class="center">Moins de 3 cavaliers sont inscrits à la reprise</h2>
+      <h3 style="color: black; margin-bottom: 0;" class="center">Annuler la séance ?</h3><br>
+      <button mat-raised-button style="color: white; background-color: #e32020;" class="center" (click)="editRepriseStatus()">Annuler</button>
+    </mat-card>
+
+    <ng-template #maintainReprise>
+      <mat-card *ngIf="cavaliersInscrits.length < 3">
+        <h2 style="color: black; margin-bottom: 0;" class="center">La reprise est actuellement annulée</h2>
+        <h3 style="color: black; margin-bottom: 0;" class="center">Maintenir la séance ?</h3><br>
+        <button mat-raised-button style="color: white; background-color: #69c61a;" class="center" (click)="editRepriseStatus()">Maintenir</button>
+      </mat-card>
+    </ng-template>
+  </div>
+
+  <table mat-table *ngIf="cavaliersInscrits && authService.isRider() && !reprise.canceled; else canceled" [dataSource]="cavaliersInscrits" class="mat-elevation-z8">
+
+    <ng-container matColumnDef="cavalier">
+      <th mat-header-cell *matHeaderCellDef>Cavaliers inscrits</th>
+      <td mat-cell *matCellDef="let row"><span>{{row.user.firstname_user}} {{row.user.lastname_user}}</span></td>
+    </ng-container>
+
+    <ng-container matColumnDef="horse">
+      <th mat-header-cell *matHeaderCellDef>Chevaux assignés</th>
+      <td mat-cell *matCellDef="let row">
+        <span *ngIf="row.cheval[0]; else noAssignedHorse">{{row.cheval[0].nom}} - {{row.cheval[0].race}} - {{row.cheval[0].age}} ans</span>
+        <ng-template #noAssignedHorse><span><i>Pas de cheval assigné</i></span></ng-template></td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+  </table>
+
+  <ng-template #canceled>
+    <mat-card class="canceled">
+      <h2 class="center">La reprise est annulée dû au faible nombre de cavaliers inscrits ...</h2>
+    </mat-card>
+  </ng-template>
+
 </div>

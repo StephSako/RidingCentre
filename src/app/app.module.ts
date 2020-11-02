@@ -26,6 +26,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -98,7 +99,8 @@ import { RecuperationPasswordComponent } from './recuperation-password/recuperat
     MatSnackBarModule,
     MatMenuModule,
     MatSelectModule,
-    DragDropModule
+    DragDropModule,
+    MatTooltipModule
   ],
   providers: [AuthenticationService, AuthGuardService],
   bootstrap: [AppComponent]

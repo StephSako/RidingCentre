@@ -20,6 +20,9 @@ module.exports = db.sequelize.define(
     },
     galop_level: {
       type: Sequelize.INTEGER
+    },
+    canceled: {
+      type: Sequelize.BOOLEAN
     }
   },
   {

@@ -9,3 +9,16 @@ h1 {
 button {
   margin-top: 10px;
 }
+
+.btnHorses {
+  margin: 0;
+}
+
+.multiline {
+  white-space: pre-line;
+}
+
+.canceled {
+  border: 1px solid white;
+  background-color: #fd5b5b;
+}

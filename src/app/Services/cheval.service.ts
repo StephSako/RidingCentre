@@ -11,7 +11,7 @@ import { ChevalInterface } from '../Interfaces/ChevalInterface';
 export class ChevalService {
   private baseURL = 'http://localhost:4000/api/cheval/';
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient) { }
 
   public getAll(): Observable<any> {
     return this.http.get(this.baseURL);

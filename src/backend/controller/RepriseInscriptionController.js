@@ -136,4 +136,25 @@ reprise_inscription.put('/edit/:id_reprise_inscription', (req, res) => {
   })
 })
 
+// IF USER IS SUBSCRIBED TO A SPECIFIC REPRISE
+reprise_inscription.get('/isRegistered/reprise/:id_reprise/user/:id_user', (req, res) => {
+  let id_reprise = req.params.id_reprise
+  let id_user = req.params.id_user
+
+  RepriseInscription.findOne({
+    where: {
+      id_reprise: id_reprise,
+      id_user: id_user
+    }
+  }).then(reprise_inscription => {
+    res.json(
+      {
+        isRegistered: (reprise_inscription != null)
+      }
+    )
+  }).catch(err => {
+    res.json({message: err})
+  })
+})
+
 module.exports = reprise_inscription
