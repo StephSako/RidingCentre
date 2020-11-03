@@ -23,8 +23,8 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [AuthGuardService] },
   { path: 'home-instructor', component: HomeInstructorComponent, canActivate: [AuthGuardService] },
   { path: 'cheval-instructor', component: ChevalInstructorComponent, canActivate: [AuthGuardService] },
-  { path: 'reprise/:id', component: RepriseComponent },
-  { path: 'new/reprise', component: RepriseCreateComponent },
+  { path: 'reprise/:id_reprise', component: RepriseComponent, canActivate: [AuthGuardService] },
+  { path: 'new/reprise', component: RepriseCreateComponent, canActivate: [AuthGuardService] },
   { path: 'recuperation-mot-de-passe', component: RecuperationPasswordComponent },
 ];
 

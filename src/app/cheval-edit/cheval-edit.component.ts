@@ -22,7 +22,7 @@ export class ChevalEditComponent {
   }
 
   edit(): void {
-    this.chevalService.edit(this.cheval.id_cheval, this.cheval).subscribe(() => { }, err => { console.error(err); });
+    this.chevalService.edit(this.cheval).subscribe(() => { }, err => { console.error(err); });
   }
 
 }

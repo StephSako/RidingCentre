@@ -9,7 +9,6 @@ import { RepriseInterface } from '../Interfaces/RepriseInterface';
 })
 export class RepriseService {
   private baseURL = 'http://localhost:4000/api/reprise/';
-  private baseURLInscription = 'http://localhost:4000/api/reprise_inscription/';
 
   constructor(private http: HttpClient) { }
 
@@ -22,13 +21,13 @@ export class RepriseService {
   }
 
   // tslint:disable-next-line:variable-name
-  public edit(id_reprise: number, reprise: RepriseInterface): Observable<any> {
-    return this.http.put(`${this.baseURL}edit/${id_reprise}`, reprise);
+  public edit(reprise: RepriseInterface): Observable<any> {
+    return this.http.put(`${this.baseURL}edit/${reprise.id_reprise}`, reprise);
   }
 
   // tslint:disable-next-line:variable-name
   public details(id_reprise: number): Observable<any> {
-    return this.http.get( `${this.baseURL}/${id_reprise}`);
+    return this.http.get( `${this.baseURL}details/${id_reprise}`);
   }
 
   // tslint:disable-next-line:variable-name
@@ -39,10 +38,5 @@ export class RepriseService {
   // tslint:disable-next-line:variable-name
   public isEmpty(_string: string): boolean {
     return (!_string || 0 === _string.trim().length);
-  }
-
-  // tslint:disable-next-line:variable-name
-  public getRegisteredUsers(id_reprise: number): Observable<any> {
-    return this.http.get( `${this.baseURLInscription}reprise/${id_reprise}`);
   }
 }

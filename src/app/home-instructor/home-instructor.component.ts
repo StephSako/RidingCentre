@@ -4,7 +4,6 @@ import { RepriseInterface } from '../Interfaces/RepriseInterface';
 import { RepriseService } from '../Services/reprise.service';
 import { RepriseEditComponent } from '../reprise-edit/reprise-edit.component';
 import { MatDialog } from '@angular/material/dialog';
-import {AssignHorsesComponent} from '../assign-horses/assign-horses.component';
 
 @Component({
   selector: 'app-home-instructor',
@@ -13,7 +12,7 @@ import {AssignHorsesComponent} from '../assign-horses/assign-horses.component';
 })
 export class HomeInstructorComponent implements OnInit {
 
-  displayedColumns: string[] = ['title', 'date', 'rider_number_limit', 'galop_level', 'assign_horses', 'modify', 'delete'];
+  displayedColumns: string[] = ['title', 'date', 'rider_number_limit', 'galop_level', 'open', 'modify', 'delete'];
   allReprises: RepriseInterface[];
 
   reprise: RepriseInterface = {
@@ -21,7 +20,8 @@ export class HomeInstructorComponent implements OnInit {
     rider_number_limit: null,
     date: null,
     galop_level: null,
-    title: null
+    title: null,
+    canceled: null
   };
 
   constructor(public repriseService: RepriseService, public dialog: MatDialog) { }
@@ -65,14 +65,6 @@ export class HomeInstructorComponent implements OnInit {
     this.dialog.open(RepriseEditComponent, {
       width: '60%',
       data: cours
-    });
-  }
-
-  // tslint:disable-next-line:variable-name
-  openDialogAssignHorses(id_reprise: number): void {
-    this.dialog.open(AssignHorsesComponent, {
-      width: '60%',
-      data: id_reprise
     });
   }
 

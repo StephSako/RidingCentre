@@ -16,7 +16,8 @@ export class RepriseEditComponent {
     rider_number_limit: null,
     date: null,
     galop_level: null,
-    title: null
+    title: null,
+    canceled: null
   };
 
   constructor(private repriseService: RepriseService, @Inject(MAT_DIALOG_DATA) public reprisedata: RepriseInterface) {
@@ -24,7 +25,7 @@ export class RepriseEditComponent {
   }
 
   edit(): void {
-    this.repriseService.edit(this.reprise.id_reprise, this.reprise ).subscribe(() => { }, err => { console.error(err); });
+    this.repriseService.edit(this.reprise).subscribe(() => { }, err => { console.error(err); });
   }
 
 }

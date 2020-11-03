@@ -16,7 +16,7 @@ export class RegisterComponent implements OnInit {
     lastname_user: null,
     email_user: null,
     role_user: {
-      id: 0,
+      id: 1,
       role: null
     },
     password_user: null,
