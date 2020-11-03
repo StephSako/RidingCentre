@@ -27,11 +27,11 @@ export class ProfileEditComponent {
   }
 
   edit(): void {
-    this.authService.edit(this.user.id_user, this.user).subscribe(() => {
-        this.authService.notifyUser('Votre compte a bien été modifié', 'OK', this.snackBar, 'success');
+    this.authService.edit(this.user).subscribe(() => {
+        this.authService.notifyUser('Votre compte a bien été modifié', this.snackBar, 'success', 2000, 'OK');
       },
       err => {
-        this.authService.notifyUser(err, 'OK', this.snackBar, 'error');
+        this.authService.notifyUser(err, this.snackBar, 'error', 2000, 'OK');
       });
   }
 

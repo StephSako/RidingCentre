@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { RepriseService } from '../Services/reprise.service';
 import { RepriseInterface } from '../Interfaces/RepriseInterface';
 import {AuthenticationService} from '../Services/authentication.service';
+import {RepriseInscriptionHomeInterface} from '../Interfaces/RepriseInscriptionInterface';
+import {ChevalInterface} from '../Interfaces/ChevalInterface';
 
 @Component({
   selector: 'app-home',
@@ -12,7 +14,7 @@ import {AuthenticationService} from '../Services/authentication.service';
 export class HomeComponent implements OnInit {
 
   allReprises: RepriseInterface[];
-  allRegistredReprises: number[];
+  allRegistredReprises: RepriseInscriptionHomeInterface[];
 
   constructor(private repriseService: RepriseService, public authService: AuthenticationService) { }
 
@@ -32,7 +34,7 @@ export class HomeComponent implements OnInit {
   }
 
   isRegistered(idReprise: number): boolean {
-    if (this.allRegistredReprises) { return (this.allRegistredReprises.includes(idReprise)); }
+    if (this.allRegistredReprises) { return (this.allRegistredReprises.some(inscription => inscription.id_reprise === idReprise)); }
   }
 
   updateAllRegisteredReprises(): void {
@@ -63,6 +65,16 @@ export class HomeComponent implements OnInit {
           console.error(err);
         }
       );
+  }
+
+  nomCheval(idReprise: number): ChevalInterface {
+    if (this.allRegistredReprises) {
+      if (this.allRegistredReprises.find(inscription => inscription.id_reprise === idReprise)) {
+        return this.allRegistredReprises.find(inscription => inscription.id_reprise === idReprise).cheval;
+      } else {
+        return null;
+      }
+    }
   }
 
 }

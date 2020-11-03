@@ -1,9 +1,7 @@
-const User = require("../model/User");
-const Cheval = require("../model/Cheval");
-const Reprise = require("../model/Reprise");
 const express = require('express')
 const reprise_inscription = express.Router()
 const RepriseInscription = require("../model/RepriseInscription")
+const User = require("../model/User")
 const _ = require('lodash');
 
 // ALL REGISTERED REPRISE FOR A SPECIFIC USER
@@ -11,9 +9,19 @@ reprise_inscription.get('/user/:id_user', (req, res) => {
   const id_user = req.params.id_user;
 
   RepriseInscription.findAll({
-    where: { id_user: id_user}
+    where: {
+      id_user: id_user
+    },
+    include: ['cheval']
   }).then(reprises => {
-    if (!_.isEmpty(reprises)) return res.json(_.map(reprises, function(reprise) { return reprise.id_reprise; }))
+    if (!_.isEmpty(reprises)){
+      return res.json(_.map(reprises, function(reprise) {
+        return {
+          id_reprise: reprise.id_reprise,
+          cheval: (reprise.cheval ? reprise.cheval.dataValues : null)
+        };
+      }))
+    }
     else res.json([])
   }).catch(err => {
     res.send("error : " + err)
@@ -28,22 +36,32 @@ reprise_inscription.get('/reprise/:id_reprise', (req, res) => {
     where: {
       id_reprise: id_reprise
     },
-    include: ['user', 'cheval']
+    include: ['user', 'cheval'],
+    order: [
+      [User, 'lastname_user', 'ASC']
+    ]
   }).then(users => {
     if (!_.isEmpty(users)){
       return res.json(_.map(users, function(data) {
         return {
+          id_reprise_inscription: data.dataValues.id,
           user: {
             id_user: data.user.dataValues.id_user,
             firstname_user: data.user.dataValues.firstname_user,
             lastname_user: data.user.dataValues.lastname_user
           },
-          cheval: (!data.cheval ? null : {
-            id_cheval: data.cheval.dataValues.id_cheval,
-            nom: data.cheval.dataValues.nom,
-            race: data.cheval.dataValues.race,
-            age: data.cheval.dataValues.age,
-          })
+          cheval:
+            (!data.cheval ? [] :
+              [
+                {
+                  id_cheval: data.cheval.dataValues.id_cheval,
+                  nom: data.cheval.dataValues.nom,
+                  race: data.cheval.dataValues.race,
+                  age: data.cheval.dataValues.age,
+                }
+              ]
+            )
+
         };
       }))
     }
@@ -102,17 +120,22 @@ reprise_inscription.delete('/delete/user/:id_user/reprise/:id_reprise', (req, re
   })
 })
 
-// AVAILABLE HORSES FOR A SPECIFIC REPRISE
-reprise_inscription.get('/available_horses/reprise/:id_reprise', (req, res) => {
-  const id_reprise = req.params.id_reprise;
+// EDIT
+reprise_inscription.put('/edit/:id_reprise_inscription', (req, res) => {
+  const id_reprise_inscription = req.params.id_reprise_inscription;
+  const reprise_inscription = {
+    id_user: req.body.id_user,
+    id_reprise: req.body.id_reprise,
+    id_cheval: (req.body.id_cheval ? req.body.id_cheval : null)
+  }
 
-  RepriseInscription.findAll({
-    where: { id_user: id_user}
-  }).then(reprises => {
-    if (!_.isEmpty(reprises)) return res.json(_.map(reprises, function(reprise) { return reprise.id_reprise; }))
-    else res.json([])
+  RepriseInscription.update(reprise_inscription, {
+    where: { id: id_reprise_inscription}
+  }).then(num => {
+    if (num == 1) res.json({message: "Inscription mise à jour"})
+    else if (num < 1) res.json({message: "L'inscription n'existe pas"})
   }).catch(err => {
-    res.send("error : " + err)
+    res.json({message: err/*"Une erreur est survenue lors de la mise à jour de l'inscription"*/})
   })
 })
 

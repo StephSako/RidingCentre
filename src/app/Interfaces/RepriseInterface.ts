@@ -4,4 +4,5 @@ export interface RepriseInterface {
   title: string;
   rider_number_limit: number;
   galop_level: number;
+  canceled: boolean;
 }

@@ -17,7 +17,7 @@ user.post('/register', (req, res) => {
     password_user: req.body.password_user,
     license_number_user: req.body.license_number_user,
     phone_number_user: req.body.phone_number_user,
-    role_user: 1,
+    role_user_id: req.body.role_user_id,
     email_user: req.body.email_user
   }
 
@@ -36,12 +36,14 @@ user.post('/register', (req, res) => {
           res.json({token: token})
         }).catch(err => {
           res.json({message: err})
+          // res.status(401).send(err)
         })
       } else {
         res.json({error: "Ce compte existe déjà"})
       }
     }).catch(err => {
     res.json({message: err})
+    // res.status(401).send(err)
   })
 })
 

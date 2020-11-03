@@ -133,16 +133,16 @@ export class AuthenticationService {
     return this.http.post(this.baseURLRepriseInscription + 'register', repriseInscriptionData);
   }
 
-  public notifyUser(message: string, action: string, snackBar: MatSnackBar, style): void {
+  public notifyUser(message: string, snackBar: MatSnackBar, style: string, duration: number, action?: string): void {
       snackBar.open(message, action, {
-        duration: 2000,
+        duration,
         panelClass: ['style-' + style],
       });
   }
 
   // tslint:disable-next-line:variable-name
-  public edit(id_user: number, user: UserEditInterface): Observable<any> {
-    const URL = this.http.put(`${this.baseURL}edit/${id_user}`, user);
+  public edit(user: UserEditInterface): Observable<any> {
+    const URL = this.http.put(`${this.baseURL}edit/${user.id_user}`, user);
 
     return URL.pipe(
       map((data: TokenResponse) => {

@@ -1,6 +1,9 @@
 const express = require('express')
 const cheval = express.Router()
 const Cheval = require("../model/cheval")
+const { Op } = require("sequelize");
+const _ = require('lodash');
+const RepriseInscription = require("../model/RepriseInscription")
 
 // CREATE
 cheval.post('/create', (req, res) => {
@@ -74,6 +77,38 @@ cheval.put('/edit/:id_cheval', (req, res) => {
     else if (num < 1) res.json({message: "Le cheval n'existe pas"})
   }).catch(err => {
     res.json({message: "Une erreur est survenue lors de la mise à jour du cheval"})
+  })
+})
+
+// AVAILABLE HORSES FOR A SPECIFIC REPRISE
+cheval.get('/available_horses/reprise/:id_reprise', (req, res) => {
+  const id_reprise = req.params.id_reprise;
+  RepriseInscription.findAll({
+    where: {
+      id_reprise: id_reprise,
+      id_cheval: {
+        [Op.ne]: null
+      }
+    }
+  }).then(chevaux => {
+    let chevauxUnavailable = _.map(chevaux, function(cheval) { return cheval.id_cheval; })
+    Cheval.findAll({
+      where: {
+        id_cheval: {
+          [Op.notIn]: chevauxUnavailable
+        }
+      },
+      order: [
+        ['nom', 'ASC']
+      ]
+    }).then(chevaux => {
+      return res.json(chevaux)
+    }).catch(err => {
+      res.send("error : " + err)
+    })
+
+  }).catch(err => {
+    res.send(err)
   })
 })
 

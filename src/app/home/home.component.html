@@ -3,24 +3,52 @@
 
   <mat-card *ngFor="let reprise of allReprises">
 
-    <h2 class="center lobster_2">{{ reprise.title }}</h2>
+    <h2 class="center lobster_2" style="margin-bottom: 20px;"><b>{{ reprise.title }}</b>
+      <span class="spanBtnFiche">
+        <button *ngIf="!reprise.canceled && authService.isRider()" mat-raised-button color="primary" class="center" [routerLink]="['/reprise', reprise.id_reprise]">Voir la fiche</button>
+      </span>
+    </h2>
 
-    <mat-grid-list cols="4" rowHeight="10:1">
+    <mat-grid-list [cols]="authService.isRider() ? 5 : 4" rowHeight="10:1">
       <mat-grid-tile><b>Jour&nbsp;</b><mat-icon>event</mat-icon></mat-grid-tile>
       <mat-grid-tile><b>Heure&nbsp;</b><mat-icon>schedule</mat-icon></mat-grid-tile>
       <mat-grid-tile><b>Limite&nbsp;</b><mat-icon>groups</mat-icon></mat-grid-tile>
       <mat-grid-tile><b>Niveau du Galop&nbsp;</b><mat-icon>military_tech</mat-icon></mat-grid-tile>
+      <mat-grid-tile *ngIf="authService.isRider()"><b>Cheval assigné&nbsp;</b><img src="assets/horse-icon.png" height="20" alt="horse-icon"></mat-grid-tile>
 
       <mat-grid-tile>{{reprise.date | date:"MM/dd/yyyy"}}</mat-grid-tile>
-      <mat-grid-tile>{{reprise.date | date:"hh:mm"}}</mat-grid-tile>
+      <mat-grid-tile>{{reprise.date | date:"HH:mm"}}</mat-grid-tile>
       <mat-grid-tile>{{reprise.rider_number_limit}}</mat-grid-tile>
       <mat-grid-tile>{{reprise.galop_level}}</mat-grid-tile>
+      <div *ngIf="authService.isRider()">
+        <mat-grid-tile *ngIf="nomCheval(reprise.id_reprise); else noAssignedHorse">
+          <mat-icon matTooltipPosition=below [matTooltip]="nomCheval(reprise.id_reprise).race + ' - ' + nomCheval(reprise.id_reprise).age + ' ans'">info</mat-icon>
+          <p class="spanHorses">&nbsp;{{nomCheval(reprise.id_reprise).nom}}</p>
+        </mat-grid-tile>
+      </div>
+
+      <ng-template #noAssignedHorse>
+        <mat-grid-tile>
+          <p><i>Aucun</i></p>
+        </mat-grid-tile>
+      </ng-template>
     </mat-grid-list>
 
-    <div *ngIf="authService.isRider()">
-      <button mat-raised-button color="primary" class="center" *ngIf="!isRegistered(reprise.id_reprise)" (click)="registerToReprise(reprise.id_reprise)">S'inscrire</button>
-      <button mat-raised-button color="warn" class="center" *ngIf="isRegistered(reprise.id_reprise)" (click)="deleteRegisteredReprise(reprise.id_reprise)">Se désinscrire</button>
+    <div *ngIf="reprise.canceled; else notCanceled" class="center canceled">
+      <h3>
+        <mat-icon>cancel</mat-icon>
+        <span>&nbsp;La reprise est annulée</span>
+      </h3>
     </div>
+
+    <ng-template #notCanceled>
+      <div *ngIf="authService.isRider()">
+        <button mat-raised-button style="color: white; background-color: #69c61a;" class="center" *ngIf="!isRegistered(reprise.id_reprise); else btnDesinscrire" (click)="registerToReprise(reprise.id_reprise)">S'inscrire</button>
+        <ng-template #btnDesinscrire><button mat-raised-button color="warn" class="center" *ngIf="isRegistered(reprise.id_reprise)" (click)="deleteRegisteredReprise(reprise.id_reprise)">Se désinscrire</button></ng-template>
+      </div>
+    </ng-template>
+
+    <button *ngIf="authService.isInstructor()"  mat-raised-button color="primary" class="center" [routerLink]="['/reprise', reprise.id_reprise]">Modifier la reprise</button>
 
   </mat-card>
 </div>

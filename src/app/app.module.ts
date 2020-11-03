@@ -25,6 +25,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -46,7 +48,6 @@ import { ChevalEditComponent } from './cheval-edit/cheval-edit.component';
 import { ProfileFormComponent } from './profile-form/profile-form.component';
 import { ProfileEditComponent } from './profile-edit/profile-edit.component';
 import { RecuperationPasswordComponent } from './recuperation-password/recuperation-password.component';
-import { AssignHorsesComponent } from './assign-horses/assign-horses.component';
 
 @NgModule({
   declarations: [
@@ -66,8 +67,7 @@ import { AssignHorsesComponent } from './assign-horses/assign-horses.component';
     ChevalEditComponent,
     ProfileFormComponent,
     ProfileEditComponent,
-    RecuperationPasswordComponent,
-    AssignHorsesComponent
+    RecuperationPasswordComponent
   ],
   imports: [
     BrowserModule,
@@ -98,7 +98,9 @@ import { AssignHorsesComponent } from './assign-horses/assign-horses.component';
     MatDialogModule,
     MatSnackBarModule,
     MatMenuModule,
-    MatSelectModule
+    MatSelectModule,
+    DragDropModule,
+    MatTooltipModule
   ],
   providers: [AuthenticationService, AuthGuardService],
   bootstrap: [AppComponent]
