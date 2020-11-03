@@ -21,9 +21,4 @@ export class RepriseInscriptionService {
   public editSubscription(reprise_inscription: RepriseInscriptionInterface): Observable<any> {
     return this.http.put(`${this.baseURL}edit/${reprise_inscription.id}`, reprise_inscription);
   }
-
-  // tslint:disable-next-line:variable-name
-  isRegistered(id_reprise: number, id_user: number): Observable<any> {
-    return this.http.get(`${this.baseURL}isRegistered/reprise/${id_reprise}/user/${id_user}`);
-  }
 }

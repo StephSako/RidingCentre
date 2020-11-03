@@ -36,7 +36,10 @@ reprise_inscription.get('/reprise/:id_reprise', (req, res) => {
     where: {
       id_reprise: id_reprise
     },
-    include: ['user', 'cheval']
+    include: ['user', 'cheval'],
+    order: [
+      [User, 'lastname_user', 'ASC']
+    ]
   }).then(users => {
     if (!_.isEmpty(users)){
       return res.json(_.map(users, function(data) {
@@ -133,27 +136,6 @@ reprise_inscription.put('/edit/:id_reprise_inscription', (req, res) => {
     else if (num < 1) res.json({message: "L'inscription n'existe pas"})
   }).catch(err => {
     res.json({message: err/*"Une erreur est survenue lors de la mise à jour de l'inscription"*/})
-  })
-})
-
-// IF USER IS SUBSCRIBED TO A SPECIFIC REPRISE
-reprise_inscription.get('/isRegistered/reprise/:id_reprise/user/:id_user', (req, res) => {
-  let id_reprise = req.params.id_reprise
-  let id_user = req.params.id_user
-
-  RepriseInscription.findOne({
-    where: {
-      id_reprise: id_reprise,
-      id_user: id_user
-    }
-  }).then(reprise_inscription => {
-    res.json(
-      {
-        isRegistered: (reprise_inscription != null)
-      }
-    )
-  }).catch(err => {
-    res.json({message: err})
   })
 })
 

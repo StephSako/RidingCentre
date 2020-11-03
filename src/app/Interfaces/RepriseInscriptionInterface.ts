@@ -11,7 +11,3 @@ export interface RepriseInscriptionHomeInterface {
   id_reprise: number;
   cheval?: ChevalInterface;
 }
-
-export interface IsRegistereddRepriseInscriptionInterface {
-  isRegistered: boolean;
-}

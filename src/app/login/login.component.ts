@@ -58,7 +58,7 @@ export class LoginComponent implements OnInit {
           err => {
             this.nbErrors++;
             if (this.nbErrors === 3) { this.router.navigateByUrl('/recuperation-mot-de-passe'); }
-            else { this.authService.notifyUser(err, 'OK', this.snackBar, 'error', 2000); }
+            else { this.authService.notifyUser(err, this.snackBar, 'error', 2000, 'OK'); }
           }
         );
     }

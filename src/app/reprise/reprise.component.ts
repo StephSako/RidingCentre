@@ -9,8 +9,8 @@ import { RegisteredToRepriseInterface } from '../Interfaces/UserInterface';
 import { ChevalService } from '../Services/cheval.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthenticationService } from '../Services/authentication.service';
-import {IsRegistereddRepriseInscriptionInterface, RepriseInscriptionInterface} from '../Interfaces/RepriseInscriptionInterface';
-import {RepriseInscriptionService} from '../Services/reprise-inscription.service';
+import { RepriseInscriptionInterface } from '../Interfaces/RepriseInscriptionInterface';
+import { RepriseInscriptionService } from '../Services/reprise-inscription.service';
 
 @Component({
   selector: 'app-reprise',
@@ -19,9 +19,7 @@ import {RepriseInscriptionService} from '../Services/reprise-inscription.service
 })
 export class RepriseComponent implements OnInit {
 
-  isRegistered: IsRegistereddRepriseInscriptionInterface = {
-    isRegistered: null
-  };
+  isRegistered: boolean;
   displayedColumns: string[] = ['cavalier', 'horse'];
   chevauxDisponibles: ChevalInterface[];
   cavaliersInscrits: RegisteredToRepriseInterface[] = [{
@@ -63,9 +61,9 @@ export class RepriseComponent implements OnInit {
           event.previousIndex,
           event.currentIndex);
         this.editUserHorse(id_user, id_reprise_inscription, event.item.data.id_cheval);
-        this.authService.notifyUser('Le cheval a été assigné', null, this.snackBar, 'success', 1000);
+        this.authService.notifyUser('Le cheval a été assigné', this.snackBar, 'success', 1000);
       } else {
-        this.authService.notifyUser('Le cavalier a déjà un cheval assigné', null, this.snackBar, 'error', 1000);
+        this.authService.notifyUser('Le cavalier a déjà un cheval assigné', this.snackBar, 'error', 1000);
       }
     }
   }
@@ -77,7 +75,7 @@ export class RepriseComponent implements OnInit {
       event.currentIndex);
     if (event.item.data.user) {
       this.editUserHorse(event.item.data.user.id_user, event.item.data.id_reprise_inscription);
-      this.authService.notifyUser('Cheval désassigné', null, this.snackBar, 'error', 500);
+      this.authService.notifyUser('Cheval désassigné', this.snackBar, 'error', 500);
     }
   }
 
@@ -93,7 +91,6 @@ export class RepriseComponent implements OnInit {
       reprise => {
         this.reprise = reprise;
         this.getSubscribdedUsers();
-        this.inRegistered();
       },
       err => {
         console.error(err);
@@ -116,6 +113,7 @@ export class RepriseComponent implements OnInit {
   getSubscribdedUsers(): void {
     this.repriseInscriptionService.getRegisteredUsers(this.reprise.id_reprise).subscribe((subscriptions) => {
       this.cavaliersInscrits = subscriptions;
+      this.inRegistered();
       this.getAvailableHorses();
     });
   }
@@ -134,7 +132,7 @@ export class RepriseComponent implements OnInit {
         this.getSubscribdedUsers();
       },
       err => {
-        this.authService.notifyUser(err, 'OK', this.snackBar, 'error', 2000);
+        this.authService.notifyUser(err, this.snackBar, 'error', 2000, 'OK');
       });
   }
 
@@ -142,6 +140,7 @@ export class RepriseComponent implements OnInit {
     this.reprise.canceled = !this.reprise.canceled;
     this.repriseService.edit(this.reprise).subscribe(() => {
       this.getReprise();
+      console.log(this.reprise.canceled);
     }, err => {
       console.error(err);
     });
@@ -152,7 +151,7 @@ export class RepriseComponent implements OnInit {
     this.authService.deleteRegisteredReprise(this.reprise.id_reprise)
       .subscribe(
         () => {
-          this.inRegistered();
+          this.getSubscribdedUsers();
         },
         err => {
           console.error(err);
@@ -165,7 +164,7 @@ export class RepriseComponent implements OnInit {
     this.authService.registerToReprise(this.reprise.id_reprise)
       .subscribe(
         () => {
-          this.inRegistered();
+          this.getSubscribdedUsers();
         },
         err => {
           console.error(err);
@@ -174,11 +173,6 @@ export class RepriseComponent implements OnInit {
   }
 
   inRegistered(): void {
-    this.repriseInscriptionService.isRegistered(this.reprise.id_reprise, this.authService.getUserDetails().id_user).subscribe(
-      (isRegistered) => {
-        this.isRegistered = isRegistered;
-    }, err => {
-      console.error(err);
-    });
+    this.isRegistered = (!!this.cavaliersInscrits.find(cavalier => cavalier.user.id_user === this.authService.getUserDetails().id_user));
   }
 }

@@ -1,8 +1,8 @@
 .list {
-  width: 500px;
+  width: 100%;
   max-width: 100%;
   border: solid 1px black;
-  min-height: 60px;
+  min-height: 44px;
   border-radius: 10px;
   display: block;
   background: white;
@@ -10,18 +10,22 @@
 }
 
 .box {
-  padding: 20px 10px;
+  padding: 10px 10px;
   border-radius: 10px;
-  border-bottom: solid 1px white;
   color: rgba(0, 0, 0, 0.87);
   display: flex;
+  margin: 2px;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   box-sizing: border-box;
   cursor: move;
-  background: #d3e3fc;
+  background: #f1f1f1;
   font-size: 14px;
+}
+
+.list.all .box {
+  border: 1px solid #858585;
 }
 
 .cdk-drag-preview {
@@ -36,10 +40,6 @@
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 
-.box:last-child {
-  border: none;
-}
-
 .list.cdk-drop-list-dragging .box:not(.cdk-drag-placeholder) {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
@@ -48,7 +48,7 @@
   background: #ccc;
   border-radius: 10px;
   border: dotted 3px #999;
-  min-height: 60px;
+  min-height: 44px;
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 
@@ -71,7 +71,7 @@
 
 .nom_cavalier {
   margin-top: 20px;
-  margin-bottom: 0;
+  margin-bottom: 5px;
 }
 
 img {
@@ -104,4 +104,8 @@ h3 {
 .canceled {
   border: 1px solid white;
   background-color: #fd5b5b;
+}
+
+.userRow {
+  background-color: rgba(219, 219, 219, 0.5);
 }

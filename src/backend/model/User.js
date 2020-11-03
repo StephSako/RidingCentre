@@ -32,6 +32,9 @@ module.exports = db.sequelize.define(
       type: Sequelize.STRING,
       unique: true,
       allowNull: false
+    },
+    role_user_id: {
+      type: Sequelize.NUMBER
     }
   },
   {

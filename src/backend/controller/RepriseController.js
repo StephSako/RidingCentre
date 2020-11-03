@@ -37,7 +37,11 @@ reprise_router.get('/details/:id_reprise', (req, res) => {
 
 // ALL
 reprise_router.get('/', (req, res) => {
-  Reprise.findAll({}).then(reprises => {
+  Reprise.findAll({
+    order: [
+      ['date', 'ASC']
+    ]
+  }).then(reprises => {
     if (reprises) res.json(reprises)
     else res.send("Il n'y a pas de reprises")
   }).catch(err => {

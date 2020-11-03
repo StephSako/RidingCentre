@@ -133,7 +133,7 @@ export class AuthenticationService {
     return this.http.post(this.baseURLRepriseInscription + 'register', repriseInscriptionData);
   }
 
-  public notifyUser(message: string, action: string, snackBar: MatSnackBar, style: string, duration: number): void {
+  public notifyUser(message: string, snackBar: MatSnackBar, style: string, duration: number, action?: string): void {
       snackBar.open(message, action, {
         duration,
         panelClass: ['style-' + style],
