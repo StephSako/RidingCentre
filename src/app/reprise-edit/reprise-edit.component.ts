@@ -13,6 +13,7 @@ export class RepriseEditComponent {
 
   reprise: RepriseInterface = {
     id_reprise: null,
+    user: null,
     rider_number_limit: null,
     date: null,
     galop_level: null,

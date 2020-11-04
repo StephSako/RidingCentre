@@ -9,7 +9,8 @@ reprise_router.post('/create', (req, res) => {
     hour: req.body.hour,
     rider_number_limit: req.body.rider_number_limit,
     title: req.body.title,
-    galop_level: req.body.galop_level
+    galop_level: req.body.galop_level,
+    user_id_user: req.body.user_id_user
   }
 
   Reprise.create(repriseData).then(reprise => {
@@ -26,7 +27,8 @@ reprise_router.get('/details/:id_reprise', (req, res) => {
   Reprise.findOne({
     where: {
       id_reprise: id_reprise
-    }
+    },
+    include: ['user']
   }).then(reprise => {
     if (reprise) res.json(reprise)
     else res.send("La reprise n'existe pas")
@@ -40,7 +42,8 @@ reprise_router.get('/', (req, res) => {
   Reprise.findAll({
     order: [
       ['date', 'ASC']
-    ]
+    ],
+    include: ['user']
   }).then(reprises => {
     if (reprises) res.json(reprises)
     else res.send("Il n'y a pas de reprises")

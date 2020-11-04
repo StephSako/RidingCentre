@@ -22,6 +22,7 @@ export class RepriseComponent implements OnInit {
   isRegistered: boolean;
   displayedColumns: string[] = ['cavalier', 'horse'];
   chevauxDisponibles: ChevalInterface[];
+  noHorses: boolean;
   cavaliersInscrits: RegisteredToRepriseInterface[] = [{
     id_reprise_inscription: null,
     user: {
@@ -39,6 +40,7 @@ export class RepriseComponent implements OnInit {
 
   reprise: RepriseInterface = {
     id_reprise: null,
+    user: null,
     rider_number_limit: null,
     date: null,
     galop_level: null,
@@ -49,6 +51,12 @@ export class RepriseComponent implements OnInit {
   constructor(private route: ActivatedRoute, private repriseInscriptionService: RepriseInscriptionService,
               private chevalService: ChevalService, private snackBar: MatSnackBar, public authService: AuthenticationService,
               private repriseService: RepriseService) {}
+
+  ngOnInit(): void {
+    this.getReprise();
+    this.getAvailableHorses();
+    this.chevalService.getAll().subscribe(chevaux => this.noHorses = (!chevaux));
+  }
 
   // tslint:disable-next-line:variable-name
   dropStackToUser(event: CdkDragDrop<ChevalInterface[]>, id_user: number, id_reprise_inscription: number): void {
@@ -79,17 +87,13 @@ export class RepriseComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {
-    this.getReprise();
-    this.getAvailableHorses();
-  }
-
   getReprise(): void {
     // tslint:disable-next-line:variable-name
     const id_reprise = +this.route.snapshot.paramMap.get('id_reprise');
     this.repriseService.details(id_reprise).subscribe(
       reprise => {
         this.reprise = reprise;
+        console.log(this.reprise.user.lastname_user);
         this.getSubscribdedUsers();
       },
       err => {

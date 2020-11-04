@@ -153,4 +153,18 @@ user.post('/retrieve/password', (req, res) => {
   });
 })
 
+// ALL INSTRUCTOR
+user.get('/instructors', (req, res) => {
+  User.findAll({
+    where:{
+      role_user_id: 2
+    }
+  }).then(moniteurs => {
+    if (moniteurs) res.json(moniteurs)
+    else res.send("Il n'y a pas de moniteur")
+  }).catch(err => {
+    res.send("error : " + err)
+  })
+})
+
 module.exports = user

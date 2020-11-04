@@ -30,6 +30,7 @@ export class RepriseCreateComponent implements OnInit {
 
   @Input() reprise: RepriseInterface = {
     id_reprise: null,
+    user: null,
     rider_number_limit: null,
     date: null,
     galop_level: null,

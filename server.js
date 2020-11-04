@@ -38,6 +38,10 @@ app.get('/api', function (req, res) {
 RoleUser.hasMany(User)
 User.belongsTo(RoleUser)
 
+// Associations for reprise's instructor
+User.hasMany(Reprise)
+Reprise.belongsTo(User)
+
 // Associations for reprise inscriptions
 /*User.belongsToMany(Reprise, {
   foreignKey: 'id_user',

@@ -23,10 +23,15 @@ module.exports = db.sequelize.define(
     },
     canceled: {
       type: Sequelize.BOOLEAN
+    },
+    user_id_user: {
+      type: Sequelize.INTEGER
     }
   },
   {
     timestamps: false,
-    freezeTableName: 1
+    freezeTableName: 1,
+    underscored: true,
+    camelCase: false
   }
 )
