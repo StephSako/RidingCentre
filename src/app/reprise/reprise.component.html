@@ -2,13 +2,15 @@
 
   <h1 class="lobster center">Reprise<span class="lobster" *ngIf="reprise.title"> - {{ reprise.title }}</span></h1>
 
-  <mat-card>
-    <mat-grid-list cols="4" rowHeight="10:1">
+  <mat-card *ngIf="reprise">
+    <mat-grid-list cols="5" rowHeight="9:1">
+      <mat-grid-tile><b>Moniteur&nbsp;</b><mat-icon>supervised_user_circle</mat-icon></mat-grid-tile>
       <mat-grid-tile><b>Jour&nbsp;</b><mat-icon>event</mat-icon></mat-grid-tile>
       <mat-grid-tile><b>Heure&nbsp;</b><mat-icon>schedule</mat-icon></mat-grid-tile>
       <mat-grid-tile><b>Limite&nbsp;</b><mat-icon>groups</mat-icon></mat-grid-tile>
       <mat-grid-tile><b>Niveau du Galop&nbsp;</b><mat-icon>military_tech</mat-icon></mat-grid-tile>
 
+      <mat-grid-tile *ngIf="reprise.user">{{reprise.user.firstname_user}} {{reprise.user.lastname_user | uppercase}}</mat-grid-tile>
       <mat-grid-tile>{{reprise.date | date:"MM/dd/yyyy"}}</mat-grid-tile>
       <mat-grid-tile>{{reprise.date | date:"HH:mm"}}</mat-grid-tile>
       <mat-grid-tile>{{reprise.rider_number_limit}}</mat-grid-tile>
@@ -25,9 +27,14 @@
   <div *ngIf="!reprise.canceled">
     <h1 class="lobster center">Assignation des chevaux</h1>
 
+    <mat-card *ngIf="noHorses">
+      <h2 style="color: black" class="center">Il n'y a pas de chevaux configurés.</h2>
+      <button mat-raised-button color="primary" class="center" routerLink="/cheval-instructor">Ajouter des chevaux</button>
+    </mat-card>
+
     <div cdkDropListGroup *ngIf="authService.isInstructor()">
       <div class="row">
-        <div class="column">
+        <div style="margin-top: 32px;" class="column">
 
           <div
             cdkDropList

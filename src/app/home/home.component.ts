@@ -5,7 +5,10 @@ import { RepriseInterface } from '../Interfaces/RepriseInterface';
 import {AuthenticationService} from '../Services/authentication.service';
 import {RepriseInscriptionHomeInterface} from '../Interfaces/RepriseInscriptionInterface';
 import {ChevalInterface} from '../Interfaces/ChevalInterface';
+import {FormControl} from '@angular/forms';
+import {UserInterface} from '../Interfaces/UserInterface';
 
+// @ts-ignore
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -16,15 +19,42 @@ export class HomeComponent implements OnInit {
   allReprises: RepriseInterface[];
   allRegistredReprises: RepriseInscriptionHomeInterface[];
 
+  galopLevelsControl = new FormControl();
+  galopLevels: number[] = [1, 2, 3, 4, 5, 6, 7];
+
+  moniteursControl = new FormControl();
+  moniteurs: UserInterface[];
+
   constructor(private repriseService: RepriseService, public authService: AuthenticationService) { }
 
   ngOnInit(): void {
     this.getAllReprises();
+    this.getAllMoniteurs();
     this.getAllRegisteredReprises();
   }
 
   getAllReprises(): void {
-    this.repriseService.getAll().subscribe(reprises => this.allReprises = reprises);
+    this.repriseService.getAll().subscribe((reprises) => {
+      if (this.galopLevelsControl.value != null && this.galopLevelsControl.value.length > 0){
+        console.log('niveau saisis');
+        this.allReprises = reprises.filter(reprise => this.galopLevelsControl.value.includes(reprise.galop_level));
+      }
+
+      if (this.moniteursControl.value != null && this.moniteursControl.value.length > 0){
+        console.log('moniteur saisis');
+        this.allReprises = this.allReprises.filter(reprise => this.moniteursControl.value.includes(reprise.user.id_user));
+      }
+
+      if (this.galopLevelsControl.value == null || this.galopLevelsControl.value.length === 0) {
+        if (this.moniteursControl.value == null || this.moniteursControl.value.length === 0) {
+          this.allReprises = reprises;
+        }
+      }
+    });
+  }
+
+  getAllMoniteurs(): void {
+    this.authService.getAllMoniteurs().subscribe(moniteurs => this.moniteurs = moniteurs);
   }
 
   getAllRegisteredReprises(): void {
@@ -76,5 +106,4 @@ export class HomeComponent implements OnInit {
       }
     }
   }
-
 }

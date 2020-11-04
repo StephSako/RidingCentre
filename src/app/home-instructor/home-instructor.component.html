@@ -5,7 +5,7 @@
     </mat-expansion-panel-header>
 
     <div style="margin-top: 40px;" class="container">
-      <form (submit)="create()">
+      <form (submit)="createReprise()">
         <app-reprise-create [reprise]="reprise"></app-reprise-create>
         <button mat-raised-button class="center" color="accent" [disabled]="!isInvalid()">Créer</button>
       </form>

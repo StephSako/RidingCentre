@@ -172,4 +172,8 @@ export class AuthenticationService {
       })
     );
   }
+
+  public getAllMoniteurs(): Observable<any> {
+    return this.http.get(this.baseURL + 'instructors');
+  }
 }
