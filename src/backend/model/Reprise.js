@@ -10,7 +10,7 @@ module.exports = db.sequelize.define(
       autoIncrement: true
     },
     date: {
-      type: Sequelize.DATE
+      type: Sequelize.INTEGER // timestamp type
     },
     rider_number_limit: {
       type: Sequelize.INTEGER
