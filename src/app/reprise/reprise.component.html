@@ -2,14 +2,16 @@
 
   <h1 class="lobster center">Reprise<span class="lobster" *ngIf="reprise.title"> - {{ reprise.title }}</span></h1>
 
-  <mat-card>
-    <mat-grid-list cols="4" rowHeight="10:1">
+  <mat-card *ngIf="reprise">
+    <mat-grid-list cols="5" rowHeight="9:1">
+      <mat-grid-tile><b>Moniteur&nbsp;</b><mat-icon>supervised_user_circle</mat-icon></mat-grid-tile>
       <mat-grid-tile><b>Jour&nbsp;</b><mat-icon>event</mat-icon></mat-grid-tile>
       <mat-grid-tile><b>Heure&nbsp;</b><mat-icon>schedule</mat-icon></mat-grid-tile>
       <mat-grid-tile><b>Limite&nbsp;</b><mat-icon>groups</mat-icon></mat-grid-tile>
       <mat-grid-tile><b>Niveau du Galop&nbsp;</b><mat-icon>military_tech</mat-icon></mat-grid-tile>
 
-      <mat-grid-tile>{{reprise.date | date:"MM/dd/yyyy"}}</mat-grid-tile>
+      <mat-grid-tile *ngIf="reprise.user">{{reprise.user.firstname_user}} {{reprise.user.lastname_user | uppercase}}</mat-grid-tile>
+      <mat-grid-tile>{{reprise.date | date:"dd/MM/yyyy"}}</mat-grid-tile>
       <mat-grid-tile>{{reprise.date | date:"HH:mm"}}</mat-grid-tile>
       <mat-grid-tile>{{reprise.rider_number_limit}}</mat-grid-tile>
       <mat-grid-tile>{{reprise.galop_level}}</mat-grid-tile>
@@ -23,48 +25,65 @@
   </mat-card>
 
   <div *ngIf="!reprise.canceled">
-    <h1 class="lobster center">Assignation des chevaux</h1>
+    <div *ngIf="editable24h && !outdated; else notEditable">
+      <h1 class="lobster center">Assignation des chevaux</h1>
 
-    <div cdkDropListGroup *ngIf="authService.isInstructor()">
-      <div class="row">
-        <div class="column">
+      <mat-card *ngIf="noHorses">
+        <h2 style="color: black" class="center">Il n'y a pas de chevaux configurés.</h2>
+        <button mat-raised-button color="primary" class="center" routerLink="/cheval-instructor">Ajouter des chevaux</button>
+      </mat-card>
 
-          <div
-            cdkDropList
-            [cdkDropListData]="chevauxDisponibles"
-            class="list all"
-            (cdkDropListDropped)="dropUserToStack($event)">
-            <div class="box" [cdkDragData]="cheval" *ngFor="let cheval of chevauxDisponibles" cdkDrag>
-              <div class="custom-placeholder" *cdkDragPlaceholder></div>
-              <span><b>{{cheval.nom}}</b> - {{cheval.race}} - {{cheval.age}} ans</span><mat-icon aria-hidden="false">open_with</mat-icon>
-            </div>
-          </div>
+      <div cdkDropListGroup *ngIf="authService.isInstructor()">
+        <div class="row">
+          <div style="margin-top: 32px;" class="column">
 
-        </div>
-
-        <div class="column">
-
-          <div *ngFor="let cavalier of cavaliersInscrits">
-            <h3 class="nom_cavalier center">{{cavalier.user.firstname_user}} {{cavalier.user.lastname_user}}</h3>
             <div
               cdkDropList
-              [cdkDropListData]="cavalier.cheval"
-              class="list"
-              (cdkDropListDropped)="dropStackToUser($event, cavalier.user.id_user, cavalier.id_reprise_inscription)">
-              <div class="box" [cdkDragData]="cavalier" *ngFor="let cheval of cavalier.cheval" cdkDrag>
+              [cdkDropListData]="chevauxDisponibles"
+              class="list all"
+              (cdkDropListDropped)="dropUserToStack($event)">
+              <div class="box" [cdkDragData]="cheval" *ngFor="let cheval of chevauxDisponibles" cdkDrag>
                 <div class="custom-placeholder" *cdkDragPlaceholder></div>
                 <span><b>{{cheval.nom}}</b> - {{cheval.race}} - {{cheval.age}} ans</span><mat-icon aria-hidden="false">open_with</mat-icon>
               </div>
             </div>
+
+          </div>
+
+          <div class="column">
+
+            <div *ngFor="let cavalier of cavaliersInscrits">
+              <h3 class="nom_cavalier center">{{cavalier.user.firstname_user}} {{cavalier.user.lastname_user}}</h3>
+              <div
+                cdkDropList
+                [cdkDropListData]="cavalier.cheval"
+                class="list"
+                (cdkDropListDropped)="dropStackToUser($event, cavalier.user.id_user, cavalier.id_reprise_inscription)">
+                <div class="box" [cdkDragData]="cavalier" *ngFor="let cheval of cavalier.cheval" cdkDrag>
+                  <div class="custom-placeholder" *cdkDragPlaceholder></div>
+                  <span><b>{{cheval.nom}}</b> - {{cheval.race}} - {{cheval.age}} ans</span><mat-icon aria-hidden="false">open_with</mat-icon>
+                </div>
+              </div>
+            </div>
+
           </div>
 
         </div>
-
       </div>
     </div>
+
+    <ng-template #notEditable>
+      <mat-card *ngIf="!editable24h && !outdated">
+        <h2 class="center lobster" style="color: black;">Les chevaux ne pourront être assignés qu'à partir de 24 heures avant le début de la reprise</h2>
+      </mat-card>
+      <mat-card *ngIf="outdated">
+        <h2 class="center lobster" style="color: black;">Le cours est terminé, les chevaux ne sont plus assignables</h2>
+      </mat-card>
+    </ng-template>
+
   </div>
 
-  <div *ngIf="this.authService.isInstructor()">
+  <div *ngIf="this.authService.isInstructor() && !outdated">
     <mat-card *ngIf="cavaliersInscrits.length < 3 && !reprise.canceled; else maintainReprise">
       <h2 style="color: black; margin-bottom: 0;" class="center">Moins de 3 cavaliers sont inscrits à la reprise</h2>
       <h3 style="color: black; margin-bottom: 0;" class="center">Annuler la séance ?</h3><br>
@@ -100,7 +119,7 @@
   </table>
 
   <mat-card class="canceled" *ngIf="reprise.canceled">
-    <h2 class="center">La reprise est annulée dû au faible nombre de cavaliers inscrits ...</h2>
+    <h2 class="center lobster">La reprise est annulée dû au faible nombre de cavaliers inscrits ...</h2>
   </mat-card>
 
 </div>

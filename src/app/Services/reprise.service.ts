@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { RepriseInterface } from '../Interfaces/RepriseInterface';
+import {RepriseCreateInterface, RepriseInterface} from '../Interfaces/RepriseInterface';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +16,7 @@ export class RepriseService {
     return this.http.get(this.baseURL);
   }
 
-  public create(reprise: RepriseInterface): Observable<any> {
+  public create(reprise: RepriseCreateInterface): Observable<any> {
     return this.http.post(this.baseURL + 'create', reprise);
   }
 

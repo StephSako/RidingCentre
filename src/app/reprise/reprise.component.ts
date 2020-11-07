@@ -19,9 +19,12 @@ import { RepriseInscriptionService } from '../Services/reprise-inscription.servi
 })
 export class RepriseComponent implements OnInit {
 
+  editable24h: boolean;
+  outdated: boolean;
   isRegistered: boolean;
   displayedColumns: string[] = ['cavalier', 'horse'];
   chevauxDisponibles: ChevalInterface[];
+  noHorses: boolean;
   cavaliersInscrits: RegisteredToRepriseInterface[] = [{
     id_reprise_inscription: null,
     user: {
@@ -39,6 +42,7 @@ export class RepriseComponent implements OnInit {
 
   reprise: RepriseInterface = {
     id_reprise: null,
+    user: null,
     rider_number_limit: null,
     date: null,
     galop_level: null,
@@ -49,6 +53,12 @@ export class RepriseComponent implements OnInit {
   constructor(private route: ActivatedRoute, private repriseInscriptionService: RepriseInscriptionService,
               private chevalService: ChevalService, private snackBar: MatSnackBar, public authService: AuthenticationService,
               private repriseService: RepriseService) {}
+
+  ngOnInit(): void {
+    this.getReprise();
+    this.getAvailableHorses();
+    this.chevalService.getAll().subscribe(chevaux => this.noHorses = (!chevaux));
+  }
 
   // tslint:disable-next-line:variable-name
   dropStackToUser(event: CdkDragDrop<ChevalInterface[]>, id_user: number, id_reprise_inscription: number): void {
@@ -79,17 +89,17 @@ export class RepriseComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {
-    this.getReprise();
-    this.getAvailableHorses();
-  }
-
   getReprise(): void {
     // tslint:disable-next-line:variable-name
     const id_reprise = +this.route.snapshot.paramMap.get('id_reprise');
     this.repriseService.details(id_reprise).subscribe(
       reprise => {
         this.reprise = reprise;
+
+        const diff = Math.abs((new Date()).getTime() - new Date(this.reprise.date).getTime());
+        const diffMinutes = Math.ceil(diff / (1000 * 3600 / 60));
+        this.outdated = (new Date() > new Date(this.reprise.date));
+        this.editable24h = (diffMinutes <= 1440 && !this.outdated);
         this.getSubscribdedUsers();
       },
       err => {
@@ -140,7 +150,6 @@ export class RepriseComponent implements OnInit {
     this.reprise.canceled = !this.reprise.canceled;
     this.repriseService.edit(this.reprise).subscribe(() => {
       this.getReprise();
-      console.log(this.reprise.canceled);
     }, err => {
       console.error(err);
     });
