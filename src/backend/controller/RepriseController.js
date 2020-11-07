@@ -6,7 +6,6 @@ const Reprise = require("../model/Reprise")
 reprise_router.post('/create', (req, res) => {
   const repriseData = {
     date: req.body.date,
-    hour: req.body.hour,
     rider_number_limit: req.body.rider_number_limit,
     title: req.body.title,
     galop_level: req.body.galop_level,

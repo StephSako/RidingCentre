@@ -1,8 +1,8 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
 import { FormControl } from '@angular/forms';
 
-import { RepriseInterface } from '../Interfaces/RepriseInterface';
+import { RepriseCreateInterface } from '../Interfaces/RepriseInterface';
 
 @Component({
   selector: 'app-reprise-create',
@@ -28,9 +28,9 @@ export class RepriseCreateComponent implements OnInit {
   public hideTime = false;
   public dateControl = new FormControl(null);
 
-  @Input() reprise: RepriseInterface = {
+  @Input() reprise: RepriseCreateInterface = {
     id_reprise: null,
-    user: null,
+    user_id_user: null,
     rider_number_limit: null,
     date: null,
     galop_level: null,

@@ -35,20 +35,13 @@ export class HomeComponent implements OnInit {
 
   getAllReprises(): void {
     this.repriseService.getAll().subscribe((reprises) => {
+      this.allReprises = reprises;
+
       if (this.galopLevelsControl.value != null && this.galopLevelsControl.value.length > 0){
-        console.log('niveau saisis');
-        this.allReprises = reprises.filter(reprise => this.galopLevelsControl.value.includes(reprise.galop_level));
+        this.allReprises = this.allReprises.filter(reprise => this.galopLevelsControl.value.includes(reprise.galop_level));
       }
-
       if (this.moniteursControl.value != null && this.moniteursControl.value.length > 0){
-        console.log('moniteur saisis');
         this.allReprises = this.allReprises.filter(reprise => this.moniteursControl.value.includes(reprise.user.id_user));
-      }
-
-      if (this.galopLevelsControl.value == null || this.galopLevelsControl.value.length === 0) {
-        if (this.moniteursControl.value == null || this.moniteursControl.value.length === 0) {
-          this.allReprises = reprises;
-        }
       }
     });
   }

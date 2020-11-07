@@ -34,8 +34,6 @@ export class ChevalInstructorComponent implements OnInit {
   }
 
   create(): void {
-    // this.cheval.date = moment(this.cheval.date).utc().format('YYYY-MM-DD hh:mm');
-    // console.log(this.cheval);
     this.chevalService.create(this.cheval)
       .subscribe(
         () => {

@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import * as moment from 'moment';
+import { MatDialog } from '@angular/material/dialog';
 
-import {RepriseCreateInterface, RepriseInterface} from '../Interfaces/RepriseInterface';
+import { RepriseCreateInterface, RepriseInterface } from '../Interfaces/RepriseInterface';
 import { RepriseService } from '../Services/reprise.service';
 import { RepriseEditComponent } from '../reprise-edit/reprise-edit.component';
-import { MatDialog } from '@angular/material/dialog';
-import {AuthenticationService} from '../Services/authentication.service';
+import { AuthenticationService } from '../Services/authentication.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-home-instructor',
@@ -26,7 +28,7 @@ export class HomeInstructorComponent implements OnInit {
     canceled: null
   };
 
-  constructor(public repriseService: RepriseService, public dialog: MatDialog, private authService: AuthenticationService) { }
+  constructor(public repriseService: RepriseService, public dialog: MatDialog, private authService: AuthenticationService, private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.updateAllReprises();
@@ -38,11 +40,13 @@ export class HomeInstructorComponent implements OnInit {
 
   createReprise(): void {
     // this.reprise.date = moment(this.reprise.date).utc().format('YYYY-MM-DD hh:mm');
+    const dt = moment(this.reprise.date).utc().format('YYYY-MM-DD HH:mm');
     this.reprise.user_id_user = this.authService.getUserDetails().id_user;
     this.repriseService.create(this.reprise)
       .subscribe(
         () => {
           this.updateAllReprises();
+          this.authService.notifyUser('Reprise créée', this.snackBar, 'success', 1500, 'OK');
         },
         err => {
           console.error(err);
