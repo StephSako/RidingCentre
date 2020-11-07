@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { AuthenticationService } from '../Services/authentication.service';
-import { UserEditInterface, UserInterface } from '../Interfaces/UserInterface';
+import { UserInfoInterface, UserInterface } from '../Interfaces/UserInterface';
 import { MatDialog } from '@angular/material/dialog';
 import { ProfileEditComponent } from '../profile-edit/profile-edit.component';
 
@@ -13,7 +13,7 @@ import { ProfileEditComponent } from '../profile-edit/profile-edit.component';
 export class ProfileComponent implements OnInit {
 
   user: UserInterface;
-  userEdit: UserEditInterface = {
+  userEdit: UserInfoInterface = {
     id_user: null,
     lastname_user: null,
     firstname_user: null,
@@ -35,7 +35,7 @@ export class ProfileComponent implements OnInit {
     );
   }
 
-  openDialog(user: UserEditInterface): void {
+  openDialog(user: UserInfoInterface): void {
     this.dialog.open(ProfileEditComponent, {
       width: '60%',
       data: user

@@ -17,7 +17,7 @@
 
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef>Nom</th>
-      <td mat-cell *matCellDef="let cheval">{{cheval.nom}}</td>
+      <td mat-cell *matCellDef="let cheval">{{cheval.nom | titlecase}}</td>
     </ng-container>
 
     <ng-container matColumnDef="age">
@@ -27,17 +27,17 @@
 
     <ng-container matColumnDef="race">
       <th mat-header-cell *matHeaderCellDef>Race</th>
-      <td mat-cell *matCellDef="let cheval">{{cheval.race}}</td>
+      <td mat-cell *matCellDef="let cheval">{{cheval.race | titlecase}}</td>
     </ng-container>
 
     <ng-container matColumnDef="modify">
       <th mat-header-cell *matHeaderCellDef></th>
-      <td mat-cell *matCellDef="let cheval"><button (click)="openDialog(cheval)" class="center" mat-raised-button color="primary">Modifier</button></td>
+      <td mat-cell *matCellDef="let cheval"><button (click)="editCheval(cheval)" class="center" mat-raised-button color="primary">Modifier</button></td>
     </ng-container>
 
     <ng-container matColumnDef="delete">
       <th mat-header-cell *matHeaderCellDef></th>
-      <td mat-cell *matCellDef="let cheval"><button (click)="delete(cheval.id)" class="center" mat-raised-button color="warn">Supprimer</button></td>
+      <td mat-cell *matCellDef="let cheval"><button (click)="deleteCheval(cheval.id_cheval, cheval.nom)" class="center" mat-raised-button color="warn">Supprimer</button></td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

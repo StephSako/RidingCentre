@@ -118,9 +118,23 @@ user.put('/edit/:id_user', (req, res) => {
   })
 })
 
-// DELETE
-user.post('/delete', (req, res) => {
-  console.log('not created yet')
+// DELETE ACCOUNT
+user.delete('/delete/:id_user', (req, res) => {
+  const id_user = req.params.id_user
+
+  User.findOne({
+    where: {
+      id_user: id_user,
+    }
+  }).then(user => {
+    if (user){
+      user.destroy();
+      res.json({message: "Compte supprimé avec succès"})
+    }
+    else res.json({message: "Ce compte n'existe pas"})
+  }).catch(err => {
+    res.json({error: err})
+  })
 })
 
 // SEND EMAIL
@@ -162,6 +176,20 @@ user.get('/instructors', (req, res) => {
   }).then(moniteurs => {
     if (moniteurs) res.json(moniteurs)
     else res.send("Il n'y a pas de moniteur")
+  }).catch(err => {
+    res.send("error : " + err)
+  })
+})
+
+// ALL ADMINISTRATORS
+user.get('/administrators', (req, res) => {
+  User.findAll({
+    where:{
+      role_user_id: 3
+    }
+  }).then(moniteurs => {
+    if (moniteurs) res.json(moniteurs)
+    else res.send("Il n'y a pas d'administrateurs")
   }).catch(err => {
     res.send("error : " + err)
   })

@@ -11,7 +11,7 @@ import {
   UserInterface,
   RepriseCreateInscriptionInterface,
   TokenResponse,
-  UserEditInterface
+  UserInfoInterface
 } from '../Interfaces/UserInterface';
 
 @Injectable({
@@ -70,6 +70,13 @@ export class AuthenticationService {
     const user = this.getUserDetails();
     if (this.isLoggedIn()) {
       return user.role_user.id === 3;
+    } else { return false; }
+  }
+
+  public isSuperAdmin(): boolean {
+    const user = this.getUserDetails();
+    if (this.isLoggedIn()) {
+      return user.role_user.id === 4;
     } else { return false; }
   }
 
@@ -141,7 +148,7 @@ export class AuthenticationService {
   }
 
   // tslint:disable-next-line:variable-name
-  public edit(user: UserEditInterface): Observable<any> {
+  public edit(user: UserInfoInterface): Observable<any> {
     const URL = this.http.put(`${this.baseURL}edit/${user.id_user}`, user);
 
     return URL.pipe(
@@ -175,5 +182,14 @@ export class AuthenticationService {
 
   public getAllMoniteurs(): Observable<any> {
     return this.http.get(this.baseURL + 'instructors');
+  }
+
+  public getAllAdministrators(): Observable<any> {
+    return this.http.get(this.baseURL + 'administrators');
+  }
+
+  // tslint:disable-next-line:variable-name
+  public deleteAccount(id_user: number): Observable<any> {
+    return this.http.delete(`${this.baseURL}delete/${id_user}`);
   }
 }

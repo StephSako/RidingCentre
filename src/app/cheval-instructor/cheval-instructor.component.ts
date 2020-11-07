@@ -5,6 +5,8 @@ import { ChevalService } from '../Services/cheval.service';
 import { ChevalInterface } from '../Interfaces/ChevalInterface';
 import { ChevalEditComponent } from '../cheval-edit/cheval-edit.component';
 import { HelperService } from '../Services/helper.service';
+import { DialogData } from '../Interfaces/DialogData';
+import { DialogComponent } from '../dialog/dialog.component';
 
 @Component({
   selector: 'app-cheval-instructor',
@@ -45,20 +47,25 @@ export class ChevalInstructorComponent implements OnInit {
       );
   }
 
-  // tslint:disable-next-line:variable-name
-  delete(id_cheval: number): void {
-    this.chevalService.delete(id_cheval)
-      .subscribe(
-        () => {
-          this.updateAllCheval();
-        },
-        err => {
-          console.error(err);
-        }
-      );
+  deleteCheval(idCheval: number, nomCheval: string): void {
+    const horseToDelete: DialogData = {
+      id: idCheval,
+      action: 'Supprimer le cheval',
+      subtitle: nomCheval
+    };
+
+    this.dialog.open(DialogComponent, {
+      width: '30%',
+      data: horseToDelete
+    })
+      .afterClosed().subscribe(result => {
+      this.chevalService.delete(result).subscribe(() => {
+        this.updateAllCheval();
+      }, err => { console.error(err); });
+    });
   }
 
-  openDialog(cheval: ChevalInterface): void {
+  editCheval(cheval: ChevalInterface): void {
     this.dialog.open(ChevalEditComponent, {
       width: '60%',
       data: cheval

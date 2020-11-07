@@ -14,6 +14,7 @@ import { RepriseComponent } from './reprise/reprise.component';
 import { RepriseCreateComponent } from './reprise-create/reprise-create.component';
 import {ChevalInstructorComponent} from './cheval-instructor/cheval-instructor.component';
 import {RecuperationPasswordComponent} from './recuperation-password/recuperation-password.component';
+import {AdminGestionComponent} from './admin-gestion/admin-gestion.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -26,6 +27,7 @@ const routes: Routes = [
   { path: 'reprise/:id_reprise', component: RepriseComponent, canActivate: [AuthGuardService] },
   { path: 'new/reprise', component: RepriseCreateComponent, canActivate: [AuthGuardService] },
   { path: 'recuperation-mot-de-passe', component: RecuperationPasswordComponent },
+  { path: 'admin-gestion', component: AdminGestionComponent, canActivate: [AuthGuardService] },
 ];
 
 @NgModule({

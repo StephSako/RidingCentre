@@ -52,7 +52,7 @@ cheval.delete('/delete/:id_cheval', (req, res) => {
 
   Cheval.findOne({
     where: {
-      id: id_cheval
+      id_cheval: id_cheval
     }
   }).then(cheval => {
     if (cheval){

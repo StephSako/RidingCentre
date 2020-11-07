@@ -1,0 +1,41 @@
+<div class="container">
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title></mat-panel-title>
+      <mat-panel-description class="lobster">Créer un compte administrateur</mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <div style="margin-top: 40px;" class="container">
+      <form (submit)="create()">
+        <app-user-form [user]="administrator"></app-user-form>
+        <button mat-raised-button class="center" color="accent" [disabled]="!isInvalid()">Créer</button>
+      </form>
+    </div>
+
+  </mat-expansion-panel>
+
+  <mat-grid-list cols="3" rowHeight="370px:250px">
+    <mat-grid-tile colspan="1" *ngFor="let allAdministrator of allAdministrators">
+      <mat-card class="example-card">
+        <mat-card-header>
+          <mat-icon>admin_panel_settings</mat-icon>
+          <mat-card-title>{{allAdministrator.firstname_user | titlecase}} {{allAdministrator.lastname_user | uppercase}}</mat-card-title>
+          <mat-card-subtitle>Dog Breed</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <p><b>Numéro de license : </b>
+            <span *ngIf="allAdministrator.license_number_user; else noLicenceNumber">{{allAdministrator.license_number_user}}</span>
+            <ng-template #noLicenceNumber><span style="color: grey"><i>Pas de licence renseignée</i></span></ng-template>
+          </p>
+          <p><b>Adresse email : </b>{{allAdministrator.email_user}}</p>
+          <p><b>Numéro de téléphone : </b>{{allAdministrator.phone_number_user}}</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button color="warn">Rétrograder Moniteur</button>
+          <button mat-raised-button (click)="deleteAccount(allAdministrator.id_user, allAdministrator.firstname_user, allAdministrator.lastname_user)" color="warn">Supprimer</button>
+        </mat-card-actions>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+
+</div>
