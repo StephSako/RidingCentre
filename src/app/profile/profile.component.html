@@ -5,7 +5,7 @@
     <mat-list *ngIf="user">
 
       <mat-list-item>
-        <mat-icon mat-list-icon>account_circle</mat-icon>
+        <mat-icon mat-list-icon>account_box</mat-icon>
         <div mat-line><b>Votre nom</b></div>
         <div mat-line>{{ user.lastname_user | uppercase}}</div>
       </mat-list-item>
@@ -13,7 +13,7 @@
       <mat-divider></mat-divider>
 
       <mat-list-item>
-        <mat-icon mat-list-icon>account_circle</mat-icon>
+        <mat-icon mat-list-icon>account_box</mat-icon>
         <div mat-line><b>Votre prénom</b></div>
         <div mat-line>{{ user.firstname_user | titlecase}}</div>
       </mat-list-item>
@@ -46,7 +46,7 @@
       <mat-divider></mat-divider>
 
       <mat-list-item>
-        <mat-icon mat-list-icon>verified_user</mat-icon>
+        <mat-icon mat-list-icon>{{user.role_user.icon}}</mat-icon>
         <div mat-line><b>Type de compte</b></div>
         <div mat-line>{{ user.role_user.role | titlecase }}</div>
       </mat-list-item>

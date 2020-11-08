@@ -10,8 +10,8 @@ table {
   border-radius: 10px;
 }
 
-.example-card {
-  height: 200px;
+.card {
+  height: 235px;
   width: 350px;
   margin: 0;
 }

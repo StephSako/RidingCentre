@@ -14,6 +14,7 @@ export class ProfileComponent implements OnInit {
 
   user: UserInterface;
   userEdit: UserInfoInterface = {
+    role_user: null,
     id_user: null,
     lastname_user: null,
     firstname_user: null,

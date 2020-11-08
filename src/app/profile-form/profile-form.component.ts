@@ -11,6 +11,7 @@ export class ProfileFormComponent implements OnInit {
 
   @Input() user: UserInfoInterface = {
     id_user: null,
+    role_user:  null,
     lastname_user: null,
     firstname_user: null,
     email_user: null,

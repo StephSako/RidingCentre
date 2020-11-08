@@ -184,12 +184,17 @@ export class AuthenticationService {
     return this.http.get(this.baseURL + 'instructors');
   }
 
-  public getAllAdministrators(): Observable<any> {
-    return this.http.get(this.baseURL + 'administrators');
+  public getAllAccounts(): Observable<any> {
+    return this.http.get(this.baseURL);
   }
 
   // tslint:disable-next-line:variable-name
   public deleteAccount(id_user: number): Observable<any> {
     return this.http.delete(`${this.baseURL}delete/${id_user}`);
+  }
+
+  // tslint:disable-next-line:variable-name
+  public editRole(user: UserInfoInterface, role_user_id: number): Observable<any> {
+    return this.http.put(`${this.baseURL}edit/${user.id_user}`, { role_user_id });
   }
 }

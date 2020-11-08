@@ -75,7 +75,7 @@ user.get('/profile', (req, res) => {
 
   User.findOne({
     where: {
-      id_user: decoded.id_user,
+      id_user: decoded.id_user
     },
     include: [RoleUser]
   }).then(user => {
@@ -181,17 +181,52 @@ user.get('/instructors', (req, res) => {
   })
 })
 
-// ALL ADMINISTRATORS
-user.get('/administrators', (req, res) => {
+// ALL ACCOUNTS
+user.get('/', (req, res) => {
   User.findAll({
-    where:{
-      role_user_id: 3
-    }
+    order: [
+      ['lastname_user', 'ASC']
+    ],
+    include: [RoleUser]
   }).then(moniteurs => {
     if (moniteurs) res.json(moniteurs)
     else res.send("Il n'y a pas d'administrateurs")
   }).catch(err => {
     res.send("error : " + err)
+  })
+})
+
+// EDIT ACCOUNT'S ROLE
+user.put('/edit/role/:id_user', (req, res) => {
+  const id_user = req.params.id_user;
+
+  console.log(req.body);
+
+  User.update(req.body, {
+    where: {
+      id_user: id_user
+    }
+  }).then(num => {
+
+    if (num =! 0) {
+      User.findOne({
+        where: {
+          id_user: id_user
+        },
+        include: [RoleUser]
+      }).then(user => {
+        let token = jwt.sign(user.dataValues, process.env.SECRET_KEY, {
+          expiresIn: 1440
+        })
+        res.json({token: token})
+      }).catch(() => {
+        res.status(500).send("Le compte demandé n'a pas été trouvé")
+      })
+    }
+    else res.status(401).send("Le rôle du compte n'a pas été modifié")
+
+  }).catch(err => {
+    res.status(401).send("Le rôle demandé n'a pas été trouvé")
   })
 })
 

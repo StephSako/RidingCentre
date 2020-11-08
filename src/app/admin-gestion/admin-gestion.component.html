@@ -7,32 +7,56 @@
 
     <div style="margin-top: 40px;" class="container">
       <form (submit)="create()">
-        <app-user-form [user]="administrator"></app-user-form>
+        <app-user-form [user]="account"></app-user-form>
         <button mat-raised-button class="center" color="accent" [disabled]="!isInvalid()">Créer</button>
       </form>
     </div>
 
   </mat-expansion-panel>
 
-  <mat-grid-list cols="3" rowHeight="370px:250px">
-    <mat-grid-tile colspan="1" *ngFor="let allAdministrator of allAdministrators">
-      <mat-card class="example-card">
+  <mat-grid-list cols="3" rowHeight="370px:260px">
+    <mat-grid-tile colspan="1" *ngFor="let account of allAccounts">
+      <mat-card class="card">
         <mat-card-header>
-          <mat-icon>admin_panel_settings</mat-icon>
-          <mat-card-title>{{allAdministrator.firstname_user | titlecase}} {{allAdministrator.lastname_user | uppercase}}</mat-card-title>
-          <mat-card-subtitle>Dog Breed</mat-card-subtitle>
+          <mat-icon>{{account.role_user.icon}}</mat-icon>
+          <mat-card-title>{{account.firstname_user | titlecase}} {{account.lastname_user | uppercase}}</mat-card-title>
+          <mat-card-subtitle>{{account.role_user.role}}</mat-card-subtitle>
         </mat-card-header>
-        <mat-card-content>
+        <mat-card-content style="margin-bottom: 8px;">
           <p><b>Numéro de license : </b>
-            <span *ngIf="allAdministrator.license_number_user; else noLicenceNumber">{{allAdministrator.license_number_user}}</span>
+            <span *ngIf="account.license_number_user; else noLicenceNumber">{{account.license_number_user}}</span>
             <ng-template #noLicenceNumber><span style="color: grey"><i>Pas de licence renseignée</i></span></ng-template>
           </p>
-          <p><b>Adresse email : </b>{{allAdministrator.email_user}}</p>
-          <p><b>Numéro de téléphone : </b>{{allAdministrator.phone_number_user}}</p>
+          <p><b>Adresse email : </b>{{account.email_user}}</p>
+          <p><b>Numéro de téléphone : </b>{{account.phone_number_user}}</p>
         </mat-card-content>
-        <mat-card-actions>
-          <button mat-button color="warn">Rétrograder Moniteur</button>
-          <button mat-raised-button (click)="deleteAccount(allAdministrator.id_user, allAdministrator.firstname_user, allAdministrator.lastname_user)" color="warn">Supprimer</button>
+        <mat-card-actions style="padding-bottom: 0;">
+
+          <mat-grid-list [cols]="(account.role_user.id == 1 || account.role_user.id == 4 ? 1 : 2)" [rowHeight]="(account.role_user.id == 1 || account.role_user.id == 4 ? '12:1' : '6:1')">
+
+            <mat-grid-tile *ngIf="account.role_user.id != 1">
+              <button mat-button (click)="nommer(account, account.firstname_user, account.lastname_user, 'r')" color="warn">
+                <span>Rétrograder
+                  <ng-template [ngIf]="account.role_user.id == 2">Cavalier</ng-template>
+                  <ng-template [ngIf]="account.role_user.id == 3">Moniteur</ng-template>
+                  <ng-template [ngIf]="account.role_user.id == 4">Admin</ng-template>
+                </span>
+              </button>
+            </mat-grid-tile>
+
+            <mat-grid-tile *ngIf="account.role_user.id != 4">
+              <button mat-button (click)="nommer(account, account.firstname_user, account.lastname_user, 'p')" style="color: forestgreen;">
+                <span>Promouvoir
+                  <ng-template [ngIf]="account.role_user.id == 1">Moniteur</ng-template>
+                  <ng-template [ngIf]="account.role_user.id == 2">Admin</ng-template>
+                  <ng-template [ngIf]="account.role_user.id == 3">Super-Admin</ng-template>
+                </span>
+              </button>
+            </mat-grid-tile>
+
+          </mat-grid-list>
+
+          <button style="margin-top: 6px;" class="center" mat-raised-button (click)="deleteAccount(account.id_user, account.firstname_user, account.lastname_user)" color="warn">Supprimer</button>
         </mat-card-actions>
       </mat-card>
     </mat-grid-tile>

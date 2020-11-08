@@ -11,6 +11,9 @@ module.exports = db.sequelize.define(
     },
     role: {
       type: Sequelize.STRING
+    },
+    icon: {
+      type: Sequelize.STRING
     }
   },
   {

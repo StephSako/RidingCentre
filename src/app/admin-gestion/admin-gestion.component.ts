@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import {Component, OnInit} from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
 
-import { HelperService } from '../Services/helper.service';
-import { TokenPayloadRegister, UserInfoInterface } from '../Interfaces/UserInterface';
-import { AuthenticationService } from '../Services/authentication.service';
-import { DialogData } from '../Interfaces/DialogData';
-import { DialogComponent } from '../dialog/dialog.component';
+import {HelperService} from '../Services/helper.service';
+import {TokenPayloadRegister, UserInfoInterface} from '../Interfaces/UserInterface';
+import {AuthenticationService} from '../Services/authentication.service';
+import {DialogData} from '../Interfaces/DialogData';
+import {DialogComponent} from '../dialog/dialog.component';
+import {RoleUserInterface} from '../Interfaces/RoleUser';
 
 @Component({
   selector: 'app-admin-gestion',
@@ -15,13 +16,13 @@ import { DialogComponent } from '../dialog/dialog.component';
 export class AdminGestionComponent implements OnInit {
 
   displayedColumns: string[] = ['name', 'licenceNumber', 'email', 'phoneNumber'];
-  allAdministrators: UserInfoInterface[];
+  allAccounts: UserInfoInterface[];
 
-  administrator: TokenPayloadRegister = {
+  account: TokenPayloadRegister = {
     firstname_user: null,
     lastname_user: null,
     email_user: null,
-    role_user_id: 3,
+    role_user_id: null,
     password_user: null,
     license_number_user: null,
     phone_number_user: null
@@ -30,18 +31,18 @@ export class AdminGestionComponent implements OnInit {
   constructor(public authService: AuthenticationService, public dialog: MatDialog, private helper: HelperService) { }
 
   ngOnInit(): void {
-    this.updateAllAdministrators();
+    this.updateAllAccounts();
   }
 
-  updateAllAdministrators(): void {
-    this.authService.getAllAdministrators().subscribe(allAdministrators => this.allAdministrators = allAdministrators );
+  updateAllAccounts(): void {
+    this.authService.getAllAccounts().subscribe(allAccounts => this.allAccounts = allAccounts );
   }
 
   create(): void {
-    this.authService.register(this.administrator)
+    this.authService.register(this.account)
       .subscribe(
         () => {
-          this.updateAllAdministrators();
+          this.updateAllAccounts();
         },
         err => {
           console.error(err);
@@ -50,9 +51,9 @@ export class AdminGestionComponent implements OnInit {
   }
 
   isInvalid(): boolean {
-    return (!this.helper.isEmpty(this.administrator.firstname_user) && !this.helper.isEmpty(this.administrator.firstname_user) &&
-      !this.helper.isEmpty(this.administrator.email_user) && !this.helper.isEmpty(this.administrator.phone_number_user)
-      && !this.helper.isEmpty(this.administrator.license_number_user));
+    return (!this.helper.isEmpty(this.account.firstname_user) && !this.helper.isEmpty(this.account.firstname_user) &&
+      !this.helper.isEmpty(this.account.email_user) && !this.helper.isEmpty(this.account.phone_number_user)
+      && !this.helper.isEmpty(this.account.license_number_user));
   }
 
   deleteAccount(idUser: number, firstname: string, lastname: string): void {
@@ -68,8 +69,35 @@ export class AdminGestionComponent implements OnInit {
     })
       .afterClosed().subscribe(result => {
       this.authService.deleteAccount(result).subscribe(() => {
-        this.updateAllAdministrators();
+        this.updateAllAccounts();
         }, err => { console.error(err); });
+    });
+  }
+
+  nommer(user: UserInfoInterface, firstname: string, lastname: string, action: string): void {
+    const accountToDowngrade: DialogData = {
+      id: user.id_user,
+      action: (action === 'r' ? 'Rétrograder' : 'Promouvoir') + ' le role de',
+      subtitle: firstname + ' ' + lastname
+    };
+
+    this.dialog.open(DialogComponent, {
+      width: '30%',
+      data: accountToDowngrade
+    })
+      .afterClosed().subscribe(result => {
+        if (result) {
+          let newRole = user.role_user.id;
+          console.log(newRole);
+
+          if (action === 'r'){ newRole--; }
+          else { newRole++; }
+
+          console.log(newRole);
+          this.authService.editRole(user, newRole).subscribe(() => {
+            this.updateAllAccounts();
+          }, err => { console.error(err); });
+        }
     });
   }
 

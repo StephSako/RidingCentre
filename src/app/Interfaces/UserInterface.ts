@@ -52,6 +52,7 @@ export interface TokenPayloadRegister {
 
 export interface UserInfoInterface {
   id_user: number;
+  role_user: RoleUserInterface;
   firstname_user: string;
   lastname_user: string;
   email_user: string;
