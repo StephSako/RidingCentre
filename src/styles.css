@@ -33,9 +33,17 @@ body {
 .style-success .mat-simple-snackbar-action {
   color: green;
 }
+
 .style-success, .style-error  {
   color: white;
 }
+
 .style-error .mat-simple-snackbar-action {
   color: red;
+}
+
+.filter {
+  margin-top: 10px;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
 }

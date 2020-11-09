@@ -7,6 +7,8 @@ import {AuthenticationService} from '../Services/authentication.service';
 import {DialogData} from '../Interfaces/DialogData';
 import {DialogComponent} from '../dialog/dialog.component';
 import {RoleUserInterface} from '../Interfaces/RoleUser';
+import {RoleService} from '../Services/role.service';
+import {FormControl} from '@angular/forms';
 
 @Component({
   selector: 'app-admin-gestion',
@@ -18,31 +20,59 @@ export class AdminGestionComponent implements OnInit {
   displayedColumns: string[] = ['name', 'licenceNumber', 'email', 'phoneNumber'];
   allAccounts: UserInfoInterface[];
 
-  account: TokenPayloadRegister = {
+  allRoles: RoleUserInterface[];
+  rolesControl = new FormControl();
+  namesControl = new FormControl();
+
+  newAdmin: TokenPayloadRegister = {
     firstname_user: null,
     lastname_user: null,
     email_user: null,
-    role_user_id: null,
+    role_user_id: 3,
     password_user: null,
     license_number_user: null,
     phone_number_user: null
   };
 
-  constructor(public authService: AuthenticationService, public dialog: MatDialog, private helper: HelperService) { }
+  constructor(public authService: AuthenticationService, public dialog: MatDialog, private helper: HelperService,
+              private roleService: RoleService) { }
 
   ngOnInit(): void {
-    this.updateAllAccounts();
+    this.getAllAccounts();
+    this.getAllRoles();
   }
 
-  updateAllAccounts(): void {
-    this.authService.getAllAccounts().subscribe(allAccounts => this.allAccounts = allAccounts );
+  getAllRoles(): void {
+    this.roleService.getAll().subscribe(allRoles => this.allRoles = allRoles,
+      err => {
+        console.error(err);
+      });
+  }
+
+  getAllAccounts(): void {
+    this.authService.getAllAccounts().subscribe((allAccounts) =>
+      {
+        this.allAccounts = allAccounts;
+
+        if (this.rolesControl.value != null && this.rolesControl.value.length > 0){
+          this.allAccounts = this.allAccounts.filter(account => this.rolesControl.value.includes(account.role_user.id));
+        }
+        if (this.namesControl.value != null && this.namesControl.value.length > 0){
+          this.allAccounts = this.allAccounts.filter(account =>
+            // tslint:disable-next-line:max-line-length
+            ((account.firstname_user.toLowerCase()) + ' ' + (account.lastname_user.toLowerCase())).includes(this.namesControl.value.toLowerCase()));
+        }
+      },
+      err => {
+        console.error(err);
+      });
   }
 
   create(): void {
-    this.authService.register(this.account)
+    this.authService.register(this.newAdmin)
       .subscribe(
         () => {
-          this.updateAllAccounts();
+          this.getAllAccounts();
         },
         err => {
           console.error(err);
@@ -51,25 +81,30 @@ export class AdminGestionComponent implements OnInit {
   }
 
   isInvalid(): boolean {
-    return (!this.helper.isEmpty(this.account.firstname_user) && !this.helper.isEmpty(this.account.firstname_user) &&
-      !this.helper.isEmpty(this.account.email_user) && !this.helper.isEmpty(this.account.phone_number_user)
-      && !this.helper.isEmpty(this.account.license_number_user));
+    return (!this.helper.isEmpty(this.newAdmin.firstname_user) && !this.helper.isEmpty(this.newAdmin.firstname_user) &&
+      !this.helper.isEmpty(this.newAdmin.email_user) && !this.helper.isEmpty(this.newAdmin.phone_number_user)
+      && !this.helper.isEmpty(this.newAdmin.license_number_user));
   }
 
-  deleteAccount(idUser: number, firstname: string, lastname: string): void {
+  deleteAccount(user: UserInfoInterface): void {
+    let message;
+    if (user.role_user.id === 1) { message = 'Supprimer le compte et ses inscriptions aux cours de'; }
+    else if (user.role_user.id === 2) { message = 'Supprimer le compte et ses reprises créées de'; }
+    else {  message = 'Supprimer le compte de'; }
+
     const accountToDelete: DialogData = {
-      id: idUser,
-      action: 'Supprimer le compte',
-      subtitle: firstname + ' ' + lastname
+      id: user.id_user,
+      action: message,
+      subtitle: user.firstname_user + ' ' + user.lastname_user
     };
 
     this.dialog.open(DialogComponent, {
-      width: '30%',
+      width: '50%',
       data: accountToDelete
     })
       .afterClosed().subscribe(result => {
       this.authService.deleteAccount(result).subscribe(() => {
-        this.updateAllAccounts();
+        this.getAllAccounts();
         }, err => { console.error(err); });
     });
   }
@@ -95,7 +130,7 @@ export class AdminGestionComponent implements OnInit {
 
           console.log(newRole);
           this.authService.editRole(user, newRole).subscribe(() => {
-            this.updateAllAccounts();
+            this.getAllAccounts();
           }, err => { console.error(err); });
         }
     });

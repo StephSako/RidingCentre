@@ -12,7 +12,7 @@ export class UserFormComponent implements OnInit {
     firstname_user: null,
     lastname_user: null,
     email_user: null,
-    role_user_id: 1,
+    role_user_id: null,
     password_user: null,
     license_number_user: null,
     phone_number_user: null

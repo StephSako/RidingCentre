@@ -184,6 +184,11 @@ user.get('/instructors', (req, res) => {
 // ALL ACCOUNTS
 user.get('/', (req, res) => {
   User.findAll({
+    where:{
+      [Op.not]: [
+        { role_user_id: 4 }
+      ]
+    },
     order: [
       ['lastname_user', 'ASC']
     ],

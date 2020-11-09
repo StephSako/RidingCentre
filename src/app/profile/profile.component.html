@@ -39,8 +39,8 @@
       <mat-list-item>
         <mat-icon mat-list-icon>credit_card</mat-icon>
         <div mat-line style="margin-bottom: 4px;"><b>Votre numéro de licence</b></div>
-        <div mat-line>{{ user.license_number_user}}</div>
-        <div mat-line *ngIf="user.license_number_user == null || user.license_number_user == ''"><span style="color: lightgrey"><i>La license c'est pas enseignée</i></span></div>
+        <div mat-line *ngIf="user.license_number_user != null && user.license_number_user != ''; else noLicence">{{ user.license_number_user}}</div>
+        <ng-template #noLicence><div mat-line><span style="color: lightgrey"><i>La license n'est pas renseignée</i></span></div></ng-template>
       </mat-list-item>
 
       <mat-divider></mat-divider>

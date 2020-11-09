@@ -49,11 +49,9 @@ export class LoginComponent implements OnInit {
       this.authService.login(this.credentials)
         .subscribe(
           () => {
-            if (this.authService.isInstructor()) {
-              this.router.navigateByUrl('/home-instructor');
-            } else {
-              this.router.navigateByUrl('/home');
-            }
+            if (this.authService.isInstructor()) { this.router.navigateByUrl('/home-instructor'); }
+            else if (this.authService.isSuperAdmin() || this.authService.isAdmin()) { this.router.navigateByUrl('/admin-gestion'); }
+            else { this.router.navigateByUrl('/home'); }
           },
           err => {
             this.nbErrors++;
