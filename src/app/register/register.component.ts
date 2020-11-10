@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { AuthenticationService } from '../Services/authentication.service';
 import { TokenPayloadRegister } from '../Interfaces/UserInterface';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-register',
@@ -22,7 +23,10 @@ export class RegisterComponent implements OnInit {
     phone_number_user: null
   };
 
-  constructor(private authService: AuthenticationService, private router: Router, private snackBar: MatSnackBar) { }
+  constructor(private authService: AuthenticationService, private router: Router,
+              private snackBar: MatSnackBar, private titleService: Title) {
+    this.titleService.setTitle('Page d\'inscription');
+  }
 
   ngOnInit(): void { }
 

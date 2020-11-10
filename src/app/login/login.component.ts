@@ -6,6 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormControl, Validators } from '@angular/forms';
 import { HelperService } from '../Services/helper.service';
 import { TokenPayloadLogin } from '../Interfaces/UserInterface';
+import {Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-login',
@@ -25,6 +26,15 @@ export class LoginComponent implements OnInit {
   loginControl = new FormControl('', [Validators.required]);
   passwordControl = new FormControl('', [Validators.required]);
 
+  constructor(private authService: AuthenticationService, private router: Router, private snackBar: MatSnackBar,
+              private helper: HelperService, private titleService: Title) {
+    this.titleService.setTitle('Page de connexion');
+  }
+
+  ngOnInit(): void {
+    this.nbErrors = 0;
+  }
+
   getErrorMessageLogin(): string {
     if (this.loginControl.hasError('required')) {
       return 'Login obligatoire';
@@ -35,13 +45,6 @@ export class LoginComponent implements OnInit {
     if (this.passwordControl.hasError('required')) {
       return 'Mot de passe obligatoire';
     }
-  }
-
-  constructor(private authService: AuthenticationService, private router: Router, private snackBar: MatSnackBar,
-              private helper: HelperService) { }
-
-  ngOnInit(): void {
-    this.nbErrors = 0;
   }
 
   login(): void {

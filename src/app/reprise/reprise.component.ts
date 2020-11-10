@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { RepriseService } from '../Services/reprise.service';
-import { RepriseCreateInterface } from '../Interfaces/RepriseInterface';
+import { RepriseInterface } from '../Interfaces/RepriseInterface';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { ChevalInterface } from '../Interfaces/ChevalInterface';
 import { RegisteredToRepriseInterface } from '../Interfaces/UserInterface';
@@ -11,6 +11,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthenticationService } from '../Services/authentication.service';
 import { RepriseInscriptionInterface } from '../Interfaces/RepriseInscriptionInterface';
 import { RepriseInscriptionService } from '../Services/reprise-inscription.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-reprise',
@@ -40,9 +41,9 @@ export class RepriseComponent implements OnInit {
     }]
   }];
 
-  reprise: RepriseCreateInterface = {
+  reprise: RepriseInterface = {
     id_reprise: null,
-    user_id_user: null,
+    user: null,
     rider_number_limit: null,
     date: null,
     galop_level: null,
@@ -52,7 +53,7 @@ export class RepriseComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private repriseInscriptionService: RepriseInscriptionService,
               private chevalService: ChevalService, private snackBar: MatSnackBar, public authService: AuthenticationService,
-              private repriseService: RepriseService) {}
+              private repriseService: RepriseService, private titleService: Title) { }
 
   ngOnInit(): void {
     this.getReprise();
@@ -95,6 +96,7 @@ export class RepriseComponent implements OnInit {
     this.repriseService.details(id_reprise).subscribe(
       reprise => {
         this.reprise = reprise;
+        this.titleService.setTitle((this.reprise.title ? this.reprise.title : 'Page de la reprise'));
 
         const diff = Math.abs((new Date()).getTime() - new Date(this.reprise.date).getTime());
         const diffMinutes = Math.ceil(diff / (1000 * 3600 / 60));

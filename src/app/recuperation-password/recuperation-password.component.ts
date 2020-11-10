@@ -3,6 +3,7 @@ import {FormControl, Validators} from '@angular/forms';
 import {AuthenticationService} from '../Services/authentication.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {HelperService} from '../Services/helper.service';
+import {Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-recuperation-password',
@@ -15,6 +16,15 @@ export class RecuperationPasswordComponent implements OnInit {
   sent: boolean;
   emailControl = new FormControl('', [Validators.required, Validators.email]);
 
+  constructor(private authService: AuthenticationService, public snackBar: MatSnackBar, private helper: HelperService,
+              private titleService: Title) {
+    this.titleService.setTitle('Récupération du mot de passe');
+  }
+
+  ngOnInit(): void {
+    this.sent = false;
+  }
+
   getErrorMessageEmail(): string {
     if (this.emailControl.hasError('required')) {
       return 'Champ obligatoire';
@@ -22,12 +32,6 @@ export class RecuperationPasswordComponent implements OnInit {
     else if (this.emailControl.hasError('email')) {
       return 'Format invalide. Ex : user@fai.fr';
     }
-  }
-
-  constructor(private authService: AuthenticationService, public snackBar: MatSnackBar, private helper: HelperService) { }
-
-  ngOnInit(): void {
-    this.sent = false;
   }
 
   recupPassword(): void {

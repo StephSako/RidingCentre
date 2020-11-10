@@ -33,7 +33,7 @@
         <button mat-raised-button color="primary" class="center" routerLink="/cheval-instructor">Ajouter des chevaux</button>
       </mat-card>
 
-      <div cdkDropListGroup *ngIf="authService.isInstructor()">
+      <div cdkDropListGroup *ngIf="!authService.isRider()">
         <div class="row">
           <div style="margin-top: 32px;" class="column">
 
@@ -83,7 +83,7 @@
 
   </div>
 
-  <div *ngIf="this.authService.isInstructor() && !outdated">
+  <div *ngIf="!this.authService.isRider() && !outdated">
     <mat-card *ngIf="cavaliersInscrits.length < 3 && !reprise.canceled; else maintainReprise">
       <h2 style="color: black; margin-bottom: 0;" class="center">Moins de 3 cavaliers sont inscrits à la reprise</h2>
       <h3 style="color: black; margin-bottom: 0;" class="center">Annuler la séance ?</h3><br>
@@ -99,7 +99,7 @@
     </ng-template>
   </div>
 
-  <table mat-table *ngIf="cavaliersInscrits && authService.isRider() && !reprise.canceled" [dataSource]="cavaliersInscrits" class="mat-elevation-z8">
+  <table mat-table *ngIf="cavaliersInscrits && !reprise.canceled" [dataSource]="cavaliersInscrits" class="mat-elevation-z8">
 
     <ng-container matColumnDef="cavalier">
       <th mat-header-cell *matHeaderCellDef>Cavaliers inscrits</th>

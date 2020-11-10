@@ -9,6 +9,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { DialogData } from '../Interfaces/DialogData';
 import { DialogComponent } from '../dialog/dialog.component';
 import {DatePipe} from '@angular/common';
+import {HelperService} from '../Services/helper.service';
+import {Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-home-instructor',
@@ -34,7 +36,9 @@ export class HomeInstructorComponent implements OnInit {
   panelOpenState = false;
 
   constructor(public repriseService: RepriseService, public dialog: MatDialog, public authService: AuthenticationService,
-              private snackBar: MatSnackBar, private datepipe: DatePipe) { }
+              private snackBar: MatSnackBar, private datepipe: DatePipe, private titleService: Title) {
+    this.titleService.setTitle('Gestion des reprises');
+  }
 
   ngOnInit(): void {
     this.updateAllReprises();

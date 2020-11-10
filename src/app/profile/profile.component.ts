@@ -4,6 +4,7 @@ import { AuthenticationService } from '../Services/authentication.service';
 import { UserInfoInterface } from '../Interfaces/UserInterface';
 import { MatDialog } from '@angular/material/dialog';
 import { ProfileEditComponent } from '../profile-edit/profile-edit.component';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-profile',
@@ -23,7 +24,9 @@ export class ProfileComponent implements OnInit {
     license_number_user: null
   };
 
-  constructor(private authService: AuthenticationService, public dialog: MatDialog) { }
+  constructor(private authService: AuthenticationService, public dialog: MatDialog, private titleService: Title) {
+    this.titleService.setTitle('Mon profil');
+  }
 
   ngOnInit(): void {
     this.authService.profile().subscribe(

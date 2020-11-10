@@ -72,7 +72,7 @@
       </div>
     </ng-template>
 
-    <button *ngIf="authService.isInstructor()"  mat-raised-button color="primary" class="center" [routerLink]="['/reprise', reprise.id_reprise]">Modifier la reprise</button>
+    <button *ngIf="!authService.isRider()"  mat-raised-button color="primary" class="center" [routerLink]="['/reprise', reprise.id_reprise]">Modifier la reprise</button>
 
   </mat-card>
 </div>

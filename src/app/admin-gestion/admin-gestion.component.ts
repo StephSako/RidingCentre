@@ -10,6 +10,7 @@ import { RoleUserInterface } from '../Interfaces/RoleUser';
 import { RoleService } from '../Services/role.service';
 import { FormControl } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import {Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-admin-gestion',
@@ -38,7 +39,9 @@ export class AdminGestionComponent implements OnInit {
   panelOpenState = false;
 
   constructor(public authService: AuthenticationService, public dialog: MatDialog, private helper: HelperService,
-              private roleService: RoleService, private snackBar: MatSnackBar) { }
+              private roleService: RoleService, private snackBar: MatSnackBar, private titleService: Title) {
+    this.titleService.setTitle('Gestion des comptes');
+  }
 
   ngOnInit(): void {
     this.getAllAccounts();
@@ -50,7 +53,7 @@ export class AdminGestionComponent implements OnInit {
   }
 
   getAllRoles(): void {
-    this.roleService.getAll().subscribe(allRoles => this.allRoles = allRoles,
+    this.roleService.getAll().subscribe(allRoles => this.allRoles = allRoles.filter(role => role.id !== 4),
       err => {
         console.error(err);
       });
@@ -97,8 +100,8 @@ export class AdminGestionComponent implements OnInit {
 
   deleteAccount(user: UserInfoInterface): void {
     let message;
-    if (user.role_user.id === 1) { message = 'Supprimer le compte et ses inscriptions aux cours de'; }
-    else if (user.role_user.id === 2) { message = 'Supprimer le compte et ses reprises créées de'; }
+    if (user.role_user.id === 1) { message = 'Supprimer le compte et les inscriptions aux cours de'; }
+    else if (user.role_user.id === 2) { message = 'Supprimer le compte et les reprises créées de'; }
     else {  message = 'Supprimer le compte de'; }
 
     const accountToDelete: DialogData = {

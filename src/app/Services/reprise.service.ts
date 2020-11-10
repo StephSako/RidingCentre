@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { RepriseCreateInterface } from '../Interfaces/RepriseInterface';
+import {RepriseCreateInterface, RepriseInterface} from '../Interfaces/RepriseInterface';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +21,7 @@ export class RepriseService {
   }
 
   // tslint:disable-next-line:variable-name
-  public edit(reprise: RepriseCreateInterface): Observable<any> {
+  public edit(reprise: RepriseInterface): Observable<any> {
     return this.http.put(`${this.baseURL}edit/${reprise.id_reprise}`, reprise);
   }
 

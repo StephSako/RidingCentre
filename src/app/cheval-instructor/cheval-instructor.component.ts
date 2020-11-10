@@ -9,6 +9,7 @@ import { DialogData } from '../Interfaces/DialogData';
 import { DialogComponent } from '../dialog/dialog.component';
 import { AuthenticationService } from '../Services/authentication.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import {Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-cheval-instructor',
@@ -30,7 +31,9 @@ export class ChevalInstructorComponent implements OnInit {
   panelOpenState = false;
 
   constructor(public chevalService: ChevalService, public dialog: MatDialog, private helper: HelperService,
-              private authService: AuthenticationService, private snackBar: MatSnackBar) { }
+              private authService: AuthenticationService, private snackBar: MatSnackBar, private titleService: Title) {
+    this.titleService.setTitle('Gestion des chevaux');
+  }
 
   togglePanel(): void {
     this.panelOpenState = !this.panelOpenState;

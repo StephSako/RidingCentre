@@ -11,10 +11,9 @@ import { HomeComponent } from './home/home.component';
 import { AuthGuardService } from './auth-guard.service';
 import { HomeInstructorComponent } from './home-instructor/home-instructor.component';
 import { RepriseComponent } from './reprise/reprise.component';
-import { RepriseCreateComponent } from './reprise-create/reprise-create.component';
-import {ChevalInstructorComponent} from './cheval-instructor/cheval-instructor.component';
-import {RecuperationPasswordComponent} from './recuperation-password/recuperation-password.component';
-import {AdminGestionComponent} from './admin-gestion/admin-gestion.component';
+import { ChevalInstructorComponent } from './cheval-instructor/cheval-instructor.component';
+import { RecuperationPasswordComponent } from './recuperation-password/recuperation-password.component';
+import { AdminGestionComponent } from './admin-gestion/admin-gestion.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -22,12 +21,11 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuardService] },
   { path: 'home', component: HomeComponent, canActivate: [AuthGuardService] },
-  { path: 'home-instructor', component: HomeInstructorComponent, canActivate: [AuthGuardService] },
-  { path: 'cheval-instructor', component: ChevalInstructorComponent, canActivate: [AuthGuardService] },
+  { path: 'home-instructor', component: HomeInstructorComponent, canActivate: [AuthGuardService], data: {roles: [2, 3, 4]} },
+  { path: 'cheval-instructor', component: ChevalInstructorComponent, canActivate: [AuthGuardService], data: {roles: [2, 3, 4]} },
   { path: 'reprise/:id_reprise', component: RepriseComponent, canActivate: [AuthGuardService] },
-  { path: 'new/reprise', component: RepriseCreateComponent, canActivate: [AuthGuardService] },
   { path: 'recuperation-mot-de-passe', component: RecuperationPasswordComponent },
-  { path: 'admin-gestion', component: AdminGestionComponent, canActivate: [AuthGuardService] },
+  { path: 'admin-gestion', component: AdminGestionComponent, canActivate: [AuthGuardService], data: {roles: [3, 4]} },
 ];
 
 @NgModule({
