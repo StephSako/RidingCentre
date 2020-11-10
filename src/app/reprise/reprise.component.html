@@ -10,7 +10,10 @@
       <mat-grid-tile><b>Limite&nbsp;</b><mat-icon>groups</mat-icon></mat-grid-tile>
       <mat-grid-tile><b>Niveau du Galop&nbsp;</b><mat-icon>military_tech</mat-icon></mat-grid-tile>
 
-      <mat-grid-tile *ngIf="reprise.user">{{reprise.user.firstname_user | titlecase}} {{reprise.user.lastname_user | uppercase}}</mat-grid-tile>
+      <mat-grid-tile>
+        <span *ngIf="reprise.user; else undefinedInstructor">{{reprise.user.firstname_user | titlecase}} {{reprise.user.lastname_user | uppercase}}</span>
+        <ng-template #undefinedInstructor><i style="color: lightgrey;">Non défini</i></ng-template>
+      </mat-grid-tile>
       <mat-grid-tile>{{reprise.date | date:"dd/MM/yyyy"}}</mat-grid-tile>
       <mat-grid-tile>{{reprise.date | date:"HH:mm"}}</mat-grid-tile>
       <mat-grid-tile>{{reprise.rider_number_limit}}</mat-grid-tile>
