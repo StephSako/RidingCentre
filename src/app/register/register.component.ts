@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { AuthenticationService } from '../Services/authentication.service';
-import {TokenPayloadRegister} from '../Interfaces/UserInterface';
+import { TokenPayloadRegister } from '../Interfaces/UserInterface';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-register',
@@ -21,7 +22,7 @@ export class RegisterComponent implements OnInit {
     phone_number_user: null
   };
 
-  constructor(private authService: AuthenticationService, private router: Router) { }
+  constructor(private authService: AuthenticationService, private router: Router, private snackBar: MatSnackBar) { }
 
   ngOnInit(): void { }
 
@@ -32,7 +33,7 @@ export class RegisterComponent implements OnInit {
           this.router.navigateByUrl('/home');
         },
         err => {
-          console.error(err);
+          this.authService.notifyUser(err, this.snackBar, 'error', 2000);
         }
       );
   }

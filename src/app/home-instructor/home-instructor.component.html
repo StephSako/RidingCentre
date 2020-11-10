@@ -1,6 +1,7 @@
 <div class="container">
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
+  <mat-expansion-panel [expanded]="panelOpenState" *ngIf="this.authService.isInstructor()">
+    <mat-expansion-panel-header (click)="togglePanel()">
+      <mat-panel-title></mat-panel-title>
       <mat-panel-description class="lobster">Créer une reprise</mat-panel-description>
     </mat-expansion-panel-header>
 

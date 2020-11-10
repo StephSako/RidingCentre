@@ -31,11 +31,17 @@ export class HomeInstructorComponent implements OnInit {
     canceled: null
   };
 
-  constructor(public repriseService: RepriseService, public dialog: MatDialog, private authService: AuthenticationService,
+  panelOpenState = false;
+
+  constructor(public repriseService: RepriseService, public dialog: MatDialog, public authService: AuthenticationService,
               private snackBar: MatSnackBar, private datepipe: DatePipe) { }
 
   ngOnInit(): void {
     this.updateAllReprises();
+  }
+
+  togglePanel(): void {
+    this.panelOpenState = !this.panelOpenState;
   }
 
   updateAllReprises(): void {
@@ -47,6 +53,7 @@ export class HomeInstructorComponent implements OnInit {
     this.repriseService.create(this.reprise)
       .subscribe(
         () => {
+          this.togglePanel();
           this.updateAllReprises();
           this.authService.notifyUser('Reprise créée', this.snackBar, 'success', 1500, 'OK');
         },

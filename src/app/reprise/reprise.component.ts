@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { RepriseService } from '../Services/reprise.service';
-import { RepriseInterface } from '../Interfaces/RepriseInterface';
+import { RepriseCreateInterface } from '../Interfaces/RepriseInterface';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { ChevalInterface } from '../Interfaces/ChevalInterface';
 import { RegisteredToRepriseInterface } from '../Interfaces/UserInterface';
@@ -40,9 +40,9 @@ export class RepriseComponent implements OnInit {
     }]
   }];
 
-  reprise: RepriseInterface = {
+  reprise: RepriseCreateInterface = {
     id_reprise: null,
-    user: null,
+    user_id_user: null,
     rider_number_limit: null,
     date: null,
     galop_level: null,

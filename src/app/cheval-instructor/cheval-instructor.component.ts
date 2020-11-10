@@ -7,6 +7,8 @@ import { ChevalEditComponent } from '../cheval-edit/cheval-edit.component';
 import { HelperService } from '../Services/helper.service';
 import { DialogData } from '../Interfaces/DialogData';
 import { DialogComponent } from '../dialog/dialog.component';
+import { AuthenticationService } from '../Services/authentication.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-cheval-instructor',
@@ -25,7 +27,14 @@ export class ChevalInstructorComponent implements OnInit {
     race: null
   };
 
-  constructor(public chevalService: ChevalService, public dialog: MatDialog, private helper: HelperService) { }
+  panelOpenState = false;
+
+  constructor(public chevalService: ChevalService, public dialog: MatDialog, private helper: HelperService,
+              private authService: AuthenticationService, private snackBar: MatSnackBar) { }
+
+  togglePanel(): void {
+    this.panelOpenState = !this.panelOpenState;
+  }
 
   ngOnInit(): void {
     this.updateAllCheval();
@@ -39,7 +48,9 @@ export class ChevalInstructorComponent implements OnInit {
     this.chevalService.create(this.cheval)
       .subscribe(
         () => {
+          this.togglePanel();
           this.updateAllCheval();
+          this.authService.notifyUser('Cheval créé', this.snackBar, 'success', 1000);
         },
         err => {
           console.error(err);

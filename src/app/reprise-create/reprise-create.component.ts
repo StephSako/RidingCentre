@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
-import { FormControl } from '@angular/forms';
+import {FormControl, Validators} from '@angular/forms';
 
 import { RepriseCreateInterface } from '../Interfaces/RepriseInterface';
 
@@ -26,7 +26,10 @@ export class RepriseCreateComponent implements OnInit {
   public color: ThemePalette = 'primary';
   public disableMinute = false;
   public hideTime = false;
-  public dateControl = new FormControl(null);
+
+  public dateControl = new FormControl('', [Validators.required]);
+  public limitPersonControl = new FormControl('', [Validators.required]);
+  public levelControl = new FormControl('', [Validators.required]);
 
   @Input() reprise: RepriseCreateInterface = {
     id_reprise: null,
@@ -41,5 +44,12 @@ export class RepriseCreateComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void { }
+
+  getErrorMessageInput(): string {
+    if (this.dateControl.hasError('required') || this.limitPersonControl.hasError('required')
+      || this.levelControl.hasError('required')) {
+      return 'Champ obligatoire';
+    }
+  }
 
 }

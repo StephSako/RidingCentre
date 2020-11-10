@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-import { RepriseInterface } from '../Interfaces/RepriseInterface';
+import { RepriseCreateInterface } from '../Interfaces/RepriseInterface';
 import { RepriseService } from '../Services/reprise.service';
 
 @Component({
@@ -11,9 +11,9 @@ import { RepriseService } from '../Services/reprise.service';
 })
 export class RepriseEditComponent {
 
-  reprise: RepriseInterface = {
+  reprise: RepriseCreateInterface = {
+    user_id_user: null,
     id_reprise: null,
-    user: null,
     rider_number_limit: null,
     date: null,
     galop_level: null,
@@ -21,7 +21,7 @@ export class RepriseEditComponent {
     canceled: null
   };
 
-  constructor(private repriseService: RepriseService, @Inject(MAT_DIALOG_DATA) public reprisedata: RepriseInterface) {
+  constructor(private repriseService: RepriseService, @Inject(MAT_DIALOG_DATA) public reprisedata: RepriseCreateInterface) {
     this.reprise = reprisedata;
   }
 
