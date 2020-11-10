@@ -189,9 +189,6 @@ user.get('/', (req, res) => {
 // EDIT ACCOUNT'S ROLE
 user.put('/edit/role/:id_user', (req, res) => {
   const id_user = req.params.id_user;
-
-  console.log(req.body);
-
   User.update(req.body, {
     where: {
       id_user: id_user

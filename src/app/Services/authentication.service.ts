@@ -197,7 +197,7 @@ export class AuthenticationService {
   }
 
   // tslint:disable-next-line:variable-name
-  public editRole(user: UserInfoInterface, role_user_id: number): Observable<any> {
-    return this.http.put(`${this.baseURL}edit/${user.id_user}`, { role_user_id });
+  public editRole(id_user: number, role_user_id: number): Observable<any> {
+    return this.http.put(`${this.baseURL}edit/${id_user}`, { role_user_id });
   }
 }

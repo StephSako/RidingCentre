@@ -26,7 +26,8 @@ module.exports = db.sequelize.define(
       type: Sequelize.BOOLEAN
     },
     user_id_user: {
-      type: Sequelize.INTEGER
+      type: Sequelize.INTEGER,
+      allowNull: true
     }
   },
   {

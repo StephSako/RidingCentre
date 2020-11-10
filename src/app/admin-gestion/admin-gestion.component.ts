@@ -11,6 +11,7 @@ import { RoleService } from '../Services/role.service';
 import { FormControl } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {Title} from '@angular/platform-browser';
+import {RepriseService} from '../Services/reprise.service';
 
 @Component({
   selector: 'app-admin-gestion',
@@ -39,7 +40,8 @@ export class AdminGestionComponent implements OnInit {
   panelOpenState = false;
 
   constructor(public authService: AuthenticationService, public dialog: MatDialog, private helper: HelperService,
-              private roleService: RoleService, private snackBar: MatSnackBar, private titleService: Title) {
+              private roleService: RoleService, private snackBar: MatSnackBar, private titleService: Title,
+              private repriseService: RepriseService) {
     this.titleService.setTitle('Gestion des comptes');
   }
 
@@ -124,24 +126,26 @@ export class AdminGestionComponent implements OnInit {
   nommer(user: UserInfoInterface, firstname: string, lastname: string, action: string): void {
     const accountToDowngrade: DialogData = {
       id: user.id_user,
-      action: (action === 'r' ? 'Rétrograder' : 'Promouvoir') + ' le role de',
+      action: (action === 'r' ? 'Rétrograder' : 'Promouvoir') + ' le rôle de',
       subtitle: firstname + ' ' + lastname
     };
 
     this.dialog.open(DialogComponent, {
       width: '30%',
       data: accountToDowngrade
-    })
-      .afterClosed().subscribe(result => {
+    }).afterClosed().subscribe(result => {
         if (result) {
           let newRole = user.role_user.id;
-          console.log(newRole);
 
           if (action === 'r'){ newRole--; }
           else { newRole++; }
 
-          console.log(newRole);
-          this.authService.editRole(user, newRole).subscribe(() => {
+          this.authService.editRole(user.id_user, newRole).subscribe(() => {
+            // On défini le champ 'moniteur' de la table Reprise du compte rétrogader s'il s'agit d'un compte moniteur
+            // car une reprise ne peut être dirigée que par un moniteur
+            if (user.role_user.id === 2){
+              this.repriseService.editInstructor(user.id_user).subscribe(() => { }, err => { console.error(err); });
+            }
             this.getAllAccounts();
           }, err => { console.error(err); });
         }
