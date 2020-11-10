@@ -1,13 +1,13 @@
 <div class="container">
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
+  <mat-expansion-panel [expanded]="panelOpenState">
+    <mat-expansion-panel-header (click)="togglePanel()">
       <mat-panel-title></mat-panel-title>
-      <mat-panel-description class="lobster">Créer un compte administrateur</mat-panel-description>
+      <mat-panel-description class="lobster">Créer un compte administrateur / moniteur</mat-panel-description>
     </mat-expansion-panel-header>
 
     <div style="margin-top: 40px;" class="container">
       <form (submit)="create()">
-        <app-user-form [user]="newAdmin"></app-user-form>
+        <app-user-form [roleAdmin]="true" [user]="newAdmin"></app-user-form>
         <button mat-raised-button class="center" color="accent" [disabled]="!isInvalid()">Créer</button>
       </form>
     </div>

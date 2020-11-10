@@ -8,6 +8,7 @@ module.exports = db.sequelize.define(
     id_user: {
       type: Sequelize.INTEGER,
       primaryKey: true,
+      allowNull: true,
       autoIncrement: true
     },
     firstname_user: {

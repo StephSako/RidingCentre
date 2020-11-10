@@ -7,6 +7,7 @@ module.exports = db.sequelize.define(
     id_cheval: {
       type: Sequelize.INTEGER,
       primaryKey: true,
+      allowNull: true,
       autoIncrement: true
     },
     nom: {

@@ -21,29 +21,14 @@ user.post('/register', (req, res) => {
     email_user: req.body.email_user
   }
 
-  User.findOne({
-    where: {
-      email_user: req.body.email_user
-    }
-  })
-    .then(user => {
-      if (!user) {
-        userData.password_user = bcrypt.hashSync(userData.password_user, 12)
-        User.create(userData).then(user => {
-          let token = jwt.sign(user.dataValues, process.env.SECRET_KEY, {
-            expiresIn: 1440
-          })
-          res.json({token: token})
-        }).catch(err => {
-          res.json({message: err})
-          // res.status(401).send(err)
-        })
-      } else {
-        res.json({error: "Ce compte existe déjà"})
-      }
-    }).catch(err => {
-    res.json({message: err})
-    // res.status(401).send(err)
+  userData.password_user = bcrypt.hashSync(userData.password_user, 12)
+  User.create(userData).then(user => {
+    let token = jwt.sign(user.dataValues, process.env.SECRET_KEY, { expiresIn: 1440 })
+    res.json({token: token})
+  }).catch(err => {
+    if (err.parent.errno === 1062 && err.errors[0].path === "index_phone_number_unique") res.status(401).send("Le numéro de télephone est déjà lié un compte existant")
+    else if (err.parent.errno === 1062 && err.errors[0].path === "email_user_unique") res.status(401).send("L'adresse email est déjà lié un compte existant")
+    else res.status(401).send("Une erreur est survenue dans la mise à jour du compte")
   })
 })
 

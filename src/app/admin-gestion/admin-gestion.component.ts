@@ -1,14 +1,15 @@
-import {Component, OnInit} from '@angular/core';
-import {MatDialog} from '@angular/material/dialog';
+import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 
-import {HelperService} from '../Services/helper.service';
-import {TokenPayloadRegister, UserInfoInterface} from '../Interfaces/UserInterface';
-import {AuthenticationService} from '../Services/authentication.service';
-import {DialogData} from '../Interfaces/DialogData';
-import {DialogComponent} from '../dialog/dialog.component';
-import {RoleUserInterface} from '../Interfaces/RoleUser';
-import {RoleService} from '../Services/role.service';
-import {FormControl} from '@angular/forms';
+import { HelperService } from '../Services/helper.service';
+import { TokenPayloadRegister, UserInfoInterface } from '../Interfaces/UserInterface';
+import { AuthenticationService } from '../Services/authentication.service';
+import { DialogData } from '../Interfaces/DialogData';
+import { DialogComponent } from '../dialog/dialog.component';
+import { RoleUserInterface } from '../Interfaces/RoleUser';
+import { RoleService } from '../Services/role.service';
+import { FormControl } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-admin-gestion',
@@ -28,18 +29,24 @@ export class AdminGestionComponent implements OnInit {
     firstname_user: null,
     lastname_user: null,
     email_user: null,
-    role_user_id: 3,
+    role_user_id: null,
     password_user: null,
     license_number_user: null,
     phone_number_user: null
   };
 
+  panelOpenState = false;
+
   constructor(public authService: AuthenticationService, public dialog: MatDialog, private helper: HelperService,
-              private roleService: RoleService) { }
+              private roleService: RoleService, private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.getAllAccounts();
     this.getAllRoles();
+  }
+
+  togglePanel(): void {
+    this.panelOpenState = !this.panelOpenState;
   }
 
   getAllRoles(): void {
@@ -73,17 +80,19 @@ export class AdminGestionComponent implements OnInit {
       .subscribe(
         () => {
           this.getAllAccounts();
+          this.togglePanel();
+          this.authService.notifyUser('Compte créé', this.snackBar, 'success', 1000);
         },
         err => {
-          console.error(err);
+          this.authService.notifyUser(err, this.snackBar, 'error', 2000);
         }
       );
   }
 
   isInvalid(): boolean {
-    return (!this.helper.isEmpty(this.newAdmin.firstname_user) && !this.helper.isEmpty(this.newAdmin.firstname_user) &&
-      !this.helper.isEmpty(this.newAdmin.email_user) && !this.helper.isEmpty(this.newAdmin.phone_number_user)
-      && !this.helper.isEmpty(this.newAdmin.license_number_user));
+    return (this.newAdmin.role_user_id && !this.helper.isEmpty(this.newAdmin.firstname_user) &&
+      !this.helper.isEmpty(this.newAdmin.firstname_user) && !this.helper.isEmpty(this.newAdmin.email_user)
+      && !this.helper.isEmpty(this.newAdmin.phone_number_user));
   }
 
   deleteAccount(user: UserInfoInterface): void {

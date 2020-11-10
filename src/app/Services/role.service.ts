@@ -13,4 +13,8 @@ export class RoleService {
   public getAll(): Observable<any> {
     return this.http.get(this.baseURL);
   }
+
+  public getListRolesAdminCreateAccount(): Observable<any> {
+    return this.http.get(this.baseURL + 'list/admin');
+  }
 }

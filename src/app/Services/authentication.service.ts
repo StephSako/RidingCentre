@@ -55,28 +55,28 @@ export class AuthenticationService {
   public isRider(): boolean {
     const user = this.getUserDetails();
     if (this.isLoggedIn()) {
-      return user.role_user.id === 1;
+      return user.role_user_id === 1;
     } else { return false; }
   }
 
   public isInstructor(): boolean {
     const user = this.getUserDetails();
     if (this.isLoggedIn()) {
-      return user.role_user.id === 2;
+      return user.role_user_id === 2;
     } else { return false; }
   }
 
   public isAdmin(): boolean {
     const user = this.getUserDetails();
     if (this.isLoggedIn()) {
-      return user.role_user.id === 3;
+      return user.role_user_id === 3;
     } else { return false; }
   }
 
   public isSuperAdmin(): boolean {
     const user = this.getUserDetails();
     if (this.isLoggedIn()) {
-      return user.role_user.id === 4;
+      return user.role_user_id === 4;
     } else { return false; }
   }
 
@@ -89,6 +89,9 @@ export class AuthenticationService {
           this.saveToken(data.token);
         }
         return data;
+      }),
+      catchError(err => {
+        return throwError(err.error);
       })
     );
   }

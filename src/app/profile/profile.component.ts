@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { AuthenticationService } from '../Services/authentication.service';
-import { UserInfoInterface, UserInterface } from '../Interfaces/UserInterface';
+import { UserInfoInterface } from '../Interfaces/UserInterface';
 import { MatDialog } from '@angular/material/dialog';
 import { ProfileEditComponent } from '../profile-edit/profile-edit.component';
 
@@ -12,7 +12,7 @@ import { ProfileEditComponent } from '../profile-edit/profile-edit.component';
 })
 export class ProfileComponent implements OnInit {
 
-  user: UserInterface;
+  user: UserInfoInterface;
   userEdit: UserInfoInterface = {
     role_user: null,
     id_user: null,
