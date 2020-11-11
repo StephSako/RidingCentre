@@ -74,8 +74,17 @@ reprise_router.delete('/delete/:id_reprise', (req, res) => {
 // EDIT
 reprise_router.put('/edit/:id_reprise', (req, res) => {
   const id_reprise = req.params.id_reprise;
+  const reprise = {
+    date: req.body.date,
+    rider_number_limit: req.body.rider_number_limit,
+    title: req.body.title,
+    galop_level: req.body.galop_level,
+    canceled: req.body.canceled,
+    user_id_user: req.body.user_id_user,
+    recurrence: req.body.recurrence,
+  }
 
-  Reprise.update(req.body, {
+  Reprise.update(reprise, {
     where: {
       id_reprise: id_reprise
     }

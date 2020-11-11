@@ -29,9 +29,6 @@
     </mat-form-field>
   </p>
 
-
-
-
   <mat-grid-list cols="2" rowHeight="5:1">
     <mat-grid-tile>
       <p>
@@ -49,5 +46,15 @@
       </p>
     </mat-grid-tile>
   </mat-grid-list>
+
+  <p *ngIf="editMonitor">
+    <mat-form-field style="width: 100%; !important" appearance="outline">
+      <mat-label>Moniteur</mat-label>
+      <mat-select [(ngModel)]="reprise.user_id_user" [formControl]="moniteurControl" required>
+        <mat-option *ngFor="let moniteur of moniteurs" [value]="moniteur.id_user">{{moniteur.firstname_user | titlecase}} {{moniteur.lastname_user | uppercase}}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="moniteurControl.invalid">{{getErrorMessageMoniteur()}}</mat-error>
+    </mat-form-field>
+  </p>
 
 </div>

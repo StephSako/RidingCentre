@@ -96,6 +96,6 @@ export class HomeInstructorComponent implements OnInit {
   }
 
   isInvalid(): boolean {
-    return (this.reprise.date != null);
+    return (this.reprise.date != null && this.reprise.rider_number_limit != null && this.reprise.galop_level != null);
   }
 }

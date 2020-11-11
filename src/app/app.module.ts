@@ -28,6 +28,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSliderModule } from '@angular/material/slider';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -106,7 +107,8 @@ import { DialogComponent } from './dialog/dialog.component';
     MatSelectModule,
     DragDropModule,
     MatTooltipModule,
-    MatSliderModule
+    MatSliderModule,
+    MatProgressSpinnerModule
   ],
   providers: [AuthenticationService, AuthGuardService],
   bootstrap: [AppComponent]
