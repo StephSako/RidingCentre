@@ -48,7 +48,8 @@ export class RepriseComponent implements OnInit {
     date: null,
     galop_level: null,
     title: null,
-    canceled: null
+    canceled: null,
+    recurrence: null
   };
 
   constructor(private route: ActivatedRoute, private repriseInscriptionService: RepriseInscriptionService,
@@ -72,7 +73,6 @@ export class RepriseComponent implements OnInit {
           event.previousIndex,
           event.currentIndex);
         this.editUserHorse(id_user, id_reprise_inscription, event.item.data.id_cheval);
-        this.authService.notifyUser('Le cheval a été assigné', this.snackBar, 'success', 1000);
       } else {
         this.authService.notifyUser('Le cavalier a déjà un cheval assigné', this.snackBar, 'error', 1000);
       }

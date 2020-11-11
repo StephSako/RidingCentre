@@ -18,7 +18,8 @@ export class RepriseEditComponent {
     date: null,
     galop_level: null,
     title: null,
-    canceled: null
+    canceled: null,
+    recurrence: null
   };
 
   constructor(private repriseService: RepriseService, @Inject(MAT_DIALOG_DATA) public reprisedata: RepriseInterface) {

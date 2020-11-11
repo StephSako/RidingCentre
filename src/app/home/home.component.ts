@@ -35,6 +35,10 @@ export class HomeComponent implements OnInit {
     this.getAllRegisteredReprises();
   }
 
+  isOutdated(date: number): boolean {
+    return (new Date() > new Date(date));
+  }
+
   getAllReprises(): void {
     this.repriseService.getAll().subscribe((reprises) => {
       this.allReprises = reprises;

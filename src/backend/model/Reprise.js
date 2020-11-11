@@ -28,6 +28,9 @@ module.exports = db.sequelize.define(
     user_id_user: {
       type: Sequelize.INTEGER,
       allowNull: true
+    },
+    recurrence: {
+      type: Sequelize.STRING
     }
   },
   {

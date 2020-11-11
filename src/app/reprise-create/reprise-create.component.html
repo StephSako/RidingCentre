@@ -23,6 +23,14 @@
 
   <p>
     <mat-form-field appearance="outline" class="center">
+      <mat-icon matSuffix>update</mat-icon>
+      <mat-label>Récurrence (facultatif)</mat-label>
+      <input name="recurrence" type="text" [(ngModel)]="reprise.recurrence" matInput>
+    </mat-form-field>
+  </p>
+
+  <p>
+    <mat-form-field appearance="outline" class="center">
       <mat-icon matSuffix>groups</mat-icon>
       <mat-label>Nombre maximal de cavalier</mat-label>
       <input min="1" max="100" name="rider_number_limit" type="number" [(ngModel)]="reprise.rider_number_limit" matInput [formControl]="limitPersonControl" required>

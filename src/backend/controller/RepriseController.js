@@ -9,7 +9,8 @@ reprise_router.post('/create', (req, res) => {
     rider_number_limit: req.body.rider_number_limit,
     title: req.body.title,
     galop_level: req.body.galop_level,
-    user_id_user: req.body.user_id_user
+    user_id_user: req.body.user_id_user,
+    recurrence: req.body.recurrence
   }
 
   Reprise.create(repriseData).then(reprise => {
