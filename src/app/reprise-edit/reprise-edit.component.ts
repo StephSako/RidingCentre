@@ -1,8 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-import { RepriseInterface } from '../Interfaces/RepriseInterface';
-import { RepriseService } from '../Services/reprise.service';
+import { RepriseCreateInterface } from '../Interfaces/RepriseInterface';
 
 @Component({
   selector: 'app-reprise-edit',
@@ -11,8 +10,8 @@ import { RepriseService } from '../Services/reprise.service';
 })
 export class RepriseEditComponent {
 
-  reprise: RepriseInterface = {
-    user: null,
+  reprise: RepriseCreateInterface = {
+    user_id_user: null,
     id_reprise: null,
     rider_number_limit: null,
     date: null,
@@ -22,12 +21,8 @@ export class RepriseEditComponent {
     recurrence: null
   };
 
-  constructor(private repriseService: RepriseService, @Inject(MAT_DIALOG_DATA) public reprisedata: RepriseInterface) {
+  constructor(@Inject(MAT_DIALOG_DATA) public reprisedata: RepriseCreateInterface) {
     this.reprise = reprisedata;
-  }
-
-  edit(): void {
-    this.repriseService.edit(this.reprise).subscribe(() => { }, err => { console.error(err); });
   }
 
 }

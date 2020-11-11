@@ -67,7 +67,7 @@
 
     <ng-container matColumnDef="modify">
       <th mat-header-cell *matHeaderCellDef></th>
-      <td mat-cell *matCellDef="let reprise"><button (click)="openDialogEditReprise(reprise)" class="center" mat-raised-button color="primary">Modifier</button></td>
+      <td mat-cell *matCellDef="let reprise"><button (click)="edit(reprise)" class="center" mat-raised-button color="primary">Modifier</button></td>
     </ng-container>
 
     <ng-container matColumnDef="delete">

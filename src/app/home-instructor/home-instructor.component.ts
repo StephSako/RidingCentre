@@ -8,9 +8,8 @@ import { AuthenticationService } from '../Services/authentication.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DialogData } from '../Interfaces/DialogData';
 import { DialogComponent } from '../dialog/dialog.component';
-import {DatePipe} from '@angular/common';
-import {HelperService} from '../Services/helper.service';
-import {Title} from '@angular/platform-browser';
+import { DatePipe } from '@angular/common';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-home-instructor',
@@ -80,18 +79,21 @@ export class HomeInstructorComponent implements OnInit {
     this.dialog.open(DialogComponent, {
       width: '45%',
       data: accountToDelete
-    })
-      .afterClosed().subscribe(result => {
+    }).afterClosed().subscribe(result => {
       this.repriseService.delete(result).subscribe(() => {
         this.updateAllReprises();
       }, err => { console.error(err); });
     });
   }
 
-  openDialogEditReprise(cours: RepriseInterface): void {
+  edit(cours: RepriseInterface): void {
     this.dialog.open(RepriseEditComponent, {
       width: '60%',
       data: cours
+    }).afterClosed().subscribe(() => {
+      this.repriseService.edit(cours).subscribe(() => {
+        this.updateAllReprises();
+      }, err => { console.error(err); });
     });
   }
 

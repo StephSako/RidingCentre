@@ -115,8 +115,7 @@ export class AdminGestionComponent implements OnInit {
     this.dialog.open(DialogComponent, {
       width: '50%',
       data: accountToDelete
-    })
-      .afterClosed().subscribe(result => {
+    }).afterClosed().subscribe(result => {
       this.authService.deleteAccount(result).subscribe(() => {
         this.getAllAccounts();
         }, err => { console.error(err); });
