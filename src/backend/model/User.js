@@ -1,5 +1,6 @@
 const Sequelize = require("sequelize")
 const db = require("../db.js")
+const RoleUser = require("../model/RoleUser")
 
 module.exports = db.sequelize.define(
   'user',
@@ -7,6 +8,7 @@ module.exports = db.sequelize.define(
     id_user: {
       type: Sequelize.INTEGER,
       primaryKey: true,
+      allowNull: true,
       autoIncrement: true
     },
     firstname_user: {
@@ -34,7 +36,12 @@ module.exports = db.sequelize.define(
       allowNull: false
     },
     role_user_id: {
-      type: Sequelize.NUMBER
+      type: Sequelize.NUMBER,
+      allowNull: true,
+      references: {
+        model: RoleUser,
+        key: 'id'
+      }
     }
   },
   {

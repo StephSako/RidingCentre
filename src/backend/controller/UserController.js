@@ -21,29 +21,14 @@ user.post('/register', (req, res) => {
     email_user: req.body.email_user
   }
 
-  User.findOne({
-    where: {
-      email_user: req.body.email_user
-    }
-  })
-    .then(user => {
-      if (!user) {
-        userData.password_user = bcrypt.hashSync(userData.password_user, 12)
-        User.create(userData).then(user => {
-          let token = jwt.sign(user.dataValues, process.env.SECRET_KEY, {
-            expiresIn: 1440
-          })
-          res.json({token: token})
-        }).catch(err => {
-          res.json({message: err})
-          // res.status(401).send(err)
-        })
-      } else {
-        res.json({error: "Ce compte existe déjà"})
-      }
-    }).catch(err => {
-    res.json({message: err})
-    // res.status(401).send(err)
+  userData.password_user = bcrypt.hashSync(userData.password_user, 12)
+  User.create(userData).then(user => {
+    let token = jwt.sign(user.dataValues, process.env.SECRET_KEY, { expiresIn: 1440 })
+    res.json({token: token})
+  }).catch(err => {
+    if (err.parent.errno === 1062 && err.errors[0].path === "index_phone_number_unique") res.status(401).send("Le numéro de télephone est déjà lié un compte existant")
+    else if (err.parent.errno === 1062 && err.errors[0].path === "email_user_unique") res.status(401).send("L'adresse email est déjà lié un compte existant")
+    else res.status(401).send("Une erreur est survenue dans la mise à jour du compte")
   })
 })
 
@@ -75,7 +60,7 @@ user.get('/profile', (req, res) => {
 
   User.findOne({
     where: {
-      id_user: decoded.id_user,
+      id_user: decoded.id_user
     },
     include: [RoleUser]
   }).then(user => {
@@ -118,9 +103,23 @@ user.put('/edit/:id_user', (req, res) => {
   })
 })
 
-// DELETE
-user.post('/delete', (req, res) => {
-  console.log('not created yet')
+// DELETE ACCOUNT
+user.delete('/delete/:id_user', (req, res) => {
+  const id_user = req.params.id_user
+
+  User.findOne({
+    where: {
+      id_user: id_user,
+    }
+  }).then(user => {
+    if (user){
+      user.destroy();
+      res.json({message: "Compte supprimé avec succès"})
+    }
+    else res.json({message: "Ce compte n'existe pas"})
+  }).catch(err => {
+    res.json({error: err})
+  })
 })
 
 // SEND EMAIL
@@ -164,6 +163,57 @@ user.get('/instructors', (req, res) => {
     else res.send("Il n'y a pas de moniteur")
   }).catch(err => {
     res.send("error : " + err)
+  })
+})
+
+// ALL ACCOUNTS
+user.get('/', (req, res) => {
+  User.findAll({
+    where:{
+      [Op.not]: [
+        { role_user_id: 4 }
+      ]
+    },
+    order: [
+      ['lastname_user', 'ASC']
+    ],
+    include: [RoleUser]
+  }).then(moniteurs => {
+    if (moniteurs) res.json(moniteurs)
+    else res.send("Il n'y a pas d'administrateurs")
+  }).catch(err => {
+    res.send("error : " + err)
+  })
+})
+
+// EDIT ACCOUNT'S ROLE
+user.put('/edit/role/:id_user', (req, res) => {
+  const id_user = req.params.id_user;
+  User.update(req.body, {
+    where: {
+      id_user: id_user
+    }
+  }).then(num => {
+
+    if (num =! 0) {
+      User.findOne({
+        where: {
+          id_user: id_user
+        },
+        include: [RoleUser]
+      }).then(user => {
+        let token = jwt.sign(user.dataValues, process.env.SECRET_KEY, {
+          expiresIn: 1440
+        })
+        res.json({token: token})
+      }).catch(() => {
+        res.status(500).send("Le compte demandé n'a pas été trouvé")
+      })
+    }
+    else res.status(401).send("Le rôle du compte n'a pas été modifié")
+
+  }).catch(err => {
+    res.status(401).send("Le rôle demandé n'a pas été trouvé")
   })
 })
 

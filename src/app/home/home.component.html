@@ -1,9 +1,9 @@
 <div class="container">
   <h1 class="lobster">Tous les cours</h1>
 
-  <mat-card style="background-color: #eeeeee">
+  <mat-card class="filter">
 
-    <h2 class="center lobster">Filtres</h2>
+    <h2 class="center lobster">Rechercher une reprise</h2>
 
     <div class="center">
       <mat-form-field appearance="outline">
@@ -16,7 +16,7 @@
       <mat-form-field appearance="outline" style="margin-left: 30px">
         <mat-label>Moniteur(s)</mat-label>
         <mat-select [formControl]="moniteursControl" (closed)="getAllReprises()" multiple>
-          <mat-option *ngFor="let moniteur of moniteurs" [value]="moniteur.id_user">{{moniteur.firstname_user}} {{moniteur.lastname_user}}</mat-option>
+          <mat-option *ngFor="let moniteur of moniteurs" [value]="moniteur.id_user">{{moniteur.firstname_user | titlecase}} {{moniteur.lastname_user | uppercase}}</mat-option>
         </mat-select>
       </mat-form-field>
     </div>
@@ -25,7 +25,7 @@
 
   <mat-card *ngFor="let reprise of allReprises">
 
-    <h2 class="center lobster_2" style="margin-bottom: 20px;"><b>{{ reprise.title }}</b>
+    <h2 class="center lobster_2" style="margin-bottom: 20px;"><b>{{ reprise.title  | titlecase}}</b>
       <span class="spanBtnFiche">
         <button *ngIf="!reprise.canceled && authService.isRider()" mat-raised-button color="primary" class="center" [routerLink]="['/reprise', reprise.id_reprise]">Voir la fiche</button>
       </span>
@@ -39,21 +39,24 @@
       <mat-grid-tile><b>Niveau du Galop&nbsp;</b><mat-icon>military_tech</mat-icon></mat-grid-tile>
       <mat-grid-tile *ngIf="authService.isRider()"><b>Cheval assigné&nbsp;</b><img src="assets/horse-icon.png" height="20" alt="horse-icon"></mat-grid-tile>
 
-      <mat-grid-tile>{{reprise.user.firstname_user}} {{reprise.user.lastname_user | uppercase}}</mat-grid-tile>
-      <mat-grid-tile>{{reprise.date | date:"MM/dd/yyyy"}}</mat-grid-tile>
+      <mat-grid-tile>
+        <span *ngIf="reprise.user; else undefinedInstructor">{{reprise.user.firstname_user | titlecase}} {{reprise.user.lastname_user | uppercase}}</span>
+        <ng-template #undefinedInstructor><i style="color: lightgrey;">Non défini</i></ng-template>
+      </mat-grid-tile>
+      <mat-grid-tile>{{reprise.date | date:"dd/MM/yyyy"}}</mat-grid-tile>
       <mat-grid-tile>{{reprise.date | date:"HH:mm"}}</mat-grid-tile>
       <mat-grid-tile>{{reprise.rider_number_limit}}</mat-grid-tile>
       <mat-grid-tile>{{reprise.galop_level}}</mat-grid-tile>
       <div *ngIf="authService.isRider()">
         <mat-grid-tile *ngIf="nomCheval(reprise.id_reprise); else noAssignedHorse">
           <mat-icon matTooltipPosition=below [matTooltip]="nomCheval(reprise.id_reprise).race + ' - ' + nomCheval(reprise.id_reprise).age + ' ans'">info</mat-icon>
-          <p class="spanHorses">&nbsp;{{nomCheval(reprise.id_reprise).nom}}</p>
+          <p class="spanHorses">&nbsp;{{nomCheval(reprise.id_reprise).nom | titlecase}}</p>
         </mat-grid-tile>
       </div>
 
       <ng-template #noAssignedHorse>
         <mat-grid-tile>
-          <p><i>Aucun</i></p>
+          <p><i style="color: lightgrey;">Aucun</i></p>
         </mat-grid-tile>
       </ng-template>
     </mat-grid-list>
@@ -72,7 +75,7 @@
       </div>
     </ng-template>
 
-    <button *ngIf="authService.isInstructor()"  mat-raised-button color="primary" class="center" [routerLink]="['/reprise', reprise.id_reprise]">Modifier la reprise</button>
+    <button *ngIf="!authService.isRider()"  mat-raised-button color="primary" class="center" [routerLink]="['/reprise', reprise.id_reprise]">Modifier la reprise</button>
 
   </mat-card>
 </div>

@@ -1,0 +1,66 @@
+<div class="container">
+
+  <p>
+    <mat-form-field appearance="outline" class="center">
+      <mat-icon matSuffix>account_circle</mat-icon>
+      <mat-label>Nom</mat-label>
+      <input [(ngModel)]="user.lastname_user" name="lastname_user" type="text" class="validate" matInput [formControl]="lastnameControl" required>
+      <mat-error *ngIf="lastnameControl.invalid">{{getErrorMessageLogin()}}</mat-error>
+    </mat-form-field>
+  </p>
+
+  <p>
+    <mat-form-field appearance="outline" class="center">
+      <mat-icon matSuffix>account_circle</mat-icon>
+      <mat-label>Prénom</mat-label>
+      <input [(ngModel)]="user.firstname_user" class="validate" name="firstname_user" type="text" matInput [formControl]="firstnameControl" required>
+      <mat-error *ngIf="firstnameControl.invalid">{{getErrorMessageLogin()}}</mat-error>
+    </mat-form-field>
+  </p>
+
+  <p *ngIf="roleAdmin">
+    <mat-form-field appearance="outline">
+      <mat-label>Rôle(s)</mat-label>
+      <mat-select [(ngModel)]="user.role_user_id" [formControl]="roleControl" required>
+        <mat-option *ngFor="let role of listRoles" [value]="role.id">{{role.role}}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="roleControl.invalid">{{getErrorMessageLogin()}}</mat-error>
+    </mat-form-field>
+  </p>
+
+  <p>
+    <mat-form-field appearance="outline" class="center">
+      <mat-icon matSuffix>email</mat-icon>
+      <mat-label>Adresse email</mat-label>
+      <input [(ngModel)]="user.email_user" class="validate" name="email_user" type="email" matInput [formControl]="emailControl" required>
+      <mat-error *ngIf="emailControl.invalid">{{getErrorMessageEmail()}}</mat-error>
+    </mat-form-field>
+  </p>
+
+  <p>
+    <mat-form-field appearance="outline" class="center">
+      <mat-icon matSuffix>vpn_key</mat-icon>
+      <mat-label>Mot de passe</mat-label>
+      <input [(ngModel)]="user.password_user" class="validate" name="password_user" type="password" matInput [formControl]="passwordControl" required>
+      <mat-error *ngIf="passwordControl.invalid">{{getErrorMessageLogin()}}</mat-error>
+    </mat-form-field>
+  </p>
+
+  <p>
+    <mat-form-field appearance="outline" class="center">
+      <mat-icon matSuffix>phone_android</mat-icon>
+      <mat-label>Numéro de téléphone</mat-label>
+      <input [(ngModel)]="user.phone_number_user" class="validate" name="phone_user" type="tel" pattern="[0-9]{10}" matInput [formControl]="phoneNumberControl" required>
+      <mat-error *ngIf="phoneNumberControl.invalid">{{getErrorMessagePhoneNumber()}}</mat-error>
+    </mat-form-field>
+  </p>
+
+  <p>
+    <mat-form-field appearance="outline" class="center">
+      <mat-icon matSuffix>assignment_ind</mat-icon>
+      <mat-label>Numéro de license</mat-label>
+      <input [(ngModel)]="user.license_number_user" class="validate" name="license_number" type="text" matInput>
+    </mat-form-field>
+  </p>
+
+</div>

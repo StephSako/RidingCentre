@@ -86,4 +86,19 @@ reprise_router.put('/edit/:id_reprise', (req, res) => {
   })
 })
 
+// EDIT INSTRUCTOR FOR ALL REPRISE WITH THIS INSTRUCTOR
+reprise_router.put('/edit/instructor/:user_id_user', (req, res) => {
+  const user_id_user = req.params.user_id_user;
+
+  Reprise.update((req.body.user_id_user === '' ? { user_id_user: null} : req.body), {
+    where: {
+      user_id_user: user_id_user
+    }
+  }).then(num => {
+    res.json({message: "Le moniteur de la reprise a été mis à jour"})
+  }).catch(err => {
+    res.json({message: "Une erreur est survenue dans la mise à jour du moniteur de la reprise"})
+  })
+})
+
 module.exports = reprise_router

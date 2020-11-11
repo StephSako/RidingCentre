@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { UserEditInterface } from '../Interfaces/UserInterface';
+import { UserInfoInterface } from '../Interfaces/UserInterface';
 import { AuthenticationService } from '../Services/authentication.service';
 import { HelperService } from '../Services/helper.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -12,8 +12,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class ProfileEditComponent {
 
-  user: UserEditInterface = {
+  user: UserInfoInterface = {
     id_user: null,
+    role_user: null,
     lastname_user: null,
     firstname_user: null,
     email_user: null,
@@ -21,7 +22,7 @@ export class ProfileEditComponent {
     license_number_user: null
   };
 
-  constructor(private authService: AuthenticationService, @Inject(MAT_DIALOG_DATA) public userdata: UserEditInterface,
+  constructor(private authService: AuthenticationService, @Inject(MAT_DIALOG_DATA) public userdata: UserInfoInterface,
               private helper: HelperService, private snackBar: MatSnackBar) {
     this.user = userdata;
   }

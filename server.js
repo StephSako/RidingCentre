@@ -42,38 +42,6 @@ User.belongsTo(RoleUser)
 User.hasMany(Reprise)
 Reprise.belongsTo(User)
 
-// Associations for reprise inscriptions
-/*User.belongsToMany(Reprise, {
-  foreignKey: 'id_user',
-  through: RepriseInscription,
-  as: 'reprises'
-});
-Reprise.belongsToMany(User, {
-  foreignKey: 'id_reprise',
-  through: RepriseInscription,
-  as: 'users'
-});
-Cheval.belongsToMany(Reprise, {
-  foreignKey: 'id_cheval',
-  through: RepriseInscription,
-  as: 'chevalsReprises'
-});
-Cheval.belongsToMany(User, {
-  foreignKey: 'id_cheval',
-  through: RepriseInscription,
-  as: 'chevalsUsers'
-});
-User.belongsToMany(Cheval, {
-  foreignKey: 'id_user',
-  through: RepriseInscription,
-  as: 'usersChevals'
-});
-Reprise.belongsToMany(Cheval, {
-  foreignKey: 'id_reprise',
-  through: RepriseInscription,
-  as: 'reprisesChevals'
-});*/
-
 RepriseInscription.belongsTo(User, {
   foreignKey: 'id_user'
 });
@@ -86,6 +54,9 @@ RepriseInscription.belongsTo(Cheval, {
 
 let UserController = require('./src/backend/controller/UserController')
 app.use('/api/user', UserController)
+
+let RoleController = require('./src/backend/controller/RoleUserController')
+app.use('/api/role', RoleController)
 
 let RepriseController = require('./src/backend/controller/RepriseController')
 app.use('/api/reprise', RepriseController)

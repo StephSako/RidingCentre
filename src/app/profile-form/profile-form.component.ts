@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { UserEditInterface } from '../Interfaces/UserInterface';
+import { UserInfoInterface } from '../Interfaces/UserInterface';
 import {FormControl, Validators} from '@angular/forms';
 
 @Component({
@@ -9,8 +9,9 @@ import {FormControl, Validators} from '@angular/forms';
 })
 export class ProfileFormComponent implements OnInit {
 
-  @Input() user: UserEditInterface = {
+  @Input() user: UserInfoInterface = {
     id_user: null,
+    role_user:  null,
     lastname_user: null,
     firstname_user: null,
     email_user: null,

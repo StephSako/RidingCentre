@@ -6,10 +6,9 @@
   <button *ngIf="!auth.isLoggedIn()" routerLink="/register" mat-raised-button color="accent">S'inscrire</button>
   <button *ngIf="!auth.isLoggedIn()" routerLink="/login" mat-button>Se connecter</button>
 
-  <button *ngIf="auth.isAdmin()" routerLink="/register" mat-raised-button color="accent">Back-office</button>
   <app-menu-gestion></app-menu-gestion>
 
-  <button *ngIf="auth.isLoggedIn()" routerLink="/profile" mat-stroked-button>Mon compte</button>
+  <button *ngIf="auth.isLoggedIn()" routerLink="/profile" style="margin-left: 10px; margin-right: 10px;" mat-button>Mon compte</button>
 
   <button *ngIf="auth.isLoggedIn()" (click)="auth.logout()" mat-raised-button color="warn">Se déconnecter</button>
 </mat-toolbar>
