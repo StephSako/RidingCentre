@@ -17,6 +17,7 @@ import {Title} from '@angular/platform-browser';
 export class LoginComponent implements OnInit {
 
   nbErrors: number;
+  spinnerShown: boolean;
 
   credentials: TokenPayloadLogin = {
     login_user: '',
@@ -33,6 +34,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.nbErrors = 0;
+    this.spinnerShown = false;
   }
 
   getErrorMessageLogin(): string {
@@ -48,15 +50,18 @@ export class LoginComponent implements OnInit {
   }
 
   login(): void {
-    if (!(this.helper.isEmpty(this.credentials.login_user) || this.helper.isEmpty(this.credentials.password_user))) {
+    if (!this.helper.isEmpty(this.credentials.login_user) && !this.helper.isEmpty(this.credentials.password_user)) {
+      this.spinnerShown = true;
       this.authService.login(this.credentials)
         .subscribe(
           () => {
+            this.spinnerShown = false;
             if (this.authService.isInstructor()) { this.router.navigateByUrl('/home-instructor'); }
             else if (this.authService.isSuperAdmin() || this.authService.isAdmin()) { this.router.navigateByUrl('/admin-gestion'); }
             else { this.router.navigateByUrl('/home'); }
           },
           err => {
+            this.spinnerShown = false;
             this.nbErrors++;
             if (this.nbErrors === 3) { this.router.navigateByUrl('/recuperation-mot-de-passe'); }
             else { this.authService.notifyUser(err, this.snackBar, 'error', 2000, 'OK'); }
