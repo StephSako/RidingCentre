@@ -72,13 +72,13 @@ export class HomeInstructorComponent implements OnInit {
     const dateConverted = new Date(date);
     const accountToDelete: DialogData = {
       id: idReprise,
-      action: 'Supprimer la reprise',
+      action: 'Supprimer la reprise et les inscriptions de',
       subtitle: (title ? title : 'du ' + this.datepipe.transform(dateConverted, 'dd/MM/yyyy') + ' à ' +
         this.datepipe.transform(dateConverted, 'HH:mm'))
     };
 
     this.dialog.open(DialogComponent, {
-      width: '30%',
+      width: '45%',
       data: accountToDelete
     })
       .afterClosed().subscribe(result => {
@@ -96,7 +96,6 @@ export class HomeInstructorComponent implements OnInit {
   }
 
   isInvalid(): boolean {
-    return (!this.repriseService.isEmpty(this.reprise.title) && this.reprise.galop_level && this.reprise.rider_number_limit
-      && this.reprise.galop_level > 0 && this.reprise.rider_number_limit > 0);
+    return (this.reprise.date != null);
   }
 }

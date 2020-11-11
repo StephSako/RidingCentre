@@ -47,9 +47,20 @@ export class RepriseCreateComponent implements OnInit {
   ngOnInit(): void { }
 
   getErrorMessageInput(): string {
-    if (this.dateControl.hasError('required') || this.limitPersonControl.hasError('required')
-      || this.levelControl.hasError('required')) {
-      return 'Champ obligatoire';
+    if (this.dateControl.hasError('required')) {
+      return 'Horaire obligatoire';
+    }
+  }
+
+  getErrorMessageLevel(): string {
+    if (this.levelControl.hasError('required')) {
+      return 'Niveau du galop obligatoire';
+    }
+  }
+
+  getErrorMessageLimit(): string {
+    if (this.limitPersonControl.hasError('required')) {
+      return 'Limite du nombre de cavaliers obligatoire';
     }
   }
 

@@ -94,7 +94,7 @@
       </div>
     </ng-template>
 
-    <button *ngIf="!authService.isRider() && !isOutdated(reprise.date)" mat-raised-button color="primary" class="center" [routerLink]="['/reprise', reprise.id_reprise]">Modifier la reprise</button>
+    <button *ngIf="!authService.isRider() && !isOutdated(reprise.date)" mat-raised-button color="primary" class="center" [routerLink]="['/reprise', reprise.id_reprise]">Assigner les chevaux</button>
 
   </mat-card>
 </div>
