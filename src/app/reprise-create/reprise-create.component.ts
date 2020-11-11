@@ -38,7 +38,8 @@ export class RepriseCreateComponent implements OnInit {
     date: null,
     galop_level: null,
     title: null,
-    canceled: false
+    canceled: false,
+    recurrence: null
   };
 
   constructor() { }

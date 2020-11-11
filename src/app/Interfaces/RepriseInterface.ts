@@ -8,6 +8,7 @@ export interface RepriseInterface {
   rider_number_limit: number;
   galop_level: number;
   canceled: boolean;
+  recurrence: null;
 }
 
 export interface RepriseCreateInterface {
@@ -18,4 +19,5 @@ export interface RepriseCreateInterface {
   rider_number_limit: number;
   galop_level: number;
   canceled: boolean;
+  recurrence: null;
 }

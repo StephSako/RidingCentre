@@ -20,7 +20,7 @@ import {Title} from '@angular/platform-browser';
 })
 export class HomeInstructorComponent implements OnInit {
 
-  displayedColumns: string[] = ['title', 'date', 'rider_number_limit', 'galop_level', 'open', 'modify', 'delete'];
+  displayedColumns: string[] = ['title', 'moniteur', 'date', 'recurrence', 'rider_number_limit', 'galop_level', 'open', 'modify', 'delete'];
   allReprises: RepriseInterface[];
 
   reprise: RepriseCreateInterface = {
@@ -30,7 +30,8 @@ export class HomeInstructorComponent implements OnInit {
     date: null,
     galop_level: null,
     title: null,
-    canceled: null
+    canceled: null,
+    recurrence: null
   };
 
   panelOpenState = false;
