@@ -1,5 +1,9 @@
-<button *ngIf="authService.isInstructor() || authService.isAdmin()" class="btn_menu" mat-button [matMenuTriggerFor]="menu">Gestion</button>
+<button *ngIf="authService.isLoggedIn() && !authService.isRider()" class="btn_menu" style="border-color: white" mat-stroked-button [matMenuTriggerFor]="menu">
+  Gestion
+  <mat-icon>keyboard_arrow_down</mat-icon>
+</button>
 <mat-menu #menu="matMenu">
-  <button routerLink="/home-instructor" mat-menu-item>Gestion des reprises</button>
-  <button routerLink="/cheval-instructor" mat-menu-item>Gestion des chevaux</button>
+  <button *ngIf="!authService.isRider()" routerLink="/home-instructor" routerLinkActive="activeMenuItem" mat-menu-item>Reprises</button>
+  <button *ngIf="!authService.isRider()" routerLink="/cheval-instructor" routerLinkActive="activeMenuItem" mat-menu-item>Chevaux</button>
+  <button *ngIf="authService.isSuperAdmin() || authService.isAdmin()" routerLink="/admin-gestion" routerLinkActive="activeMenuItem" mat-menu-item>Comptes</button>
 </mat-menu>

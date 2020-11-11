@@ -39,4 +39,9 @@ export class RepriseService {
   public isEmpty(_string: string): boolean {
     return (!_string || 0 === _string.trim().length);
   }
+
+  // tslint:disable-next-line:variable-name
+  public editInstructor(user_id_user: number): Observable<any> {
+    return this.http.put(`${this.baseURL}edit/instructor/${user_id_user}`, { user_id_user: null });
+  }
 }

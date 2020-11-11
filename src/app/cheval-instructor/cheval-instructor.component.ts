@@ -5,6 +5,11 @@ import { ChevalService } from '../Services/cheval.service';
 import { ChevalInterface } from '../Interfaces/ChevalInterface';
 import { ChevalEditComponent } from '../cheval-edit/cheval-edit.component';
 import { HelperService } from '../Services/helper.service';
+import { DialogData } from '../Interfaces/DialogData';
+import { DialogComponent } from '../dialog/dialog.component';
+import { AuthenticationService } from '../Services/authentication.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import {Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-cheval-instructor',
@@ -23,7 +28,16 @@ export class ChevalInstructorComponent implements OnInit {
     race: null
   };
 
-  constructor(public chevalService: ChevalService, public dialog: MatDialog, private helper: HelperService) { }
+  panelOpenState = false;
+
+  constructor(public chevalService: ChevalService, public dialog: MatDialog, private helper: HelperService,
+              private authService: AuthenticationService, private snackBar: MatSnackBar, private titleService: Title) {
+    this.titleService.setTitle('Gestion des chevaux');
+  }
+
+  togglePanel(): void {
+    this.panelOpenState = !this.panelOpenState;
+  }
 
   ngOnInit(): void {
     this.updateAllCheval();
@@ -37,7 +51,9 @@ export class ChevalInstructorComponent implements OnInit {
     this.chevalService.create(this.cheval)
       .subscribe(
         () => {
+          this.togglePanel();
           this.updateAllCheval();
+          this.authService.notifyUser('Cheval créé', this.snackBar, 'success', 1000);
         },
         err => {
           console.error(err);
@@ -45,20 +61,25 @@ export class ChevalInstructorComponent implements OnInit {
       );
   }
 
-  // tslint:disable-next-line:variable-name
-  delete(id_cheval: number): void {
-    this.chevalService.delete(id_cheval)
-      .subscribe(
-        () => {
-          this.updateAllCheval();
-        },
-        err => {
-          console.error(err);
-        }
-      );
+  deleteCheval(idCheval: number, nomCheval: string): void {
+    const horseToDelete: DialogData = {
+      id: idCheval,
+      action: 'Supprimer le cheval',
+      subtitle: nomCheval
+    };
+
+    this.dialog.open(DialogComponent, {
+      width: '30%',
+      data: horseToDelete
+    })
+      .afterClosed().subscribe(result => {
+      this.chevalService.delete(result).subscribe(() => {
+        this.updateAllCheval();
+      }, err => { console.error(err); });
+    });
   }
 
-  openDialog(cheval: ChevalInterface): void {
+  editCheval(cheval: ChevalInterface): void {
     this.dialog.open(ChevalEditComponent, {
       width: '60%',
       data: cheval

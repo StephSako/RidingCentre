@@ -9,3 +9,9 @@ table {
   margin-bottom: 30px;
   border-radius: 10px;
 }
+
+.card {
+  height: 235px;
+  width: 350px;
+  margin: 0;
+}

@@ -17,6 +17,7 @@
                                [touchUi]="touchUi" [color]="color" [enableMeridian]="enableMeridian"
                                [disableMinute]="disableMinute" [hideTime]="hideTime">
       </ngx-mat-datetime-picker>
+      <mat-error *ngIf="dateControl.invalid">{{getErrorMessageInput()}}</mat-error>
     </mat-form-field>
   </p>
 
@@ -24,7 +25,8 @@
     <mat-form-field appearance="outline" class="center">
       <mat-icon matSuffix>groups</mat-icon>
       <mat-label>Nombre maximal de cavalier</mat-label>
-      <input min="1" max="100" name="rider_number_limit" type="number" [(ngModel)]="reprise.rider_number_limit" matInput>
+      <input min="1" max="100" name="rider_number_limit" type="number" [(ngModel)]="reprise.rider_number_limit" matInput [formControl]="limitPersonControl" required>
+      <mat-error *ngIf="limitPersonControl.invalid">{{getErrorMessageInput()}}</mat-error>
     </mat-form-field>
   </p>
 
@@ -32,7 +34,8 @@
     <mat-form-field appearance="outline" class="center">
       <mat-icon matSuffix>military_tech</mat-icon>
       <mat-label>Niveau du Galop</mat-label>
-      <input min="1" max="7" name="galop_level" type="number" [(ngModel)]="reprise.galop_level" matInput>
+      <input min="1" max="7" name="galop_level" type="number" [(ngModel)]="reprise.galop_level" matInput [formControl]="levelControl" required>
+      <mat-error *ngIf="levelControl.invalid">{{getErrorMessageInput()}}</mat-error>
     </mat-form-field>
   </p>
 

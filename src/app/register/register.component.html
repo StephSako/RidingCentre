@@ -3,55 +3,7 @@
     <h1 class="lobster">S'inscrire</h1>
 
     <form (submit)="register()">
-
-      <p>
-        <mat-form-field appearance="outline" class="center">
-          <mat-icon matSuffix>account_circle</mat-icon>
-          <mat-label>Nom</mat-label>
-          <input [(ngModel)]="credentials.lastname_user" name="lastname_user" type="text" class="validate" matInput>
-        </mat-form-field>
-      </p>
-
-      <p>
-        <mat-form-field appearance="outline" class="center">
-          <mat-icon matSuffix>account_circle</mat-icon>
-          <mat-label>Prénom</mat-label>
-          <input [(ngModel)]="credentials.firstname_user" class="validate" name="firstname_user" type="text" matInput>
-        </mat-form-field>
-      </p>
-
-      <p>
-        <mat-form-field appearance="outline" class="center">
-          <mat-icon matSuffix>email</mat-icon>
-          <mat-label>Adresse email</mat-label>
-          <input [(ngModel)]="credentials.email_user" class="validate" name="email_user" type="email" matInput>
-        </mat-form-field>
-      </p>
-
-      <p>
-        <mat-form-field appearance="outline" class="center">
-          <mat-icon matSuffix>vpn_key</mat-icon>
-          <mat-label>Mot de passe</mat-label>
-          <input [(ngModel)]="credentials.password_user" class="validate" name="password_user" type="password" matInput>
-        </mat-form-field>
-      </p>
-
-      <p>
-        <mat-form-field appearance="outline" class="center">
-          <mat-icon matSuffix>phone_android</mat-icon>
-          <mat-label>Numéro de téléphone</mat-label>
-          <input [(ngModel)]="credentials.phone_number_user" class="validate" name="phone_user" type="text" matInput>
-        </mat-form-field>
-      </p>
-
-      <p>
-        <mat-form-field appearance="outline" class="center">
-          <mat-icon matSuffix>assignment_ind</mat-icon>
-          <mat-label>Numéro de license</mat-label>
-          <input [(ngModel)]="credentials.license_number_user" class="validate" name="license_number" type="text" matInput>
-        </mat-form-field>
-      </p>
-
+      <app-user-form [user]="credentials"></app-user-form>
       <button class="center" mat-raised-button color="blue">S'inscrire</button>
     </form>
   </mat-card>

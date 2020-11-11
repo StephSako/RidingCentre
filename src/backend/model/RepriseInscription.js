@@ -10,6 +10,7 @@ module.exports = db.sequelize.define(
     id: {
       type: Sequelize.INTEGER,
       primaryKey: true,
+      allowNull: true,
       autoIncrement: true
     },
     id_reprise: {

@@ -37,7 +37,6 @@ import { AuthGuardService } from './auth-guard.service';
 import { ProfileComponent } from './profile/profile.component';
 import { HomeComponent } from './home/home.component';
 import { HomeInstructorComponent } from './home-instructor/home-instructor.component';
-import { BackOfficeComponent } from './back-office/back-office.component';
 import { RepriseComponent } from './reprise/reprise.component';
 import { RepriseCreateComponent } from './reprise-create/reprise-create.component';
 import { RepriseEditComponent } from './reprise-edit/reprise-edit.component';
@@ -48,6 +47,9 @@ import { ChevalEditComponent } from './cheval-edit/cheval-edit.component';
 import { ProfileFormComponent } from './profile-form/profile-form.component';
 import { ProfileEditComponent } from './profile-edit/profile-edit.component';
 import { RecuperationPasswordComponent } from './recuperation-password/recuperation-password.component';
+import { AdminGestionComponent } from './admin-gestion/admin-gestion.component';
+import { UserFormComponent } from './user-form/user-form.component';
+import { DialogComponent } from './dialog/dialog.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +59,6 @@ import { RecuperationPasswordComponent } from './recuperation-password/recuperat
     ProfileComponent,
     HomeComponent,
     HomeInstructorComponent,
-    BackOfficeComponent,
     RepriseComponent,
     RepriseCreateComponent,
     RepriseEditComponent,
@@ -67,7 +68,10 @@ import { RecuperationPasswordComponent } from './recuperation-password/recuperat
     ChevalEditComponent,
     ProfileFormComponent,
     ProfileEditComponent,
-    RecuperationPasswordComponent
+    RecuperationPasswordComponent,
+    AdminGestionComponent,
+    UserFormComponent,
+    DialogComponent
   ],
   imports: [
     BrowserModule,

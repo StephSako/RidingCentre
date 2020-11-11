@@ -1,17 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import * as moment from 'moment';
 import { MatDialog } from '@angular/material/dialog';
 
 import { RepriseCreateInterface, RepriseInterface } from '../Interfaces/RepriseInterface';
 import { RepriseService } from '../Services/reprise.service';
 import { RepriseEditComponent } from '../reprise-edit/reprise-edit.component';
 import { AuthenticationService } from '../Services/authentication.service';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { DialogData } from '../Interfaces/DialogData';
+import { DialogComponent } from '../dialog/dialog.component';
+import {DatePipe} from '@angular/common';
+import {HelperService} from '../Services/helper.service';
+import {Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-home-instructor',
   templateUrl: './home-instructor.component.html',
-  styleUrls: ['./home-instructor.component.css']
+  styleUrls: ['./home-instructor.component.css'],
+  providers: [DatePipe]
 })
 export class HomeInstructorComponent implements OnInit {
 
@@ -28,10 +33,19 @@ export class HomeInstructorComponent implements OnInit {
     canceled: null
   };
 
-  constructor(public repriseService: RepriseService, public dialog: MatDialog, private authService: AuthenticationService, private snackBar: MatSnackBar) { }
+  panelOpenState = false;
+
+  constructor(public repriseService: RepriseService, public dialog: MatDialog, public authService: AuthenticationService,
+              private snackBar: MatSnackBar, private datepipe: DatePipe, private titleService: Title) {
+    this.titleService.setTitle('Gestion des reprises');
+  }
 
   ngOnInit(): void {
     this.updateAllReprises();
+  }
+
+  togglePanel(): void {
+    this.panelOpenState = !this.panelOpenState;
   }
 
   updateAllReprises(): void {
@@ -39,12 +53,11 @@ export class HomeInstructorComponent implements OnInit {
   }
 
   createReprise(): void {
-    // this.reprise.date = moment(this.reprise.date).utc().format('YYYY-MM-DD hh:mm');
-    const dt = moment(this.reprise.date).utc().format('YYYY-MM-DD HH:mm');
     this.reprise.user_id_user = this.authService.getUserDetails().id_user;
     this.repriseService.create(this.reprise)
       .subscribe(
         () => {
+          this.togglePanel();
           this.updateAllReprises();
           this.authService.notifyUser('Reprise créée', this.snackBar, 'success', 1500, 'OK');
         },
@@ -54,17 +67,24 @@ export class HomeInstructorComponent implements OnInit {
       );
   }
 
-  // tslint:disable-next-line:variable-name
-  delete(id_reprise: number): void {
-    this.repriseService.delete(id_reprise)
-      .subscribe(
-        () => {
-          this.updateAllReprises();
-        },
-        err => {
-          console.error(err);
-        }
-      );
+  delete(idReprise: number, title: string, date: number): void {
+    const dateConverted = new Date(date);
+    const accountToDelete: DialogData = {
+      id: idReprise,
+      action: 'Supprimer la reprise',
+      subtitle: (title ? title : 'du ' + this.datepipe.transform(dateConverted, 'dd/MM/yyyy') + ' à ' +
+        this.datepipe.transform(dateConverted, 'HH:mm'))
+    };
+
+    this.dialog.open(DialogComponent, {
+      width: '30%',
+      data: accountToDelete
+    })
+      .afterClosed().subscribe(result => {
+      this.repriseService.delete(result).subscribe(() => {
+        this.updateAllReprises();
+      }, err => { console.error(err); });
+    });
   }
 
   openDialogEditReprise(cours: RepriseInterface): void {

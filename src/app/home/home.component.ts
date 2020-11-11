@@ -3,12 +3,12 @@ import { Component, OnInit } from '@angular/core';
 import { RepriseService } from '../Services/reprise.service';
 import { RepriseInterface } from '../Interfaces/RepriseInterface';
 import {AuthenticationService} from '../Services/authentication.service';
-import {RepriseInscriptionHomeInterface} from '../Interfaces/RepriseInscriptionInterface';
-import {ChevalInterface} from '../Interfaces/ChevalInterface';
-import {FormControl} from '@angular/forms';
-import {UserInterface} from '../Interfaces/UserInterface';
+import { RepriseInscriptionHomeInterface } from '../Interfaces/RepriseInscriptionInterface';
+import { ChevalInterface } from '../Interfaces/ChevalInterface';
+import {FormControl } from '@angular/forms';
+import { UserInterface } from '../Interfaces/UserInterface';
+import { Title } from '@angular/platform-browser';
 
-// @ts-ignore
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -25,7 +25,9 @@ export class HomeComponent implements OnInit {
   moniteursControl = new FormControl();
   moniteurs: UserInterface[];
 
-  constructor(private repriseService: RepriseService, public authService: AuthenticationService) { }
+  constructor(private repriseService: RepriseService, public authService: AuthenticationService, private titleService: Title) {
+    this.titleService.setTitle('Page d\'accueil');
+  }
 
   ngOnInit(): void {
     this.getAllReprises();

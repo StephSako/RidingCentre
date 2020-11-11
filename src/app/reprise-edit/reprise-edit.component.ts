@@ -12,8 +12,8 @@ import { RepriseService } from '../Services/reprise.service';
 export class RepriseEditComponent {
 
   reprise: RepriseInterface = {
-    id_reprise: null,
     user: null,
+    id_reprise: null,
     rider_number_limit: null,
     date: null,
     galop_level: null,

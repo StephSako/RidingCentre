@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ChevalInterface} from '../Interfaces/ChevalInterface';
 import {RaceChevalInterface} from '../Interfaces/RaceCheval';
+import {FormControl, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-cheval-form',
@@ -34,10 +35,29 @@ export class ChevalFormComponent implements OnInit {
     {nom: 'Mustang'}
   ];
 
+  nomChevalControl = new FormControl('', [Validators.required]);
+  ageControl = new FormControl('', [Validators.required, Validators.pattern('[0-9]{1,2}')]);
+  raceControl = new FormControl('', [Validators.required]);
+
   constructor() { }
 
   ngOnInit(): void {
     this.races.sort((a, b) => (a.nom > b.nom) ? 1 : -1);
+  }
+
+  getErrorMessageInput(): string {
+    if (this.nomChevalControl.hasError('required') || this.raceControl.hasError('required')) {
+      return 'Champ obligatoire';
+    }
+  }
+
+  getErrorMessageAge(): string {
+    if (this.ageControl.hasError('required')) {
+      return 'Age obligatoire';
+    }
+    else if (this.ageControl.hasError('pattern')) {
+      return 'Les chevaux vivent moins de 100 ans ...';
+    }
   }
 
 }
