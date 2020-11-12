@@ -6,6 +6,7 @@ const session = require('express-session')
 const app = express()
 const RoleUser = require("./src/backend/model/RoleUser")
 const User = require("./src/backend/model/User")
+const RaceCheval = require("./src/backend/model/RaceCheval")
 const Cheval = require("./src/backend/model/Cheval")
 const Reprise = require("./src/backend/model/Reprise")
 const RepriseInscription = require("./src/backend/model/RepriseInscription")
@@ -34,11 +35,12 @@ app.get('/api', function (req, res) {
   res.json({ status: 'Working' })
 })
 
-// Associations for user's roles
+RaceCheval.hasMany(Cheval)
+Cheval.belongsTo(RaceCheval)
+
 RoleUser.hasMany(User)
 User.belongsTo(RoleUser)
 
-// Associations for reprise's instructor
 User.hasMany(Reprise)
 Reprise.belongsTo(User)
 
@@ -66,6 +68,9 @@ app.use('/api/reprise_inscription', RepriseInscriptionController)
 
 let ChevalController = require('./src/backend/controller/ChevalController')
 app.use('/api/cheval', ChevalController)
+
+let RaceChevalController = require('./src/backend/controller/RaceChevalController')
+app.use('/api/race_cheval', RaceChevalController)
 
 let port = process.env.PORT || 4000
 app.listen(port, function () {

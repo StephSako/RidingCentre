@@ -41,7 +41,7 @@
     <mat-grid-tile>
       <p>
         <span class="center">Niveau du galop (1 à 7)</span>
-        <mat-slider  [formControl]="levelControl" style="width: 300px;" color="primary" [max]="7" [min]="1" [step]="1" [thumbLabel]="true" [tickInterval]="1" [(ngModel)]="reprise.galop_level" [vertical]="false"></mat-slider>
+        <mat-slider [formControl]="levelControl" style="width: 300px;" color="primary" [max]="7" [min]="1" [step]="1" [thumbLabel]="true" [tickInterval]="1" [(ngModel)]="reprise.galop_level" [vertical]="false"></mat-slider>
         <mat-error *ngIf="levelControl.invalid">{{getErrorMessageLevel()}}</mat-error>
       </p>
     </mat-grid-tile>

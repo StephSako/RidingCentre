@@ -37,7 +37,7 @@ module.exports = db.sequelize.define(
     },
     role_user_id: {
       type: Sequelize.NUMBER,
-      allowNull: true,
+      allowNull: false,
       references: {
         model: RoleUser,
         key: 'id'

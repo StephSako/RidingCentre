@@ -8,7 +8,12 @@
     <div style="margin-top: 40px;" class="container">
       <form (submit)="createReprise()">
         <app-reprise-create [editMonitor]="false" [reprise]="reprise"></app-reprise-create>
-        <button mat-raised-button class="center" color="accent" [disabled]="!isInvalid()">Créer</button>
+        <button mat-raised-button class="center" color="primary" [disabled]="!isInvalid()">
+          <mat-icon *ngIf="spinnerShown">
+            <mat-spinner [diameter]="20"></mat-spinner>
+          </mat-icon>
+          Créer
+        </button>
       </form>
     </div>
 

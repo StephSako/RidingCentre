@@ -47,7 +47,7 @@
               (cdkDropListDropped)="dropUserToStack($event)">
               <div class="box" [cdkDragData]="cheval" *ngFor="let cheval of chevauxDisponibles" cdkDrag>
                 <div class="custom-placeholder" *cdkDragPlaceholder></div>
-                <span><b>{{cheval.nom | titlecase}}</b> - {{cheval.race | titlecase}} - {{cheval.age}} ans</span><mat-icon aria-hidden="false">open_with</mat-icon>
+                <span><b>{{cheval.nom | titlecase}}</b> - {{cheval.race_cheval.nom | titlecase}} - {{cheval.age}} ans</span><mat-icon aria-hidden="false">open_with</mat-icon>
               </div>
             </div>
 
@@ -63,8 +63,10 @@
                 class="list"
                 (cdkDropListDropped)="dropStackToUser($event, cavalier.user.id_user, cavalier.id_reprise_inscription)">
                 <div class="box" [cdkDragData]="cavalier" *ngFor="let cheval of cavalier.cheval" cdkDrag>
-                  <div class="custom-placeholder" *cdkDragPlaceholder></div>
-                  <span><b>{{cheval.nom | titlecase}}</b> - {{cheval.race | titlecase}} - {{cheval.age}} ans</span><mat-icon aria-hidden="false">open_with</mat-icon>
+                  <div *ngIf="cheval.race_cheval">
+                    <div class="custom-placeholder" *cdkDragPlaceholder></div>
+                    <span><b>{{cheval.nom | titlecase}}</b> - {{cheval.race_cheval.nom | titlecase}} - {{cheval.age}} ans</span><mat-icon aria-hidden="false">open_with</mat-icon>
+                  </div>
                 </div>
               </div>
             </div>

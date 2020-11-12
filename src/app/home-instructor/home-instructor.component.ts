@@ -21,6 +21,7 @@ export class HomeInstructorComponent implements OnInit {
 
   displayedColumns: string[] = ['title', 'moniteur', 'date', 'recurrence', 'rider_number_limit', 'galop_level', 'open', 'modify', 'delete'];
   allReprises: RepriseInterface[];
+  spinnerShown: boolean;
 
   reprise: RepriseCreateInterface = {
     id_reprise: null,
@@ -41,6 +42,7 @@ export class HomeInstructorComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.spinnerShown = false;
     this.updateAllReprises();
   }
 
@@ -53,15 +55,18 @@ export class HomeInstructorComponent implements OnInit {
   }
 
   createReprise(): void {
+    this.spinnerShown = true;
     this.reprise.user_id_user = this.authService.getUserDetails().id_user;
     this.repriseService.create(this.reprise)
       .subscribe(
         () => {
+          this.spinnerShown = false;
           this.togglePanel();
           this.updateAllReprises();
           this.authService.notifyUser('Reprise créée', this.snackBar, 'success', 1500, 'OK');
         },
         err => {
+          this.spinnerShown = false;
           console.error(err);
         }
       );

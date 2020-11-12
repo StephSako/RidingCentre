@@ -1,6 +1,8 @@
 const express = require('express')
 const reprise_inscription = express.Router()
 const RepriseInscription = require("../model/RepriseInscription")
+const RaceCheval = require("../model/RaceCheval")
+const Cheval = require("../model/Cheval")
 const User = require("../model/User")
 const _ = require('lodash');
 
@@ -12,7 +14,12 @@ reprise_inscription.get('/user/:id_user', (req, res) => {
     where: {
       id_user: id_user
     },
-    include: ['cheval']
+    include: [
+      {
+        model: Cheval,
+        include: [ RaceCheval ]
+      }
+    ]
   }).then(reprises => {
     if (!_.isEmpty(reprises)){
       return res.json(_.map(reprises, function(reprise) {
@@ -36,7 +43,13 @@ reprise_inscription.get('/reprise/:id_reprise', (req, res) => {
     where: {
       id_reprise: id_reprise
     },
-    include: ['user', 'cheval'],
+    include: [
+      User,
+      {
+        model: Cheval,
+        include: [ RaceCheval ]
+      }
+    ],
     order: [
       [User, 'lastname_user', 'ASC']
     ]
@@ -56,7 +69,7 @@ reprise_inscription.get('/reprise/:id_reprise', (req, res) => {
                 {
                   id_cheval: data.cheval.dataValues.id_cheval,
                   nom: data.cheval.dataValues.nom,
-                  race: data.cheval.dataValues.race,
+                  race_cheval: data.cheval.dataValues.race_cheval,
                   age: data.cheval.dataValues.age,
                 }
               ]

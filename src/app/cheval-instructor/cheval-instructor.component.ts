@@ -25,7 +25,8 @@ export class ChevalInstructorComponent implements OnInit {
     id_cheval: null,
     nom: null,
     age: null,
-    race: null
+    race_cheval: null,
+    race_cheval_id: null
   };
 
   panelOpenState = false;
@@ -87,7 +88,7 @@ export class ChevalInstructorComponent implements OnInit {
   }
 
   isInvalid(): boolean {
-    return (!this.helper.isEmpty(this.cheval.nom) && this.cheval.age && this.cheval.race && this.cheval.age > 0);
+    return (!this.helper.isEmpty(this.cheval.nom) && this.cheval.race_cheval_id != null && this.cheval.age != null);
   }
 
 }

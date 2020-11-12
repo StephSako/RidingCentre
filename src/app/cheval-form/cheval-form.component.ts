@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {ChevalInterface} from '../Interfaces/ChevalInterface';
 import {RaceChevalInterface} from '../Interfaces/RaceCheval';
 import {FormControl, Validators} from '@angular/forms';
+import {RaceChevalService} from '../Services/race-cheval.service';
 
 @Component({
   selector: 'app-cheval-form',
@@ -14,35 +15,25 @@ export class ChevalFormComponent implements OnInit {
     id_cheval: null,
     nom: null,
     age: null,
-    race: null,
+    race_cheval: null,
+    race_cheval_id: null
   };
 
   races: RaceChevalInterface[] = [
-    {nom: 'Merens'},
-    {nom: 'Pure race espagnole'},
-    {nom: 'Pur-sang Anglais'},
-    {nom: 'Morgans'},
-    {nom: 'Tennessee'},
-    {nom: 'Akhal Teke'},
-    {nom: 'Lusitanien'},
-    {nom: 'Selle Français'},
-    {nom: 'Frison'},
-    {nom: 'Lipizzan'},
-    {nom: 'Holstein'},
-    {nom: 'Pur-sang Arabe'},
-    {nom: 'Appaloosa'},
-    {nom: 'Camarguais'},
-    {nom: 'Mustang'}
+    {
+      id: null,
+      nom: null
+    }
   ];
 
   nomChevalControl = new FormControl('', [Validators.required]);
-  ageControl = new FormControl('', [Validators.required, Validators.pattern('[0-9]{1,2}')]);
+  ageControl = new FormControl('', [Validators.required]);
   raceControl = new FormControl('', [Validators.required]);
 
-  constructor() { }
+  constructor(private raceChevalService: RaceChevalService) { }
 
   ngOnInit(): void {
-    this.races.sort((a, b) => (a.nom > b.nom) ? 1 : -1);
+    this.raceChevalService.getAll().subscribe(races => this.races = races);
   }
 
   getErrorMessageInput(): string {
@@ -54,9 +45,6 @@ export class ChevalFormComponent implements OnInit {
   getErrorMessageAge(): string {
     if (this.ageControl.hasError('required')) {
       return 'Age obligatoire';
-    }
-    else if (this.ageControl.hasError('pattern')) {
-      return 'Les chevaux vivent moins de 100 ans ...';
     }
   }
 
