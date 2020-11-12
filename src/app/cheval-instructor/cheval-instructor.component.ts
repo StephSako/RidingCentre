@@ -41,10 +41,10 @@ export class ChevalInstructorComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.updateAllCheval();
+    this.getAllCheval();
   }
 
-  updateAllCheval(): void {
+  getAllCheval(): void {
     this.chevalService.getAll().subscribe(allCheval => this.allCheval = allCheval );
   }
 
@@ -53,7 +53,7 @@ export class ChevalInstructorComponent implements OnInit {
       .subscribe(
         () => {
           this.togglePanel();
-          this.updateAllCheval();
+          this.getAllCheval();
           this.authService.notifyUser('Cheval créé', this.snackBar, 'success', 1000);
         },
         err => {
@@ -75,7 +75,7 @@ export class ChevalInstructorComponent implements OnInit {
     })
       .afterClosed().subscribe(result => {
       this.chevalService.delete(result).subscribe(() => {
-        this.updateAllCheval();
+        this.getAllCheval();
       }, err => { console.error(err); });
     });
   }
@@ -84,6 +84,10 @@ export class ChevalInstructorComponent implements OnInit {
     this.dialog.open(ChevalEditComponent, {
       width: '60%',
       data: cheval
+    }).afterClosed().subscribe(() => {
+      this.chevalService.edit(cheval).subscribe(() => {
+        this.getAllCheval();
+        }, err => { console.error(err); });
     });
   }
 

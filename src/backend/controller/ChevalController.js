@@ -76,9 +76,18 @@ cheval.delete('/delete/:id_cheval', (req, res) => {
 // EDIT
 cheval.put('/edit/:id_cheval', (req, res) => {
   const id_cheval = req.params.id_cheval;
+  const cheval = {
+    nom: req.body.nom,
+    age: req.body.age,
+    race_cheval_id: req.body.race_cheval_id,
+  }
+  console.log(id_cheval)
+  console.log(cheval)
 
-  Cheval.update(req.body, {
-    where: { id: id_cheval}
+  Cheval.update(cheval, {
+    where: {
+      id_cheval: id_cheval
+    }
   }).then(num => {
     if (num == 1) res.json({message: "Le cheval a été mis à jour"})
     else if (num < 1) res.json({message: "Le cheval n'existe pas"})

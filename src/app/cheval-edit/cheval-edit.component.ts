@@ -1,8 +1,8 @@
 import { Component, Inject } from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialog} from '@angular/material/dialog';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ChevalInterface } from '../Interfaces/ChevalInterface';
 import { ChevalService } from '../Services/cheval.service';
-import {HelperService} from '../Services/helper.service';
+import { HelperService } from '../Services/helper.service';
 
 @Component({
   selector: 'app-cheval-edit',
@@ -22,10 +22,6 @@ export class ChevalEditComponent {
   constructor(private chevalService: ChevalService, @Inject(MAT_DIALOG_DATA) public chevaldata: ChevalInterface,
               private helper: HelperService) {
     this.cheval = chevaldata;
-  }
-
-  edit(): void {
-    this.chevalService.edit(this.cheval).subscribe(() => { }, err => { console.error(err); });
   }
 
   isInvalid(): boolean {
