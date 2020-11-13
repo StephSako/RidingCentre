@@ -131,7 +131,7 @@ Les chevaux supprimés sont dissociés des inscriptions des cavaliers aux repris
 Depuis cette page, les administrateurs peuvent créer et modifier les comptes des utilisateurs. Il est possible de filtrer les comptes en fonction du rôle et/ou du nom de la personne.
 
 #### Tableau général des comptes
-<p align="center"><img src="https://zupimages.net/up/20/46/u2ll.jpg"></p>
+<p align="center"><img src="https://zupimages.net/up/20/46/gmm1.jpg"></p>
 
 Le formulaire de création de compte est quasiment identique au formulaire d'inscription, mis à part la liste déroulante pour le choix du rôle à donner.
 
@@ -140,7 +140,7 @@ Le formulaire de création de compte est quasiment identique au formulaire d'ins
 Si un compte moniteur est supprimé, il ne sera plus associé aux cours qu'il a créé, comme dans l'exemple ci-dessous.
 Si un compte cavalier est supprimé, toutes les inscriptions aux reprises sont également supprimées.
 
-<p align="center"><img src="https://zupimages.net/up/20/46/1mmt.jpg"></p>
+<p align="center"><img src="https://zupimages.net/up/20/46/q1kf.jpg"></p>
 
 #### Validation de la modification d'un rôle (promotion ou rétrogradation)
 
