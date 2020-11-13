@@ -53,6 +53,35 @@
     </mat-list>
 
     <button (click)="openDialog(user)" class="center" mat-raised-button color="primary">Modifier</button>
+  </mat-card>
+
+  <mat-card>
+
+    <h2 class="center lobster">Modifier le mot de passe</h2>
+    <div class="center">
+      <mat-form-field appearance="outline" class="center">
+        <mat-icon matSuffix>vpn_key</mat-icon>
+        <mat-label>Mot de passe actuel</mat-label>
+        <input [(ngModel)]="passwords.oldPassword" name="oldPassword" type="password" class="validate" matInput [formControl]="oldPasswordControl" required>
+        <mat-error *ngIf="oldPasswordControl.invalid">{{getErrorMessageOldPassword()}}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="center">
+        <mat-icon matSuffix>vpn_key</mat-icon>
+        <mat-label>Nouveau mot de passe</mat-label>
+        <input [(ngModel)]="passwords.newPassword" name="newPassword" type="password" class="validate" matInput [formControl]="newPasswordControl" required>
+        <mat-error *ngIf="newPasswordControl.invalid">{{getErrorMessageNewPassword()}}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="center">
+        <mat-icon matSuffix>vpn_key</mat-icon>
+        <mat-label>Retaper le nouveau mot de passe</mat-label>
+        <input [(ngModel)]="passwords.newPasswordTwice" name="newPasswordTwice" type="password" class="validate" matInput [formControl]="newPasswordTwiceControl" required>
+        <mat-error *ngIf="newPasswordTwiceControl.invalid">{{getErrorMessageNewPasswordTwice()}}</mat-error>
+      </mat-form-field>
+
+      <button (click)="editPassword()" class="center" mat-raised-button color="primary" [disabled]="!isInvalid()">Modifier</button>
+    </div>
 
   </mat-card>
 </div>

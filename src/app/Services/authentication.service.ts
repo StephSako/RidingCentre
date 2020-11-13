@@ -167,22 +167,6 @@ export class AuthenticationService {
     );
   }
 
-  public retrievePassword(email: string): Observable<any> {
-    const URL = this.http.post(this.baseURL + 'retrieve/password', email);
-
-    return URL.pipe(
-      map((data: TokenResponse) => {
-        if (data.token) {
-          this.saveToken(data.token);
-        }
-        return data;
-      }),
-      catchError(err => {
-        return throwError(err.error);
-      })
-    );
-  }
-
   public getAllMoniteurs(): Observable<any> {
     return this.http.get(this.baseURL + 'instructors');
   }
@@ -199,5 +183,20 @@ export class AuthenticationService {
   // tslint:disable-next-line:variable-name
   public editRole(id_user: number, role_user_id: number): Observable<any> {
     return this.http.put(`${this.baseURL}edit/${id_user}`, { role_user_id });
+  }
+
+  // tslint:disable-next-line:variable-name
+  public retrievePassword(email_user: string): Observable<any> {
+    return this.http.post(this.baseURL + 'retrieve/password', { email_user });
+  }
+
+  // tslint:disable-next-line:variable-name
+  public resetPassword(email_user: string, password_user: string): Observable<any> {
+    return this.http.put(`${this.baseURL}edit/password/${email_user}`, { password_user });
+  }
+
+  // tslint:disable-next-line:variable-name
+  public editPasswordForm(id_user: number, old_password: string, new_password: string): Observable<any> {
+    return this.http.put(`${this.baseURL}edit/password/form/${id_user}`, { old_password, new_password });
   }
 }

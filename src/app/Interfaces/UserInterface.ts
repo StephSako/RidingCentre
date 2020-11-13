@@ -5,6 +5,7 @@ export interface UserInterface {
   id_user: number;
   role_user_id: number;
   firstname_user: string;
+  password: string;
   lastname_user: string;
   email_user: string;
   license_number_user: string;
