@@ -12,6 +12,12 @@ Le front-en a été développé en <a href="https://angular.io/">Angular</a>, co
 
 Quant au back-end, il à été développé en <a href="https://nodejs.org/en/">Node.js</a> avec le framework <a href="https://expressjs.com/fr/">Express.js</a> couplé avec l'ORM <a href="https://sequelize.org/">Sequelize</a>. J'ai stocké les données dans une base de données MySQL hébergée sur <a href="https://www.alwaysdata.com/fr/">AlwaysData</a>. Je me suis également servi de leur provider pour envoyer des mails.
 
+## Lancement du serveur
+nodemon server.js OU node server.js
+
+## Lancement du front
+ng serve -o
+
 ## Tâches réalisées
 
 -   &#x2611; 1.Epic Utilisateur (cavalier)
