@@ -91,6 +91,6 @@
         <ng-template #btnDesinscrire><button mat-raised-button color="warn" class="center" *ngIf="isRegistered(reprise.id_reprise)" (click)="deleteRegisteredReprise(reprise.id_reprise)">Se désinscrire</button></ng-template>
       </div>
 
-      <button *ngIf="!authService.isRider() && !reprise.canceled && (!isOutdated(reprise.date) || (reprise.recurrence != null && isOutdated(reprise.date)))" mat-raised-button color="primary" class="center" [routerLink]="['/reprise', reprise.id_reprise]">Assigner les chevaux</button>
+      <button *ngIf="!authService.isRider() && (!isOutdated(reprise.date) || (reprise.recurrence != null && isOutdated(reprise.date)))" mat-raised-button color="primary" class="center" [routerLink]="['/reprise', reprise.id_reprise]">Gérer</button>
   </mat-card>
 </div>

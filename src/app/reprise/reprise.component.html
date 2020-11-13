@@ -39,7 +39,7 @@
   </mat-card>
 
   <div *ngIf="!reprise.canceled && !authService.isRider()">
-    <div *ngIf="editable24h && (!outdated || (outdated && reprise.recurrence != null)); else notEditable">
+    <div *ngIf="(!outdated || (reprise.recurrence != null && outdated)); else notEditable">
       <h1 class="lobster center">Assignation des chevaux</h1>
 
       <mat-card *ngIf="noHorses">
@@ -99,7 +99,7 @@
 
   </div>
 
-  <div *ngIf="!this.authService.isRider() && !outdated">
+  <div *ngIf="!this.authService.isRider()">
     <mat-card *ngIf="cavaliersInscrits.length < 3 && !reprise.canceled; else maintainReprise">
       <h2 style="color: black; margin-bottom: 0;" class="center">Moins de 3 cavaliers sont inscrits à la reprise</h2>
       <h3 style="color: black; margin-bottom: 0;" class="center">Annuler la séance ?</h3><br>
