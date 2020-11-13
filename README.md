@@ -1,4 +1,5 @@
 
+
 # Gestion d'un centre équestre
 
 Ce projet consiste à développer un site Web pour un centre équestre permettant à :
@@ -52,7 +53,7 @@ Il en va de même pour le formulaire d'inscription.
 
 ### Récupération de mot de passe
 
-<p align="center"><img src="https://zupimages.net/up/20/46/tagh.jpg"></p>
+<p align="center"><img src="https://zupimages.net/up/20/46/h3t7.jpg"></p>
 
 L'utilisateur saisi son mail. Il est averti si l'adresse email est inconnue de la base de données, sinon un mail est envoyé.
 
