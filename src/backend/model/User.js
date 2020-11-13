@@ -1,15 +1,53 @@
-let db = require('../../../db')
+const Sequelize = require("sequelize")
+const db = require("../db.js")
+const RoleUser = require("../model/RoleUser")
 
-let Etudiant = {
-  inscription: function (callback, user) {
-    return db.query('INSERT INTO user SET ?', user, callback)
+module.exports = db.sequelize.define(
+  'user',
+  {
+    id_user: {
+      type: Sequelize.INTEGER,
+      primaryKey: true,
+      allowNull: true,
+      autoIncrement: true
+    },
+    firstname_user: {
+      type: Sequelize.STRING,
+      allowNull: false
+    },
+    lastname_user: {
+      type: Sequelize.STRING,
+      allowNull: false
+    },
+    password_user: {
+      type: Sequelize.STRING
+    },
+    email_user: {
+      type: Sequelize.STRING,
+      unique: true,
+      allowNull: false
+    },
+    license_number_user: {
+      type: Sequelize.STRING
+    },
+    phone_number_user: {
+      type: Sequelize.STRING,
+      unique: true,
+      allowNull: false
+    },
+    role_user_id: {
+      type: Sequelize.NUMBER,
+      allowNull: false,
+      references: {
+        model: RoleUser,
+        key: 'id'
+      }
+    }
   },
-  connexion: function (callback, email) {
-    return db.query('SELECT * FROM user WHERE email_user = ?', [email], callback)
-  },
-  list: function (callback) {
-    return db.query('SELECT * FROM user', callback)
+  {
+    timestamps: false,
+    freezeTableName: 1,
+    underscored: true,
+    camelCase: false
   }
-}
-
-module.exports = Etudiant
+)

@@ -1,0 +1,84 @@
+<div class="container">
+  <mat-expansion-panel [expanded]="panelOpenState">
+    <mat-expansion-panel-header (click)="togglePanel()">
+      <mat-panel-title></mat-panel-title>
+      <mat-panel-description class="lobster">Créer un compte administrateur / moniteur</mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <div style="margin-top: 40px;" class="container">
+      <form (submit)="create()">
+        <app-user-form [roleAdmin]="true" [user]="newAdmin"></app-user-form>
+        <button mat-raised-button class="center" color="accent" [disabled]="!isInvalid()">Créer</button>
+      </form>
+    </div>
+  </mat-expansion-panel>
+
+  <mat-card class="filter">
+
+    <h2 class="center lobster">Rechercher un compte</h2>
+
+    <div class="center">
+      <mat-form-field appearance="outline">
+        <mat-label>Rôle(s)</mat-label>
+        <mat-select [formControl]="rolesControl" (closed)="getAllAccounts()" multiple>
+          <mat-option *ngFor="let role of allRoles" [value]="role.id">{{role.role}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" style="margin-left: 10px;">
+        <mat-label>Nom</mat-label>
+        <input (keyup)="getAllAccounts()" [formControl]="namesControl" matInput placeholder="Prénom Nom">
+      </mat-form-field>
+    </div>
+
+  </mat-card>
+
+  <mat-grid-list cols="3" rowHeight="370:260">
+    <mat-grid-tile colspan="1" *ngFor="let account of allAccounts">
+      <mat-card class="card">
+        <mat-card-header>
+          <mat-icon>{{account.role_user.icon}}</mat-icon>
+          <mat-card-title>{{account.firstname_user | titlecase}} {{account.lastname_user | uppercase}}</mat-card-title>
+          <mat-card-subtitle>{{account.role_user.role}}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content style="margin-bottom: 8px;">
+          <p><b>Numéro de license : </b>
+            <span *ngIf="account.license_number_user; else noLicenceNumber">{{account.license_number_user}}</span>
+            <ng-template #noLicenceNumber><span style="color: grey"><i>Pas de licence renseignée</i></span></ng-template>
+          </p>
+          <p><b>Adresse email : </b>{{account.email_user}}</p>
+          <p><b>Numéro de téléphone : </b>{{account.phone_number_user}}</p>
+        </mat-card-content>
+        <mat-card-actions style="padding-bottom: 0;">
+
+          <mat-grid-list *ngIf="this.authService.isSuperAdmin()" [cols]="(account.role_user.id == 1 || account.role_user.id == 4 ? 1 : 2)" [rowHeight]="(account.role_user.id == 1 || account.role_user.id == 4 ? '12:1' : '6:1')">
+
+            <mat-grid-tile *ngIf="account.role_user.id != 1">
+              <button mat-button (click)="nommer(account, account.firstname_user, account.lastname_user, 'r')" color="warn">
+                <span>Rétrograder
+                  <ng-template [ngIf]="account.role_user.id == 2">Cavalier</ng-template>
+                  <ng-template [ngIf]="account.role_user.id == 3">Moniteur</ng-template>
+                  <ng-template [ngIf]="account.role_user.id == 4">Admin</ng-template>
+                </span>
+              </button>
+            </mat-grid-tile>
+
+            <mat-grid-tile *ngIf="account.role_user.id != 4">
+              <button mat-button (click)="nommer(account, account.firstname_user, account.lastname_user, 'p')" style="color: forestgreen;">
+                <span>Promouvoir
+                  <ng-template [ngIf]="account.role_user.id == 1">Moniteur</ng-template>
+                  <ng-template [ngIf]="account.role_user.id == 2">Admin</ng-template>
+                  <ng-template [ngIf]="account.role_user.id == 3">Super-Admin</ng-template>
+                </span>
+              </button>
+            </mat-grid-tile>
+
+          </mat-grid-list>
+
+          <button style="margin-top: 10px;" class="center" mat-raised-button (click)="deleteAccount(account)" color="warn">Supprimer</button>
+        </mat-card-actions>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+
+</div>

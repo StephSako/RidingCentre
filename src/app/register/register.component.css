@@ -1,0 +1,12 @@
+button {
+  margin-top: 15px;
+  margin-bottom: 20px;
+  background-color: lightskyblue;
+  color: white;
+}
+
+mat-card {
+  margin-bottom: 30px;
+  margin-left: 18%;
+  margin-right: 18%;
+}

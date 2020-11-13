@@ -1,0 +1,87 @@
+<div class="container">
+  <mat-card>
+    <h1 class="lobster">Votre profil</h1>
+
+    <mat-list *ngIf="user">
+
+      <mat-list-item>
+        <mat-icon mat-list-icon>account_box</mat-icon>
+        <div mat-line><b>Votre nom</b></div>
+        <div mat-line>{{ user.lastname_user | uppercase}}</div>
+      </mat-list-item>
+
+      <mat-divider></mat-divider>
+
+      <mat-list-item>
+        <mat-icon mat-list-icon>account_box</mat-icon>
+        <div mat-line><b>Votre prénom</b></div>
+        <div mat-line>{{ user.firstname_user | titlecase}}</div>
+      </mat-list-item>
+
+      <mat-divider></mat-divider>
+
+      <mat-list-item>
+        <mat-icon mat-list-icon>alternate_email</mat-icon>
+        <div mat-line><b>Votre adresse mail</b></div>
+        <div mat-line>{{ user.email_user}}</div>
+      </mat-list-item>
+
+      <mat-divider></mat-divider>
+      <mat-list-item>
+
+        <mat-icon mat-list-icon>phone_android</mat-icon>
+        <div mat-line><b>Votre numéro de téléphone</b></div>
+        <div mat-line>{{ user.phone_number_user}}</div>
+      </mat-list-item>
+
+      <mat-divider></mat-divider>
+
+      <mat-list-item>
+        <mat-icon mat-list-icon>credit_card</mat-icon>
+        <div mat-line style="margin-bottom: 4px;"><b>Votre numéro de licence</b></div>
+        <div mat-line *ngIf="user.license_number_user != null && user.license_number_user != ''; else noLicence">{{ user.license_number_user}}</div>
+        <ng-template #noLicence><div mat-line><span style="color: lightgrey"><i>La license n'est pas renseignée</i></span></div></ng-template>
+      </mat-list-item>
+
+      <mat-divider></mat-divider>
+
+      <mat-list-item>
+        <mat-icon mat-list-icon>{{user.role_user.icon}}</mat-icon>
+        <div mat-line><b>Type de compte</b></div>
+        <div mat-line>{{ user.role_user.role | titlecase }}</div>
+      </mat-list-item>
+    </mat-list>
+
+    <button (click)="openDialog(user)" class="center" mat-raised-button color="primary">Modifier</button>
+  </mat-card>
+
+  <mat-card>
+
+    <h2 class="center lobster">Modifier le mot de passe</h2>
+    <div class="center">
+      <mat-form-field appearance="outline" class="center">
+        <mat-icon matSuffix>vpn_key</mat-icon>
+        <mat-label>Mot de passe actuel</mat-label>
+        <input [(ngModel)]="passwords.oldPassword" name="oldPassword" type="password" class="validate" matInput [formControl]="oldPasswordControl" required>
+        <mat-error *ngIf="oldPasswordControl.invalid">{{getErrorMessageOldPassword()}}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="center">
+        <mat-icon matSuffix>vpn_key</mat-icon>
+        <mat-label>Nouveau mot de passe</mat-label>
+        <input [(ngModel)]="passwords.newPassword" name="newPassword" type="password" class="validate" matInput [formControl]="newPasswordControl" required>
+        <mat-error *ngIf="newPasswordControl.invalid">{{getErrorMessageNewPassword()}}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="center">
+        <mat-icon matSuffix>vpn_key</mat-icon>
+        <mat-label>Retaper le nouveau mot de passe</mat-label>
+        <input [(ngModel)]="passwords.newPasswordTwice" name="newPasswordTwice" type="password" class="validate" matInput [formControl]="newPasswordTwiceControl" required>
+        <mat-error *ngIf="newPasswordTwiceControl.invalid">{{getErrorMessageNewPasswordTwice()}}</mat-error>
+      </mat-form-field>
+
+      <button (click)="editPassword()" class="center" mat-raised-button color="primary" [disabled]="!isInvalid()">Modifier</button>
+    </div>
+
+  </mat-card>
+</div>
