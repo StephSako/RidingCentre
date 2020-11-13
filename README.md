@@ -65,7 +65,7 @@ Le lien ramène sur une page du site avec le mail chiffré passé en paramètre,
 
 ### Menu principal
 
-Depuis cette page, les utilisateurs peuvent filtrer les reprises grâce à une liste déroulantes et sélectionner un ou plusieurs niveaux de galop, ainsi qu'un ou plusieurs moniteurs en charge du cours.
+Depuis cette page, les utilisateurs peuvent filtrer les reprises grâce à une liste déroulante et sélectionner un ou plusieurs niveaux de galop, ainsi qu'un ou plusieurs moniteurs en charge du cours.
 
 Les reprises annulées, terminées (reprise dont la date est passée et sans récurrence) sont marquées par des bandeaux de couleurs. Les boutons pour les cavaliers et moniteurs sont accessibles ont non selon la situation de la reprise.
 
