@@ -103,7 +103,7 @@ export class AdminGestionComponent implements OnInit {
   deleteAccount(user: UserInfoInterface): void {
     let message;
     if (user.role_user.id === 1) { message = 'Supprimer le compte et les inscriptions aux cours de'; }
-    else if (user.role_user.id === 2) { message = 'Supprimer le compte et les reprises créées de'; }
+    else if (user.role_user.id === 2) { message = 'Supprimer le compte et le désassigner des reprises créées de'; }
     else {  message = 'Supprimer le compte de'; }
 
     const accountToDelete: DialogData = {
@@ -113,7 +113,7 @@ export class AdminGestionComponent implements OnInit {
     };
 
     this.dialog.open(DialogComponent, {
-      width: '50%',
+      width: '55%',
       data: accountToDelete
     }).afterClosed().subscribe(result => {
       this.authService.deleteAccount(result).subscribe(() => {
