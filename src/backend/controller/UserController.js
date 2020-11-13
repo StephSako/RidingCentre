@@ -153,7 +153,7 @@ user.post('/retrieve/password', (req, res) => {
         from: '"No-reply - Centre équestre" <stephsako@alwaysdata.net>',
         to: '<' + emailValue + '>',
         subject: 'Récupération de mot de passe',
-        html: 'Bonjour,<br><br>Vous avez demandé à modifier votre mot de passe.<br>Cliquez sur le lien pour accéder au formulaire : <a href=http://localhost:4200/reset-mot-de-passe/' + btoa(emailValue) + '>Réinitialiser son mot de passe</a><br><br>Merci dene pas répondre à ce mail.'
+        html: 'Bonjour,<br><br>Vous avez demandé à modifier votre mot de passe.<br>Cliquez sur le lien pour accéder au formulaire : <a href=http://localhost:4200/reset-mot-de-passe/' + btoa(emailValue) + '>Réinitialiser son mot de passe</a><br><br>Merci de ne pas répondre à ce mail.'
       };
 
       transporter.sendMail(mailOptions, function(){
