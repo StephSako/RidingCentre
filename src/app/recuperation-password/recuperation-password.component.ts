@@ -37,11 +37,10 @@ export class RecuperationPasswordComponent implements OnInit {
   recupPassword(): void {
     if (!this.helper.isEmpty(this.email)){
       this.authService.retrievePassword(this.email).subscribe(() => {
-          this.authService.notifyUser('Votre compte a bien été modifié', this.snackBar, 'success', 2000, 'OK');
           this.sent = true;
         },
-        err => {
-          this.authService.notifyUser(err, this.snackBar, 'error', 2000, 'OK');
+        () => {
+          this.authService.notifyUser('Cette adresse email n\'est pas enregistrée', this.snackBar, 'error', 2000, 'OK');
         });
     }
   }

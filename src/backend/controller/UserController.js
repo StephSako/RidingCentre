@@ -6,11 +6,11 @@ const User = require("../model/User")
 const RoleUser = require("../model/RoleUser")
 const { Op } = require("sequelize");
 const nodemailer = require('nodemailer');
-var crypto = require("crypto-js");
+const btoa = require('btoa');
+const atob = require('atob');
 
 
 process.env.SECRET_KEY = 'secret'
-process.env.SECRET_KEY_EMAIL = 'Nèçà9Y7bçG67btG6yB9Gè_'
 
 // REGISTER
 user.post('/register', (req, res) => {
@@ -127,46 +127,57 @@ user.delete('/delete/:id_user', (req, res) => {
 
 // SEND EMAIL TO RESET PASSWORD
 user.post('/retrieve/password', (req, res) => {
-  const emailValue = req.body.email
-  const transporter = nodemailer.createTransport({
-    host: 'smtp-stephsako.alwaysdata.net',
-    port: 587,
-    secure: false,
-    tls:{
-      rejectUnauthorized: false
-    },
-    auth: {
-      user: 'stephsako@alwaysdata.net',
-      pass: 'emailalwaysfromdata79YY97'
+  const emailValue = req.body.email_user
+  console.log(emailValue)
+
+  User.findOne({
+    where: {
+      email_user: emailValue
     }
-  });
+  }).then(user => {
+    if (user){
+      const transporter = nodemailer.createTransport({
+        host: 'smtp-stephsako.alwaysdata.net',
+        port: 587,
+        secure: false,
+        tls:{
+          rejectUnauthorized: false
+        },
+        auth: {
+          user: 'stephsako@alwaysdata.net',
+          pass: 'emailalwaysfromdata79YY97'
+        }
+      });
 
-  const cryptedMail = crypto.AES.encrypt(emailValue, process.env.SECRET_KEY_EMAIL).toString()
-  const mailOptions = {
-    from: '"No-reply - Centre équestre" <stephsako@alwaysdata.net>',
-    to: '<' + emailValue + '>',
-    subject: 'Récupération de mot de passe',
-    html: 'Bonjour,<br><br>Vous avez demandé à modifier votre mot de passe.<br>Cliquez sur le lien pour accéder au formulaire : <a href=http://localhost:4200/reset-mot-de-passe/' + cryptedMail + '>Réinitialiser son mot de passe</a><br><br>Merci dene pas répondre à ce mail.'
-  };
+      const mailOptions = {
+        from: '"No-reply - Centre équestre" <stephsako@alwaysdata.net>',
+        to: '<' + emailValue + '>',
+        subject: 'Récupération de mot de passe',
+        html: 'Bonjour,<br><br>Vous avez demandé à modifier votre mot de passe.<br>Cliquez sur le lien pour accéder au formulaire : <a href=http://localhost:4200/reset-mot-de-passe/' + btoa(emailValue) + '>Réinitialiser son mot de passe</a><br><br>Merci dene pas répondre à ce mail.'
+      };
 
-  transporter.sendMail(mailOptions, function(error){
-    if (error) res.status(401).send("Une erreur est survenue. Réessayez ultérieurement")
-    else res.status(200).send("Email envoyé")
-  });
+      transporter.sendMail(mailOptions, function(){
+        res.status(204).send("Email envoyé")
+      });
+    }
+    else res.status(400).send("Cette adresse email n'est pas enregistrée")
+  }).catch(() => {
+    res.status(400).send("L'adresse email n'a pas pu être cherchée")
+  })
 })
 
 // EDIT USER PASSWORD WITH CRYPTED MAIL IN PARAMETER
 user.put('/edit/password/:email_user', (req, res) => {
-  const decrypted_email_user = crypto.AES.decrypt(req.params.email_user, process.env.SECRET_KEY_EMAIL).toString(crypto.enc.Utf8)
+  const decrypted_email_user = atob(req.params.email_user)
   const password_user = {
     password_user: bcrypt.hashSync(req.body.password_user, 12)
   }
 
   User.update(password_user, {
     where: { email_user: decrypted_email_user}
-  }).then(user => {
-    res.send("Le mot de passe a été modifié avec succès !")
-  }).catch(err => {
+  }).then(() => {
+    res.status(204).send("Le mot de passe a été modifié avec succès !")
+  }).catch(() => {
     res.status(401).send("Mot de passe non modifié")
   })
 })
@@ -180,8 +191,8 @@ user.get('/instructors', (req, res) => {
   }).then(moniteurs => {
     if (moniteurs) res.json(moniteurs)
     else res.send("Il n'y a pas de moniteur")
-  }).catch(err => {
-    res.send("error : " + err)
+  }).catch(() => {
+    res.send("Les moniteurs n'ont pas pu être récupérés")
   })
 })
 
