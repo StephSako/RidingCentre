@@ -36,8 +36,9 @@ export class RepriseComponent implements OnInit {
     cheval: [{
       id_cheval: null,
       nom: null,
-      race: null,
-      age: null
+      race_cheval: null,
+      age: null,
+      race_cheval_id: null
     }]
   }];
 

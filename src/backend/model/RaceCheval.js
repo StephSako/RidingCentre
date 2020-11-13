@@ -2,18 +2,15 @@ const Sequelize = require("sequelize")
 const db = require("../db.js")
 
 module.exports = db.sequelize.define(
-  'role_user',
+  'race_cheval',
   {
     id: {
       type: Sequelize.INTEGER,
-      allowNull: true,
       primaryKey: true,
+      allowNull: true,
       autoIncrement: true
     },
-    role: {
-      type: Sequelize.STRING
-    },
-    icon: {
+    nom: {
       type: Sequelize.STRING
     }
   },

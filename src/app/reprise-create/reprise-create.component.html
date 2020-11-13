@@ -10,7 +10,7 @@
 
   <p>
     <mat-form-field appearance="outline" class="center">
-      <input matInput (click)="picker.open()" [(ngModel)]="reprise.date" [ngxMatDatetimePicker]="picker" placeholder="Choisissez un jour et une heure" [formControl]="dateControl" [min]="minDate" [max]="maxDate" [disabled]="disabled">
+      <input matInput (click)="picker.open()" [(ngModel)]="reprise.date" [ngxMatDatetimePicker]="picker" placeholder="Choisissez un jour et une heure" [formControl]="dateControl" [min]="minDate" [max]="maxDate" [disabled]="disabled" required>
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <ngx-mat-datetime-picker #picker [showSpinners]="showSpinners" [showSeconds]="showSeconds"
                                [stepHour]="stepHour" [stepMinute]="stepMinute" [stepSecond]="stepSecond"
@@ -29,21 +29,31 @@
     </mat-form-field>
   </p>
 
-  <p>
-    <mat-form-field appearance="outline" class="center">
-      <mat-icon matSuffix>groups</mat-icon>
-      <mat-label>Nombre maximal de cavalier</mat-label>
-      <input min="1" max="100" name="rider_number_limit" type="number" [(ngModel)]="reprise.rider_number_limit" matInput [formControl]="limitPersonControl" required>
-      <mat-error *ngIf="limitPersonControl.invalid">{{getErrorMessageInput()}}</mat-error>
-    </mat-form-field>
-  </p>
+  <mat-grid-list cols="2" rowHeight="5:1">
+    <mat-grid-tile>
+      <p>
+        <span class="center">Nombre maximal de cavalier (1 à 100)</span>
+        <mat-slider [formControl]="limitPersonControl" style="width: 300px;" color="primary" [max]="100" [min]="1" [step]="1" [thumbLabel]="true" [tickInterval]="'auto'" [(ngModel)]="reprise.rider_number_limit" [vertical]="false"></mat-slider>
+        <mat-error *ngIf="limitPersonControl.invalid">{{getErrorMessageLimit()}}</mat-error>
+      </p>
+    </mat-grid-tile>
 
-  <p>
-    <mat-form-field appearance="outline" class="center">
-      <mat-icon matSuffix>military_tech</mat-icon>
-      <mat-label>Niveau du Galop</mat-label>
-      <input min="1" max="7" name="galop_level" type="number" [(ngModel)]="reprise.galop_level" matInput [formControl]="levelControl" required>
-      <mat-error *ngIf="levelControl.invalid">{{getErrorMessageInput()}}</mat-error>
+    <mat-grid-tile>
+      <p>
+        <span class="center">Niveau du galop (1 à 7)</span>
+        <mat-slider [formControl]="levelControl" style="width: 300px;" color="primary" [max]="7" [min]="1" [step]="1" [thumbLabel]="true" [tickInterval]="1" [(ngModel)]="reprise.galop_level" [vertical]="false"></mat-slider>
+        <mat-error *ngIf="levelControl.invalid">{{getErrorMessageLevel()}}</mat-error>
+      </p>
+    </mat-grid-tile>
+  </mat-grid-list>
+
+  <p *ngIf="editMonitor">
+    <mat-form-field style="width: 100%; !important" appearance="outline">
+      <mat-label>Moniteur</mat-label>
+      <mat-select [(ngModel)]="reprise.user_id_user" [formControl]="moniteurControl" required>
+        <mat-option *ngFor="let moniteur of moniteurs" [value]="moniteur.id_user">{{moniteur.firstname_user | titlecase}} {{moniteur.lastname_user | uppercase}}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="moniteurControl.invalid">{{getErrorMessageMoniteur()}}</mat-error>
     </mat-form-field>
   </p>
 

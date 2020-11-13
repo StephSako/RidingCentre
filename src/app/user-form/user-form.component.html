@@ -19,7 +19,7 @@
   </p>
 
   <p *ngIf="roleAdmin">
-    <mat-form-field appearance="outline">
+    <mat-form-field style="width: 100%; !important" appearance="outline">
       <mat-label>Rôle(s)</mat-label>
       <mat-select [(ngModel)]="user.role_user_id" [formControl]="roleControl" required>
         <mat-option *ngFor="let role of listRoles" [value]="role.id">{{role.role}}</mat-option>

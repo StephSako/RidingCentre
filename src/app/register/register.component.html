@@ -4,7 +4,12 @@
 
     <form (submit)="register()">
       <app-user-form [user]="credentials"></app-user-form>
-      <button class="center" mat-raised-button color="blue">S'inscrire</button>
+      <button class="center" mat-raised-button color="blue">
+        <mat-icon *ngIf="spinnerShown">
+          <mat-spinner [diameter]="20"></mat-spinner>
+        </mat-icon>
+        S'inscrire
+      </button>
     </form>
   </mat-card>
 </div>

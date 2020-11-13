@@ -28,7 +28,7 @@
 
     <ng-container matColumnDef="race">
       <th mat-header-cell *matHeaderCellDef>Race</th>
-      <td mat-cell *matCellDef="let cheval">{{cheval.race | titlecase}}</td>
+      <td mat-cell *matCellDef="let cheval">{{cheval.race_cheval.nom | titlecase}}</td>
     </ng-container>
 
     <ng-container matColumnDef="modify">

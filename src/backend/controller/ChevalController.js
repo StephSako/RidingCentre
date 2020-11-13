@@ -1,6 +1,7 @@
 const express = require('express')
 const cheval = express.Router()
-const Cheval = require("../model/cheval")
+const Cheval = require("../model/Cheval")
+const RaceCheval = require("../model/RaceCheval")
 const { Op } = require("sequelize");
 const _ = require('lodash');
 const RepriseInscription = require("../model/RepriseInscription")
@@ -10,8 +11,9 @@ cheval.post('/create', (req, res) => {
   const chevalData = {
     nom: req.body.nom,
     age: req.body.age,
-    race: req.body.race
+    race_cheval_id: req.body.race_cheval_id
   }
+  console.log(chevalData)
 
   Cheval.create(chevalData).then(cheval => {
     res.json({cheval: cheval})
@@ -27,7 +29,8 @@ cheval.get('/details/:id_cheval', (req, res) => {
   Cheval.findOne({
     where: {
       id: id_cheval
-    }
+    },
+    include: [RaceCheval]
   }).then(cheval => {
     if (cheval) res.json(cheval)
     else res.send("La cheval n'existe pas")
@@ -38,7 +41,11 @@ cheval.get('/details/:id_cheval', (req, res) => {
 
 // ALL
 cheval.get('/', (req, res) => {
-  Cheval.findAll({}).then(chevaux => {
+  Cheval.findAll({
+    order: [
+      ['nom', 'ASC']
+    ], include: [ 'race_cheval' ]
+  }).then(chevaux => {
     if (chevaux) res.json(chevaux)
     else res.send("Il n'y a pas de chevaux")
   }).catch(err => {
@@ -69,14 +76,23 @@ cheval.delete('/delete/:id_cheval', (req, res) => {
 // EDIT
 cheval.put('/edit/:id_cheval', (req, res) => {
   const id_cheval = req.params.id_cheval;
+  const cheval = {
+    nom: req.body.nom,
+    age: req.body.age,
+    race_cheval_id: req.body.race_cheval_id,
+  }
+  console.log(id_cheval)
+  console.log(cheval)
 
-  Cheval.update(req.body, {
-    where: { id: id_cheval}
+  Cheval.update(cheval, {
+    where: {
+      id_cheval: id_cheval
+    }
   }).then(num => {
     if (num == 1) res.json({message: "Le cheval a été mis à jour"})
     else if (num < 1) res.json({message: "Le cheval n'existe pas"})
   }).catch(err => {
-    res.json({message: "Une erreur est survenue lors de la mise à jour du cheval"})
+    res.json({message: err + "Une erreur est survenue lors de la mise à jour du cheval"})
   })
 })
 
@@ -100,7 +116,8 @@ cheval.get('/available_horses/reprise/:id_reprise', (req, res) => {
       },
       order: [
         ['nom', 'ASC']
-      ]
+      ],
+      include: [RaceCheval]
     }).then(chevaux => {
       return res.json(chevaux)
     }).catch(err => {

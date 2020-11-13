@@ -26,7 +26,12 @@
         <a mat-button routerLink="/recuperation-mot-de-passe">J'ai oublié mon mot de passe</a>
       </div>
 
-      <button class="center" mat-raised-button color="blue">C'est parti !</button>
+      <button class="center" mat-raised-button color="blue">
+        <mat-icon *ngIf="spinnerShown">
+          <mat-spinner [diameter]="20"></mat-spinner>
+        </mat-icon>
+        C'est parti !
+      </button>
     </form>
   </mat-card>
 </div>

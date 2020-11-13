@@ -8,9 +8,8 @@ import { AuthenticationService } from '../Services/authentication.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DialogData } from '../Interfaces/DialogData';
 import { DialogComponent } from '../dialog/dialog.component';
-import {DatePipe} from '@angular/common';
-import {HelperService} from '../Services/helper.service';
-import {Title} from '@angular/platform-browser';
+import { DatePipe } from '@angular/common';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-home-instructor',
@@ -22,6 +21,7 @@ export class HomeInstructorComponent implements OnInit {
 
   displayedColumns: string[] = ['title', 'moniteur', 'date', 'recurrence', 'rider_number_limit', 'galop_level', 'open', 'modify', 'delete'];
   allReprises: RepriseInterface[];
+  spinnerShown: boolean;
 
   reprise: RepriseCreateInterface = {
     id_reprise: null,
@@ -42,6 +42,7 @@ export class HomeInstructorComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.spinnerShown = false;
     this.updateAllReprises();
   }
 
@@ -54,15 +55,18 @@ export class HomeInstructorComponent implements OnInit {
   }
 
   createReprise(): void {
+    this.spinnerShown = true;
     this.reprise.user_id_user = this.authService.getUserDetails().id_user;
     this.repriseService.create(this.reprise)
       .subscribe(
         () => {
+          this.spinnerShown = false;
           this.togglePanel();
           this.updateAllReprises();
           this.authService.notifyUser('Reprise créée', this.snackBar, 'success', 1500, 'OK');
         },
         err => {
+          this.spinnerShown = false;
           console.error(err);
         }
       );
@@ -72,31 +76,33 @@ export class HomeInstructorComponent implements OnInit {
     const dateConverted = new Date(date);
     const accountToDelete: DialogData = {
       id: idReprise,
-      action: 'Supprimer la reprise',
+      action: 'Supprimer la reprise et les inscriptions de',
       subtitle: (title ? title : 'du ' + this.datepipe.transform(dateConverted, 'dd/MM/yyyy') + ' à ' +
         this.datepipe.transform(dateConverted, 'HH:mm'))
     };
 
     this.dialog.open(DialogComponent, {
-      width: '30%',
+      width: '45%',
       data: accountToDelete
-    })
-      .afterClosed().subscribe(result => {
+    }).afterClosed().subscribe(result => {
       this.repriseService.delete(result).subscribe(() => {
         this.updateAllReprises();
       }, err => { console.error(err); });
     });
   }
 
-  openDialogEditReprise(cours: RepriseInterface): void {
+  edit(cours: RepriseInterface): void {
     this.dialog.open(RepriseEditComponent, {
       width: '60%',
       data: cours
+    }).afterClosed().subscribe(() => {
+      this.repriseService.edit(cours).subscribe(() => {
+        this.updateAllReprises();
+      }, err => { console.error(err); });
     });
   }
 
   isInvalid(): boolean {
-    return (!this.repriseService.isEmpty(this.reprise.title) && this.reprise.galop_level && this.reprise.rider_number_limit
-      && this.reprise.galop_level > 0 && this.reprise.rider_number_limit > 0);
+    return (this.reprise.date != null && this.reprise.rider_number_limit != null && this.reprise.galop_level != null);
   }
 }

@@ -1,5 +1,6 @@
 const Sequelize = require("sequelize")
 const db = require("../db.js")
+const RaceCheval = require("../model/RaceCheval")
 
 module.exports = db.sequelize.define(
   'cheval',
@@ -13,15 +14,22 @@ module.exports = db.sequelize.define(
     nom: {
       type: Sequelize.STRING
     },
-    race: {
-      type: Sequelize.STRING
-    },
     age: {
       type: Sequelize.INTEGER
+    },
+    race_cheval_id: {
+      type: Sequelize.NUMBER,
+      allowNull: false,
+      references: {
+        model: RaceCheval,
+        key: 'id'
+      }
     }
   },
   {
     timestamps: false,
-    freezeTableName: 1
+    freezeTableName: 1,
+    underscored: true,
+    camelCase: false
   }
 )

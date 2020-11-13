@@ -7,8 +7,13 @@
 
     <div style="margin-top: 40px;" class="container">
       <form (submit)="createReprise()">
-        <app-reprise-create [reprise]="reprise"></app-reprise-create>
-        <button mat-raised-button class="center" color="accent" [disabled]="!isInvalid()">Créer</button>
+        <app-reprise-create [editMonitor]="false" [reprise]="reprise"></app-reprise-create>
+        <button mat-raised-button class="center" color="primary" [disabled]="!isInvalid()">
+          <mat-icon *ngIf="spinnerShown">
+            <mat-spinner [diameter]="20"></mat-spinner>
+          </mat-icon>
+          Créer
+        </button>
       </form>
     </div>
 
@@ -67,7 +72,7 @@
 
     <ng-container matColumnDef="modify">
       <th mat-header-cell *matHeaderCellDef></th>
-      <td mat-cell *matCellDef="let reprise"><button (click)="openDialogEditReprise(reprise)" class="center" mat-raised-button color="primary">Modifier</button></td>
+      <td mat-cell *matCellDef="let reprise"><button (click)="edit(reprise)" class="center" mat-raised-button color="primary">Modifier</button></td>
     </ng-container>
 
     <ng-container matColumnDef="delete">
