@@ -13,26 +13,26 @@ Quant au back-end, il à été développé en <a href="https://nodejs.org/en/">N
 
 ## Tâches réalisées
 
--   [x] 1.Epic Utilisateur (cavalier)
-    -   [x] 1.1. User Story inscription
-    -   [x] 1.2. User Story connexion
-    -   [x] 1.3. User Story récupération de mots de passe
--   [x] 2. Epic Administrateur
-    -   [x] 2.1. User Story super user
-    -   [x] 2.2. User Story connexion
-    -   [x] 2.3. User Story recherche d'utilisateur
--   [x] 3. Epic création de compte technique
-    -   [x] 3.1. User Story création de comptes administrateurs
-    -   [x] 3.2. User Story création de comptes moniteurs
--   [x] 4. User Story gestion des chevaux
--   [x] 5. User Story gestion des informations personnelles
--   [x] 6. Epic moniteur
-    -   [x] 6.1. User Story connexion
-    -   [x] 6.2. User Story création de planning de cours
--   [x] 7. Epic gestion des reprises
-    -   [x] 7.1. User Story cavalier inscription reprise
-    -   [x] 7.2. User Story moniteur assignation chevaux
--   [x] 8. User Story reprise récurrente
+-   &#x2611; 1.Epic Utilisateur (cavalier)
+    -   &#x2611; 1.1. User Story inscription
+    -   &#x2611; 1.2. User Story connexion
+    -   &#x2611; 1.3. User Story récupération de mots de passe
+-   &#x2611; 2. Epic Administrateur
+    -   &#x2611; 2.1. User Story super user
+    -   &#x2611; 2.2. User Story connexion
+    -   &#x2611; 2.3. User Story recherche d'utilisateur
+-   &#x2611; 3. Epic création de compte technique
+    -   &#x2611; 3.1. User Story création de comptes administrateurs
+    -   &#x2611; 3.2. User Story création de comptes moniteurs
+-   &#x2611; 4. User Story gestion des chevaux
+-   &#x2611; 5. User Story gestion des informations personnelles
+-   &#x2611; 6. Epic moniteur
+    -   &#x2611; 6.1. User Story connexion
+    -   &#x2611; 6.2. User Story création de planning de cours
+-   &#x2611; 7. Epic gestion des reprises
+    -   &#x2611; 7.1. User Story cavalier inscription reprise
+    -   &#x2611; 7.2. User Story moniteur assignation chevaux
+-   &#x2611; 8. User Story reprise récurrente
 
 # Visite guidée
 
