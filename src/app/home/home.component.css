@@ -1,0 +1,66 @@
+mat-card {
+  margin: 30px 10px;
+}
+
+h1 {
+  color: white;
+}
+
+button {
+  margin-top: 10px;
+}
+
+.spanHorses {
+  margin: 0;
+}
+
+.multiline {
+  white-space: pre-line;
+}
+
+.canceled {
+  border: 1px solid white;
+  background-color: #fd5b5b;
+  color: white;
+  border-radius: 20px;
+  width: 25%;
+  margin-top: 10px;
+}
+
+.outdated {
+  border: 1px solid white;
+  background-color: #000000;
+  color: white;
+  border-radius: 20px;
+  width: 25%;
+  margin-top: 10px;
+}
+
+.canceled mat-icon {
+  vertical-align: top;
+  margin-top: 2px;
+  color: white;
+}
+
+.canceled h3 {
+  margin-bottom: 0;
+}
+
+.outdated mat-icon {
+  vertical-align: top;
+  margin-top: 2px;
+  color: white;
+}
+
+.outdated h3 {
+  margin-bottom: 0;
+}
+
+.spanBtnFiche {
+  position: absolute;
+  right: 16px;
+}
+
+.spanBtnFiche button{
+  margin-top: 0;
+}

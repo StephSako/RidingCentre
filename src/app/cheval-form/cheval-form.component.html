@@ -1,0 +1,36 @@
+<div class="container">
+
+  <p>
+    <mat-form-field appearance="outline" class="center">
+      <mat-icon matSuffix>title</mat-icon>
+      <mat-label>Nom</mat-label>
+      <input [(ngModel)]="cheval.nom" name="cheval_nom" matInput [formControl]="nomChevalControl" required>
+      <mat-error *ngIf="nomChevalControl.invalid">{{getErrorMessageInput()}}</mat-error>
+    </mat-form-field>
+  </p>
+
+  <mat-grid-list cols="2" rowHeight="5:1">
+    <mat-grid-tile>
+      <p>
+        <span class="center">Age</span>
+        <mat-slider [formControl]="ageControl" style="width: 300px;" color="primary" [max]="35" [min]="1" [step]="1" [thumbLabel]="true" [tickInterval]="'auto'" [(ngModel)]="cheval.age" [vertical]="false"></mat-slider>
+        <mat-error *ngIf="ageControl.invalid">{{getErrorMessageAge()}}</mat-error>
+      </p>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+      <p>
+        <mat-form-field appearance="outline" class="center">
+          <mat-label>Race</mat-label>
+          <mat-select [(ngModel)]="cheval.race_cheval_id" [formControl]="raceControl" required>
+            <mat-option *ngFor="let race of races" [value]="race.id">
+              {{race.nom}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="raceControl.invalid">{{getErrorMessageInput()}}</mat-error>
+        </mat-form-field>
+      </p>
+    </mat-grid-tile>
+  </mat-grid-list>
+
+</div>
