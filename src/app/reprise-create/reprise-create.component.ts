@@ -1,10 +1,10 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
-import {FormControl, Validators} from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 
 import { RepriseCreateInterface } from '../Interfaces/RepriseInterface';
-import {AuthenticationService} from '../Services/authentication.service';
-import {UserInterface} from '../Interfaces/UserInterface';
+import { AuthenticationService } from '../Services/authentication.service';
+import { UserInterface } from '../Interfaces/UserInterface';
 
 @Component({
   selector: 'app-reprise-create',

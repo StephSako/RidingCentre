@@ -52,6 +52,7 @@ import { RecuperationPasswordComponent } from './recuperation-password/recuperat
 import { AdminGestionComponent } from './admin-gestion/admin-gestion.component';
 import { UserFormComponent } from './user-form/user-form.component';
 import { DialogComponent } from './dialog/dialog.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -73,7 +74,8 @@ import { DialogComponent } from './dialog/dialog.component';
     RecuperationPasswordComponent,
     AdminGestionComponent,
     UserFormComponent,
-    DialogComponent
+    DialogComponent,
+    ResetPasswordComponent
   ],
   imports: [
     BrowserModule,

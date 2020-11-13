@@ -200,4 +200,9 @@ export class AuthenticationService {
   public editRole(id_user: number, role_user_id: number): Observable<any> {
     return this.http.put(`${this.baseURL}edit/${id_user}`, { role_user_id });
   }
+
+  // tslint:disable-next-line:variable-name
+  public resetPassword(email_user: string, password_user: string): Observable<any> {
+    return this.http.put(`${this.baseURL}edit/password/${email_user}`, { password_user });
+  }
 }
