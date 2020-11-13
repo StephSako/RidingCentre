@@ -9,9 +9,10 @@ Ce projet consiste à développer un site Web pour un centre équestre permettan
 
 Le front-en a été développé en <a href="https://angular.io/">Angular</a>, couplé à la librairie graphique <a href="https://material.angular.io/">Angular material</a>.
 
-Quant au back-end, il à été développé en <a href="https://nodejs.org/en/">Node.js</a> avec le framework <a href="https://expressjs.com/fr/">Express.js</a> couplé avec l'ORM <a href="https://sequelize.org/">Sequelize</a>.
+Quant au back-end, il à été développé en <a href="https://nodejs.org/en/">Node.js</a> avec le framework <a href="https://expressjs.com/fr/">Express.js</a> couplé avec l'ORM <a href="https://sequelize.org/">Sequelize</a>. J'ai stocké les données dans une base de données MySQL hébergée sur <a href="https://www.alwaysdata.com/fr/">AlwaysData</a>. Je me suis également servi de leur provider pour envoyer des mails.
 
 ## Tâches réalisées
+
 -   [x] 1.Epic Utilisateur (cavalier)
     -   [x] 1.1. User Story inscription
     -   [x] 1.2. User Story connexion
@@ -38,12 +39,19 @@ Quant au back-end, il à été développé en <a href="https://nodejs.org/en/">N
 Voici des captures d'écran des pages composant le site :
 
 ### Connexion
+
+Une vérification du format de l'adresse mail est mise en place. Lorsque les deux champs sont remplis, le bouton s'active.
+
 <p align="center"><img src="https://zupimages.net/up/20/46/71cu.jpg"></p>
 
 ### Inscription
+
+Il en va de même pour le formulaire d'inscription.
+
 <p align="center"><img src="https://zupimages.net/up/20/46/3t8t.jpg"></p>
 
 ### Récupération de mot de passe
+
 <p align="center"><img src="https://zupimages.net/up/20/46/tagh.jpg"></p>
 
 L'utilisateur saisi son mail. Il est averti si l'adresse email est inconnue de la base de données, sinon un mail est envoyé.
@@ -91,6 +99,9 @@ Depuis cette page, les moniteurs peuvent créer et modifier les reprises crées.
 Depuis cette page, les moniteurs peuvent créer et modifier les fiches des chevaux. Les administrateurs peuvent également les modifier.
 
 #### Tableau général des chevaux
+
+Les chevaux supprimés sont dissociés des inscriptions des cavaliers aux reprises.
+
 <p align="center"><img src="https://zupimages.net/up/20/46/3t1l.jpg"></p>
 
 #### Formulaire de création d'une fiche d'un cheval
@@ -98,14 +109,17 @@ Depuis cette page, les moniteurs peuvent créer et modifier les fiches des cheva
 
 ### Gestion des comptes
 
-Depuis cette page, les administrateurs peuvent créer et modifier les fiches des chevaux. Les administrateurs peuvent également les modifier.
+Depuis cette page, les administrateurs peuvent créer et modifier les comptes des utilisateurs. Il est possible de filtrer les comptes en fonction du rôle et/ou du nom de la personne.
 
 #### Tableau général des comptes
 <p align="center"><img src="https://zupimages.net/up/20/46/u2ll.jpg"></p>
 
+Le formulaire de création de compte est quasiment identique au formulaire d'inscription, mis à part la liste déroulante pour le choix du rôle à donner.
+
 #### Validation de la suppression d'un compte
 
 Si un compte moniteur est supprimé, il ne sera plus associé aux cours qu'il a créé, comme dans l'exemple ci-dessous.
+Si un compte cavalier est supprimé, toutes les inscriptions aux reprises sont également supprimées.
 
 <p align="center"><img src="https://zupimages.net/up/20/46/1mmt.jpg"></p>
 
