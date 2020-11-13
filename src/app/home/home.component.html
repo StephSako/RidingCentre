@@ -27,7 +27,7 @@
 
       <h2 class="center lobster_2" style="margin-bottom: 20px;"><b>{{ reprise.title  | titlecase}}</b>
         <span class="spanBtnFiche">
-          <button *ngIf="!isOutdated(reprise.date) && !reprise.canceled && authService.isRider()" mat-raised-button color="primary" class="center" [routerLink]="['/reprise', reprise.id_reprise]">Voir la fiche</button>
+          <button *ngIf="(!isOutdated(reprise.date) || (reprise.recurrence != null && isOutdated(reprise.date))) && !reprise.canceled && authService.isRider()" mat-raised-button color="primary" class="center" [routerLink]="['/reprise', reprise.id_reprise]">Voir la fiche</button>
         </span>
       </h2>
 
