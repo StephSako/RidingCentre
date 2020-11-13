@@ -74,6 +74,25 @@ Les reprises annulées, terminées (reprise dont la date est passée et sans ré
 #### Vue moniteur
 <p align="center"><img src="https://zupimages.net/up/20/46/y6xt.jpg"></p>
 
+### Page d'une reprise
+Depuis cette page, les utilisateurs peuvent voir à quel cheval il sont associés pour la reprise.
+
+Pour assigner un cheval déjà assigné à un autre cavalier, il suffit de le refaire glisser dans la liste, puis de le glisser sur un cavalier.
+
+#### Vue cavalier
+<p align="center"><img src="https://zupimages.net/up/20/46/2gtg.jpg"></p>
+
+#### Vue moniteur
+
+Les moniteurs peuvent associer un cheval à un cavalier grâce au système de Drag & Drop d'Angular Material.
+
+<p align="center"><img src="https://zupimages.net/up/20/46/2713.jpg"></p>
+
+Ils peuvent également annuler la reprise si moins de 3 cavaliers y sont inscrits.
+
+<p align="center"><img src="https://zupimages.net/up/20/46/xgud.jpg"></p>
+<p align="center"><img src="https://zupimages.net/up/20/46/7py5.jpg"></p>
+
 ### Page du profil
 
 Depuis cette page, les utilisateurs ont accès à leurs informations personnelles. Ils peuvent modifier ces informations ainsi que leur mot de passe.
