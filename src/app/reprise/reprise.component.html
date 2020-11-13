@@ -1,146 +1,149 @@
 <div class="container">
 
-  <div *ngIf="!isOutdated(); else outdated">
-    <h1 class="lobster center">Reprise<span class="lobster" *ngIf="reprise.title"> - {{ reprise.title }}</span></h1>
+  <h1 class="lobster center">Reprise<span class="lobster" *ngIf="reprise.title"> - {{ reprise.title }}</span></h1>
 
-    <mat-card *ngIf="reprise">
-      <mat-grid-list cols="5" rowHeight="9:1">
-        <mat-grid-tile><b>Moniteur&nbsp;</b><mat-icon>supervised_user_circle</mat-icon></mat-grid-tile>
-        <mat-grid-tile><b>Jour&nbsp;</b><mat-icon>event</mat-icon></mat-grid-tile>
-        <mat-grid-tile><b>Heure&nbsp;</b><mat-icon>schedule</mat-icon></mat-grid-tile>
-        <mat-grid-tile><b>Limite&nbsp;</b><mat-icon>groups</mat-icon></mat-grid-tile>
-        <mat-grid-tile><b>Niveau du Galop&nbsp;</b><mat-icon>military_tech</mat-icon></mat-grid-tile>
+  <mat-card *ngIf="reprise">
+    <mat-grid-list cols="5" rowHeight="9:1">
+      <mat-grid-tile><b>Moniteur&nbsp;</b><mat-icon>supervised_user_circle</mat-icon></mat-grid-tile>
 
-        <mat-grid-tile>
-          <span *ngIf="reprise.user; else undefinedInstructor">{{reprise.user.firstname_user | titlecase}} {{reprise.user.lastname_user | uppercase}}</span>
-          <ng-template #undefinedInstructor><i style="color: lightgrey;">Non défini</i></ng-template>
-        </mat-grid-tile>
-        <mat-grid-tile>{{reprise.date | date:"dd/MM/yyyy"}}</mat-grid-tile>
-        <mat-grid-tile>{{reprise.date | date:"HH:mm"}}</mat-grid-tile>
-        <mat-grid-tile>{{reprise.rider_number_limit}}</mat-grid-tile>
-        <mat-grid-tile>{{reprise.galop_level}}</mat-grid-tile>
-      </mat-grid-list>
+      <mat-grid-tile>
+        <b>Jour&nbsp;</b>
+        <mat-icon *ngIf="!reprise.recurrence; else iconRecurrence">event</mat-icon>
+        <ng-template #iconRecurrence><mat-icon>update</mat-icon></ng-template>
+      </mat-grid-tile>
 
-      <div *ngIf="authService.isRider() && !reprise.canceled">
-        <button mat-raised-button style="color: white; background-color: #69c61a;" class="center" *ngIf="!isRegistered; else btnDesinscrire" (click)="registerToReprise()">S'inscrire</button>
-        <ng-template #btnDesinscrire><button mat-raised-button color="warn" class="center" *ngIf="isRegistered" (click)="deleteRegisteredReprise()">Se désinscrire</button></ng-template>
-      </div>
+      <mat-grid-tile><b>Heure&nbsp;</b><mat-icon>schedule</mat-icon></mat-grid-tile>
+      <mat-grid-tile><b>Limite&nbsp;</b><mat-icon>groups</mat-icon></mat-grid-tile>
+      <mat-grid-tile><b>Niveau du Galop&nbsp;</b><mat-icon>military_tech</mat-icon></mat-grid-tile>
 
-    </mat-card>
+      <mat-grid-tile>
+        <span *ngIf="reprise.user; else undefinedInstructor">{{reprise.user.firstname_user | titlecase}} {{reprise.user.lastname_user | uppercase}}</span>
+        <ng-template #undefinedInstructor><i style="color: lightgrey;">Non défini</i></ng-template>
+      </mat-grid-tile>
 
-    <div *ngIf="!reprise.canceled && !authService.isRider()">
-      <div *ngIf="editable24h && !outdated; else notEditable">
-        <h1 class="lobster center">Assignation des chevaux</h1>
+      <mat-grid-tile>
+        <span *ngIf="!reprise.recurrence; else coursRecurrence">{{reprise.date | date:"dd/MM/yyyy"}}</span>
+        <ng-template #coursRecurrence>{{reprise.recurrence}}</ng-template>
+      </mat-grid-tile>
 
-        <mat-card *ngIf="noHorses">
-          <h2 style="color: black" class="center">Il n'y a pas de chevaux configurés.</h2>
-          <button mat-raised-button color="primary" class="center" routerLink="/cheval-instructor">Ajouter des chevaux</button>
-        </mat-card>
+      <mat-grid-tile>{{reprise.date | date:"HH:mm"}}</mat-grid-tile>
+      <mat-grid-tile>{{reprise.rider_number_limit}}</mat-grid-tile>
+      <mat-grid-tile>{{reprise.galop_level}}</mat-grid-tile>
+    </mat-grid-list>
 
-        <div cdkDropListGroup *ngIf="!authService.isRider()">
-          <div class="row">
-            <div style="margin-top: 32px;" class="column">
+    <div *ngIf="authService.isRider() && !reprise.canceled">
+      <button mat-raised-button style="color: white; background-color: #69c61a;" class="center" *ngIf="!isRegistered; else btnDesinscrire" (click)="registerToReprise()">S'inscrire</button>
+      <ng-template #btnDesinscrire><button mat-raised-button color="warn" class="center" *ngIf="isRegistered" (click)="deleteRegisteredReprise()">Se désinscrire</button></ng-template>
+    </div>
 
-              <div
-                cdkDropList
-                [cdkDropListData]="chevauxDisponibles"
-                class="list all"
-                (cdkDropListDropped)="dropUserToStack($event)">
-                <div class="box" [cdkDragData]="cheval" *ngFor="let cheval of chevauxDisponibles" cdkDrag>
-                  <div class="custom-placeholder" *cdkDragPlaceholder></div>
-                  <span><b>{{cheval.nom | titlecase}}</b> - {{cheval.race_cheval.nom | titlecase}} - {{cheval.age}} ans</span><mat-icon aria-hidden="false">open_with</mat-icon>
-                </div>
+  </mat-card>
+
+  <div *ngIf="!reprise.canceled && !authService.isRider()">
+    <div *ngIf="editable24h && (!outdated || (outdated && reprise.recurrence != null)); else notEditable">
+      <h1 class="lobster center">Assignation des chevaux</h1>
+
+      <mat-card *ngIf="noHorses">
+        <h2 style="color: black" class="center">Il n'y a pas de chevaux configurés.</h2>
+        <button mat-raised-button color="primary" class="center" routerLink="/cheval-instructor">Ajouter des chevaux</button>
+      </mat-card>
+
+      <div cdkDropListGroup *ngIf="!authService.isRider()">
+        <div class="row">
+          <div style="margin-top: 32px;" class="column">
+
+            <div
+              cdkDropList
+              [cdkDropListData]="chevauxDisponibles"
+              class="list all"
+              (cdkDropListDropped)="dropUserToStack($event)">
+              <div class="box" [cdkDragData]="cheval" *ngFor="let cheval of chevauxDisponibles" cdkDrag>
+                <div class="custom-placeholder" *cdkDragPlaceholder></div>
+                <span><b>{{cheval.nom | titlecase}}</b> - {{cheval.race_cheval.nom | titlecase}} - {{cheval.age}} ans</span><mat-icon aria-hidden="false">open_with</mat-icon>
               </div>
-
-            </div>
-
-            <div class="column">
-
-              <div *ngFor="let cavalier of cavaliersInscrits">
-                <h3 class="nom_cavalier center">{{cavalier.user.firstname_user | titlecase}} {{cavalier.user.lastname_user | uppercase}}</h3>
-                <div
-                  cdkDropList
-                  [cdkDropListData]="cavalier.cheval"
-                  class="list"
-                  (cdkDropListDropped)="dropStackToUser($event, cavalier.user.id_user, cavalier.id_reprise_inscription)">
-                  <div class="box" [cdkDragData]="cavalier" *ngFor="let cheval of cavalier.cheval" cdkDrag>
-                    <div *ngIf="cheval.race_cheval">
-                      <div class="custom-placeholder" *cdkDragPlaceholder></div>
-                      <span><b>{{cheval.nom | titlecase}}</b> - {{cheval.race_cheval.nom | titlecase}} - {{cheval.age}} ans</span><mat-icon aria-hidden="false">open_with</mat-icon>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
             </div>
 
           </div>
+
+          <div class="column">
+
+            <div *ngFor="let cavalier of cavaliersInscrits">
+              <h3 class="nom_cavalier center">{{cavalier.user.firstname_user | titlecase}} {{cavalier.user.lastname_user | uppercase}}</h3>
+              <div
+                cdkDropList
+                [cdkDropListData]="cavalier.cheval"
+                class="list"
+                (cdkDropListDropped)="dropStackToUser($event, cavalier.user.id_user, cavalier.id_reprise_inscription)">
+                <div class="box" [cdkDragData]="cavalier" *ngFor="let cheval of cavalier.cheval" cdkDrag>
+                  <div *ngIf="cheval.race_cheval">
+                    <div class="custom-placeholder" *cdkDragPlaceholder></div>
+                    <span><b>{{cheval.nom | titlecase}}</b> - {{cheval.race_cheval.nom | titlecase}} - {{cheval.age}} ans</span><mat-icon aria-hidden="false">open_with</mat-icon>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
         </div>
       </div>
-
-      <ng-template #notEditable>
-        <mat-card *ngIf="!editable24h && !outdated">
-          <h2 class="center lobster" style="color: black;">Les chevaux ne pourront être assignés qu'à partir de 24 heures avant le début de la reprise</h2>
-        </mat-card>
-        <mat-card *ngIf="outdated">
-          <h2 class="center lobster" style="color: black;">Le cours est terminé, les chevaux ne sont plus assignables</h2>
-        </mat-card>
-      </ng-template>
-
     </div>
 
-    <div *ngIf="!this.authService.isRider() && !outdated">
-      <mat-card *ngIf="cavaliersInscrits.length < 3 && !reprise.canceled; else maintainReprise">
-        <h2 style="color: black; margin-bottom: 0;" class="center">Moins de 3 cavaliers sont inscrits à la reprise</h2>
-        <h3 style="color: black; margin-bottom: 0;" class="center">Annuler la séance ?</h3><br>
-        <button mat-raised-button style="color: white; background-color: #e32020;" class="center" (click)="editRepriseStatus()">Annuler</button>
+    <ng-template #notEditable>
+      <mat-card *ngIf="!editable24h && !outdated">
+        <h2 class="center lobster" style="color: black;">Les chevaux ne pourront être assignés qu'à partir de 24 heures avant le début de la reprise</h2>
       </mat-card>
+      <mat-card *ngIf="outdated && reprise.recurrence == null">
+        <h2 class="center lobster" style="color: black;">Le cours est terminé, les chevaux ne sont plus assignables</h2>
+      </mat-card>
+    </ng-template>
 
-      <ng-template #maintainReprise>
-        <mat-card *ngIf="cavaliersInscrits.length < 3">
-          <h2 style="color: black; margin-bottom: 0;" class="center">La reprise est actuellement annulée</h2>
-          <h3 style="color: black; margin-bottom: 0;" class="center">Maintenir la séance ?</h3><br>
-          <button mat-raised-button style="color: white; background-color: #69c61a;" class="center" (click)="editRepriseStatus()">Maintenir</button>
-        </mat-card>
-      </ng-template>
-    </div>
-
-    <div *ngIf="authService.isRider()">
-      <div *ngIf="cavaliersInscrits.length == 0; else cavaliersInscritsDefined">
-        <mat-card>
-          <h2 class="center lobster" style="color: black;">Il n'y a pas de cavaliers inscrits ... pour le moment</h2>
-        </mat-card>
-      </div>
-      <ng-template #cavaliersInscritsDefined>
-        <table mat-table *ngIf="!reprise.canceled" [dataSource]="cavaliersInscrits" class="mat-elevation-z8">
-
-          <ng-container matColumnDef="cavalier">
-            <th mat-header-cell *matHeaderCellDef>Cavaliers inscrits</th>
-            <td mat-cell *matCellDef="let row" [ngClass]="authService.getUserDetails().id_user == row.user.id_user ? 'userRow' : null"><span>{{row.user.firstname_user | titlecase}} {{row.user.lastname_user | uppercase}}</span></td>
-          </ng-container>
-
-          <ng-container matColumnDef="horse">
-            <th mat-header-cell *matHeaderCellDef>Chevaux assignés</th>
-            <td mat-cell *matCellDef="let row" [ngClass]="authService.getUserDetails().id_user == row.user.id_user ? 'userRow' : null">
-              <span *ngIf="row.cheval[0]; else noAssignedHorse">{{row.cheval[0].nom | titlecase}} - {{row.cheval[0].race | titlecase}} - {{row.cheval[0].age}} ans</span>
-              <ng-template #noAssignedHorse><span><i>Pas de cheval assigné</i></span></ng-template></td>
-          </ng-container>
-
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
-      </ng-template>
-    </div>
-
-    <mat-card class="canceled" *ngIf="reprise.canceled">
-      <h2 class="center lobster">La reprise est annulée dû au faible nombre de cavaliers inscrits ...</h2>
-    </mat-card>
   </div>
 
-  <ng-template #outdated>
-    <mat-card>
-      <h2 class="lobster center" style="color: #e32020;">La reprise est passée</h2>
+  <div *ngIf="!this.authService.isRider() && !outdated">
+    <mat-card *ngIf="cavaliersInscrits.length < 3 && !reprise.canceled; else maintainReprise">
+      <h2 style="color: black; margin-bottom: 0;" class="center">Moins de 3 cavaliers sont inscrits à la reprise</h2>
+      <h3 style="color: black; margin-bottom: 0;" class="center">Annuler la séance ?</h3><br>
+      <button mat-raised-button style="color: white; background-color: #e32020;" class="center" (click)="editRepriseStatus()">Annuler</button>
     </mat-card>
-  </ng-template>
+
+    <ng-template #maintainReprise>
+      <mat-card *ngIf="cavaliersInscrits.length < 3">
+        <h2 style="color: black; margin-bottom: 0;" class="center">La reprise est actuellement annulée</h2>
+        <h3 style="color: black; margin-bottom: 0;" class="center">Maintenir la séance ?</h3><br>
+        <button mat-raised-button style="color: white; background-color: #69c61a;" class="center" (click)="editRepriseStatus()">Maintenir</button>
+      </mat-card>
+    </ng-template>
+  </div>
+
+  <div *ngIf="authService.isRider()">
+    <div *ngIf="cavaliersInscrits.length == 0; else cavaliersInscritsDefined">
+      <mat-card>
+        <h2 class="center lobster" style="color: black;">Il n'y a pas de cavaliers inscrits ... pour le moment</h2>
+      </mat-card>
+    </div>
+    <ng-template #cavaliersInscritsDefined>
+      <table mat-table *ngIf="!reprise.canceled" [dataSource]="cavaliersInscrits" class="mat-elevation-z8">
+
+        <ng-container matColumnDef="cavalier">
+          <th mat-header-cell *matHeaderCellDef>Cavaliers inscrits</th>
+          <td mat-cell *matCellDef="let row" [ngClass]="authService.getUserDetails().id_user == row.user.id_user ? 'userRow' : null"><span>{{row.user.firstname_user | titlecase}} {{row.user.lastname_user | uppercase}}</span></td>
+        </ng-container>
+
+        <ng-container matColumnDef="horse">
+          <th mat-header-cell *matHeaderCellDef>Chevaux assignés</th>
+          <td mat-cell *matCellDef="let row" [ngClass]="authService.getUserDetails().id_user == row.user.id_user ? 'userRow' : null">
+            <span *ngIf="row.cheval[0]; else noAssignedHorse">{{row.cheval[0].nom | titlecase}} - {{row.cheval[0].race | titlecase}} - {{row.cheval[0].age}} ans</span>
+            <ng-template #noAssignedHorse><span><i>Pas de cheval assigné</i></span></ng-template></td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </ng-template>
+  </div>
+
+  <mat-card class="canceled" *ngIf="reprise.canceled">
+    <h2 class="center lobster">La reprise est annulée dû au faible nombre de cavaliers inscrits ...</h2>
+  </mat-card>
 
 </div>

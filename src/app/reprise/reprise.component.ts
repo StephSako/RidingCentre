@@ -111,10 +111,6 @@ export class RepriseComponent implements OnInit {
     );
   }
 
-  isOutdated(): boolean {
-    return (new Date() > new Date(this.reprise.date));
-  }
-
   getAvailableHorses(): void {
     const idReprise = +this.route.snapshot.paramMap.get('id_reprise');
     this.chevalService.getAvailableHorses(idReprise).subscribe(

@@ -23,79 +23,74 @@
 
   </mat-card>
 
-  <div *ngFor="let reprise of allReprises">
-    <mat-card *ngIf="!isOutdated(reprise.date)">
+  <mat-card *ngFor="let reprise of allReprises">
 
-        <h2 class="center lobster_2" style="margin-bottom: 20px;"><b>{{ reprise.title  | titlecase}}</b>
-          <span class="spanBtnFiche">
-            <button *ngIf="!isOutdated(reprise.date) && !reprise.canceled && authService.isRider()" mat-raised-button color="primary" class="center" [routerLink]="['/reprise', reprise.id_reprise]">Voir la fiche</button>
-          </span>
-        </h2>
+      <h2 class="center lobster_2" style="margin-bottom: 20px;"><b>{{ reprise.title  | titlecase}}</b>
+        <span class="spanBtnFiche">
+          <button *ngIf="!isOutdated(reprise.date) && !reprise.canceled && authService.isRider()" mat-raised-button color="primary" class="center" [routerLink]="['/reprise', reprise.id_reprise]">Voir la fiche</button>
+        </span>
+      </h2>
 
-        <mat-grid-list [cols]="authService.isRider() ? 6 : 5" rowHeight="9:1">
-          <mat-grid-tile><b>Moniteur&nbsp;</b><mat-icon>supervised_user_circle</mat-icon></mat-grid-tile>
+      <mat-grid-list [cols]="authService.isRider() ? 6 : 5" rowHeight="9:1">
+        <mat-grid-tile><b>Moniteur&nbsp;</b><mat-icon>supervised_user_circle</mat-icon></mat-grid-tile>
 
-          <mat-grid-tile>
-            <b>Jour&nbsp;</b>
-            <mat-icon *ngIf="!reprise.recurrence; else iconRecurrence">event</mat-icon>
-            <ng-template #iconRecurrence><mat-icon>update</mat-icon></ng-template>
+        <mat-grid-tile>
+          <b>Jour&nbsp;</b>
+          <mat-icon *ngIf="!reprise.recurrence; else iconRecurrence">event</mat-icon>
+          <ng-template #iconRecurrence><mat-icon>update</mat-icon></ng-template>
+        </mat-grid-tile>
+
+        <mat-grid-tile><b>Heure&nbsp;</b><mat-icon>schedule</mat-icon></mat-grid-tile>
+        <mat-grid-tile><b>Limite&nbsp;</b><mat-icon>groups</mat-icon></mat-grid-tile>
+        <mat-grid-tile><b>Niveau du Galop&nbsp;</b><mat-icon>military_tech</mat-icon></mat-grid-tile>
+        <mat-grid-tile *ngIf="authService.isRider()"><b>Cheval assigné&nbsp;</b><img src="assets/horse-icon.png" height="20" alt="horse-icon"></mat-grid-tile>
+
+        <mat-grid-tile>
+          <span *ngIf="reprise.user; else undefinedInstructor">{{reprise.user.firstname_user | titlecase}} {{reprise.user.lastname_user | uppercase}}</span>
+          <ng-template #undefinedInstructor><i style="color: lightgrey;">Non défini</i></ng-template>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <span *ngIf="!reprise.recurrence; else coursRecurrence">{{reprise.date | date:"dd/MM/yyyy"}}</span>
+          <ng-template #coursRecurrence>{{reprise.recurrence}}</ng-template>
+        </mat-grid-tile>
+
+        <mat-grid-tile>{{reprise.date | date:"HH:mm"}}</mat-grid-tile>
+        <mat-grid-tile>{{reprise.rider_number_limit}}</mat-grid-tile>
+        <mat-grid-tile>{{reprise.galop_level}}</mat-grid-tile>
+        <div *ngIf="authService.isRider()">
+          <mat-grid-tile *ngIf="nomCheval(reprise.id_reprise); else noAssignedHorse">
+            <mat-icon matTooltipPosition=below [matTooltip]="nomCheval(reprise.id_reprise).race_cheval.nom + ' - ' + nomCheval(reprise.id_reprise).age + ' ans'">info</mat-icon>
+            <p class="spanHorses">&nbsp;{{nomCheval(reprise.id_reprise).nom | titlecase}}</p>
           </mat-grid-tile>
-
-          <mat-grid-tile><b>Heure&nbsp;</b><mat-icon>schedule</mat-icon></mat-grid-tile>
-          <mat-grid-tile><b>Limite&nbsp;</b><mat-icon>groups</mat-icon></mat-grid-tile>
-          <mat-grid-tile><b>Niveau du Galop&nbsp;</b><mat-icon>military_tech</mat-icon></mat-grid-tile>
-          <mat-grid-tile *ngIf="authService.isRider()"><b>Cheval assigné&nbsp;</b><img src="assets/horse-icon.png" height="20" alt="horse-icon"></mat-grid-tile>
-
-          <mat-grid-tile>
-            <span *ngIf="reprise.user; else undefinedInstructor">{{reprise.user.firstname_user | titlecase}} {{reprise.user.lastname_user | uppercase}}</span>
-            <ng-template #undefinedInstructor><i style="color: lightgrey;">Non défini</i></ng-template>
-          </mat-grid-tile>
-
-          <mat-grid-tile>
-            <span *ngIf="!reprise.recurrence; else coursRecurrence">{{reprise.date | date:"dd/MM/yyyy"}}</span>
-            <ng-template #coursRecurrence>{{reprise.recurrence}}</ng-template>
-          </mat-grid-tile>
-
-          <mat-grid-tile>{{reprise.date | date:"HH:mm"}}</mat-grid-tile>
-          <mat-grid-tile>{{reprise.rider_number_limit}}</mat-grid-tile>
-          <mat-grid-tile>{{reprise.galop_level}}</mat-grid-tile>
-          <div *ngIf="authService.isRider()">
-            <mat-grid-tile *ngIf="nomCheval(reprise.id_reprise); else noAssignedHorse">
-              <mat-icon matTooltipPosition=below [matTooltip]="nomCheval(reprise.id_reprise).race_cheval.nom + ' - ' + nomCheval(reprise.id_reprise).age + ' ans'">info</mat-icon>
-              <p class="spanHorses">&nbsp;{{nomCheval(reprise.id_reprise).nom | titlecase}}</p>
-            </mat-grid-tile>
-          </div>
-
-          <ng-template #noAssignedHorse>
-            <mat-grid-tile>
-              <p><i style="color: lightgrey;">Aucun</i></p>
-            </mat-grid-tile>
-          </ng-template>
-        </mat-grid-list>
-
-        <div *ngIf="isOutdated(reprise.date) || reprise.canceled; else notCanceled">
-          <div *ngIf="reprise.canceled && !isOutdated(reprise.date)" class="center canceled">
-            <h3>
-              <mat-icon>cancel</mat-icon>
-              <span>&nbsp;La reprise est annulée</span>
-            </h3>
-          </div>
-          <div *ngIf="isOutdated(reprise.date)" class="center outdated">
-            <h3>
-              <mat-icon>history</mat-icon>
-              <span>&nbsp;La reprise est terminée</span>
-            </h3>
-          </div>
         </div>
 
-        <ng-template #notCanceled>
-          <div *ngIf="authService.isRider()">
-            <button mat-raised-button style="color: white; background-color: #69c61a;" class="center" *ngIf="!isRegistered(reprise.id_reprise); else btnDesinscrire" (click)="registerToReprise(reprise.id_reprise)">S'inscrire</button>
-            <ng-template #btnDesinscrire><button mat-raised-button color="warn" class="center" *ngIf="isRegistered(reprise.id_reprise)" (click)="deleteRegisteredReprise(reprise.id_reprise)">Se désinscrire</button></ng-template>
-          </div>
+        <ng-template #noAssignedHorse>
+          <mat-grid-tile>
+            <p><i style="color: lightgrey;">Aucun</i></p>
+          </mat-grid-tile>
         </ng-template>
+      </mat-grid-list>
 
-        <button *ngIf="!authService.isRider() && !isOutdated(reprise.date) && !reprise.canceled" mat-raised-button color="primary" class="center" [routerLink]="['/reprise', reprise.id_reprise]">Assigner les chevaux</button>
-    </mat-card>
-  </div>
+      <div *ngIf="reprise.canceled && ((isOutdated(reprise.date) && reprise.recurrence != null) || (!isOutdated(reprise.date) && reprise.recurrence != null) || (!isOutdated(reprise.date) && reprise.recurrence == null) )" class="center canceled">
+        <h3>
+          <mat-icon>cancel</mat-icon>
+          <span>&nbsp;La reprise est annulée</span>
+        </h3>
+      </div>
+
+      <div *ngIf="isOutdated(reprise.date) && !reprise.recurrence" class="center outdated">
+        <h3>
+          <mat-icon>history</mat-icon>
+          <span>&nbsp;La reprise est terminée</span>
+        </h3>
+      </div>
+
+      <div *ngIf="authService.isRider() && !isOutdated(reprise.date) && !reprise.canceled">
+        <button mat-raised-button style="color: white; background-color: #69c61a;" class="center" *ngIf="!isRegistered(reprise.id_reprise); else btnDesinscrire" (click)="registerToReprise(reprise.id_reprise)">S'inscrire</button>
+        <ng-template #btnDesinscrire><button mat-raised-button color="warn" class="center" *ngIf="isRegistered(reprise.id_reprise)" (click)="deleteRegisteredReprise(reprise.id_reprise)">Se désinscrire</button></ng-template>
+      </div>
+
+      <button *ngIf="!authService.isRider() && !reprise.canceled && (!isOutdated(reprise.date) || (reprise.recurrence != null && isOutdated(reprise.date)))" mat-raised-button color="primary" class="center" [routerLink]="['/reprise', reprise.id_reprise]">Assigner les chevaux</button>
+  </mat-card>
 </div>
