@@ -86,7 +86,7 @@
         </h3>
       </div>
 
-      <div *ngIf="authService.isRider() && !isOutdated(reprise.date) && !reprise.canceled">
+      <div *ngIf="authService.isRider() && !reprise.canceled && (!isOutdated(reprise.date) || (reprise.recurrence != null && isOutdated(reprise.date)))">
         <button mat-raised-button style="color: white; background-color: #69c61a;" class="center" *ngIf="!isRegistered(reprise.id_reprise); else btnDesinscrire" (click)="registerToReprise(reprise.id_reprise)">S'inscrire</button>
         <ng-template #btnDesinscrire><button mat-raised-button color="warn" class="center" *ngIf="isRegistered(reprise.id_reprise)" (click)="deleteRegisteredReprise(reprise.id_reprise)">Se désinscrire</button></ng-template>
       </div>
