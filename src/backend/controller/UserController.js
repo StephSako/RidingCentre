@@ -247,4 +247,35 @@ user.put('/edit/role/:id_user', (req, res) => {
   })
 })
 
+// EDIT PASSWORD
+user.put('/edit/password/form/:id_user', (req, res) => {
+  const id_user = req.params.id_user;
+  const old_password = req.body.old_password;
+  const new_password = req.body.new_password;
+
+  User.findOne({
+    where: {
+      id_user: id_user
+    }
+  }).then(user => {
+    bcrypt.compare(old_password, user.password_user, (err, isMatch) => {
+      if (!isMatch){
+        res.send("L'actuel mot de passe est incorrect");
+      }
+      else {
+        User.update({password_user: bcrypt.hashSync(new_password, 12)}, {
+          where: { id_user: id_user}
+        }).then(num => {
+          if (num != 0) res.json("Le mot de passe a été modifié avec succès")
+          else res.status(401).send("Le mot de passe n'a pas été modifié")
+        }).catch(() => {
+          res.status(401).send("Le mot de passe n'a pas pu être modifié");
+        })
+      }
+    });
+  }).catch(() => {
+    res.status(404).send("L'utilisateur n'a pas été trouvé");
+  })
+})
+
 module.exports = user

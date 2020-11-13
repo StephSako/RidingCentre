@@ -192,8 +192,11 @@ export class AuthenticationService {
 
   // tslint:disable-next-line:variable-name
   public resetPassword(email_user: string, password_user: string): Observable<any> {
-    console.log(email_user);
-    console.log(password_user);
     return this.http.put(`${this.baseURL}edit/password/${email_user}`, { password_user });
+  }
+
+  // tslint:disable-next-line:variable-name
+  public editPasswordForm(id_user: number, old_password: string, new_password: string): Observable<any> {
+    return this.http.put(`${this.baseURL}edit/password/form/${id_user}`, { old_password, new_password });
   }
 }
